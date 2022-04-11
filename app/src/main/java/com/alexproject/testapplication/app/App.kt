@@ -1,11 +1,11 @@
 package com.alexproject.testapplication.app
 
 import android.app.Application
+import android.content.Context
 import com.alexproject.testapplication.di.AppComponent
-import com.alexproject.testapplication.di.AppModule
 import com.alexproject.testapplication.di.DaggerAppComponent
 
-class App : Application() {
+class App : Application(), AppDependencies {
 
     lateinit var appComponent: AppComponent
 
@@ -14,7 +14,12 @@ class App : Application() {
 
         appComponent = DaggerAppComponent
             .builder()
-            .appModule(AppModule(context = this))
+            .appDependencies(this)
             .build()
     }
+    override val context = this
+}
+
+interface AppDependencies {
+    val context: Context
 }
