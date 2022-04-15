@@ -17,8 +17,15 @@ class App : Application(), AppDependencies {
             .appDependencies(this)
             .build()
     }
+
     override val context = this
 }
+
+val Context.appComponent: AppComponent
+    get() = when (this) {
+        is App -> appComponent
+        else -> this.applicationContext.appComponent
+    }
 
 interface AppDependencies {
     val context: Context

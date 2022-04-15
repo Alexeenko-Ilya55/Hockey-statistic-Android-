@@ -1,33 +1,59 @@
 package com.alexproject.testapplication.fragments
 
-import androidx.lifecycle.ViewModelProvider
+import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.alexproject.testapplication.R
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.alexproject.domain.models.Response
+import com.alexproject.testapplication.app.appComponent
+import com.alexproject.testapplication.databinding.FragmentGameBinding
 import com.alexproject.testapplication.viewModels.FragmentGameViewModel
+import com.alexproject.testapplication.viewModels.ViewModelFactory
+import javax.inject.Inject
 
-class FragmentGame : Fragment() {
+class FragmentGame(
+    private val game: Response
+) : Fragment() {
 
-    companion object {
-        fun newInstance() = FragmentGame()
-    }
+    private lateinit var binding: FragmentGameBinding
 
-    private lateinit var viewModel: FragmentGameViewModel
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_game, container, false)
+    ): View {
+        binding = FragmentGameBinding.inflate(inflater, container, false)
+
+        context?.appComponent?.inject(this)
+
+        val viewModel =
+            ViewModelProvider(this, viewModelFactory)[FragmentGameViewModel::class.java]
+
+        binding.apply {
+            homeTeamNameGame.text = game.teams.home.name
+            awayTeamNameGame.text = game.teams.away.name
+            timeGame.text = game.time
+
+            if (game.status != "NS")
+                ScoreGame.text = "${game.scores.home}-${game.scores.away}"
+            else
+                ScoreGame.text = "-"
+        }
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(FragmentGameViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.leagueButton.setOnClickListener {
+
+        }
     }
+
 
 }

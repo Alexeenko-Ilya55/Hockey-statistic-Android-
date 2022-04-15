@@ -10,8 +10,6 @@ import com.alexproject.domain.Repository
 import com.alexproject.repository.ApiRepository
 import com.alexproject.repository.Database
 import com.alexproject.repository.RepositoryImpl
-import com.alexproject.testapplication.`object`.BASE_URL
-import com.alexproject.testapplication.`object`.DATABASE_NAME
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -34,7 +32,7 @@ class DataModule {
     @Provides
     @Singleton
     fun provideDatabase(dao: Dao): Database =
-        DatabaseImpl(dao = dao)
+        DatabaseImpl(dao)
 
 
     @Provides
@@ -50,3 +48,6 @@ class DataModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build().create(ApiService::class.java)
 }
+
+private const val DATABASE_NAME = "AlexNews"
+private const val BASE_URL = "https://v1.hockey.api-sports.io/"

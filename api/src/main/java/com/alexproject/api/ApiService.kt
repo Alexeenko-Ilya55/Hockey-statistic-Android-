@@ -1,15 +1,18 @@
 package com.alexproject.api
 
-import com.alexproject.repository.models.Games
+import com.alexproject.repository.models.countries.Countries
+import com.alexproject.repository.models.gameEvents.GameEvents
+import com.alexproject.repository.models.games.Games
+import com.alexproject.repository.models.leagues.Leagues
+import com.alexproject.repository.models.leaguesGroup.LeaguesGroup
+import com.alexproject.repository.models.statistic.StatisticTable
+import com.alexproject.repository.models.team.Team
+import com.alexproject.repository.objects.*
 import retrofit2.http.GET
 import retrofit2.http.Headers
-
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-const val HOST  = "x-rapidapi-host:"
-const val KEY  = "x-rapidapi-key:"
-const val API_SPORTS  = "v1.hockey.api-sports.io"
 
 interface ApiService {
 
@@ -17,9 +20,66 @@ interface ApiService {
         "$HOST $API_SPORTS",
         "$KEY ${BuildConfig.API_KEY}"
     )
-    @GET("{endPoint}")
+    @GET("{$END_POINT}")
     suspend fun loadGames(
-        @Path("endPoint") endPoint: String,
-        @Query("date") date: String
+        @Path(END_POINT) endPoint: String,
+        @Query("date") date: String?,
+        @Query("h2h") h2h: String?
     ): Games
+
+    @Headers(
+        "$HOST $API_SPORTS",
+        "$KEY ${BuildConfig.API_KEY}"
+    )
+    @GET(COUNTRIES)
+    suspend fun loadCountries(): Countries
+
+    @Headers(
+        "$HOST $API_SPORTS",
+        "$KEY ${BuildConfig.API_KEY}"
+    )
+    @GET(LEAGUES)
+    suspend fun loadLeagues(
+        @Query(COUNTRY) countryName: String?,
+        @Query(SEASON) season: Int
+    ): Leagues
+
+    @Headers(
+        "$HOST $API_SPORTS",
+        "$KEY ${BuildConfig.API_KEY}"
+    )
+    @GET(STANDINGS_GROUPS)
+    suspend fun loadLeaguesGroup(
+        @Query(LEAGUE) leagueId: Int,
+        @Query(SEASON) season: Int
+    ): LeaguesGroup
+
+    @Headers(
+        "$HOST $API_SPORTS",
+        "$KEY ${BuildConfig.API_KEY}"
+    )
+    @GET(GAME_EVENTS)
+    suspend fun loadGameEvents(
+        @Query(GAME) gameId: Int
+    ): GameEvents
+
+    @Headers(
+        "$HOST $API_SPORTS",
+        "$KEY ${BuildConfig.API_KEY}"
+    )
+    @GET(STANDINGS)
+    suspend fun loadStatisticTable(
+        @Query(LEAGUE) leagueId: Int,
+        @Query(SEASON) season: Int
+    ): StatisticTable
+
+    @Headers(
+        "$HOST $API_SPORTS",
+        "$KEY ${BuildConfig.API_KEY}"
+    )
+    @GET(TEAMS)
+    suspend fun loadTeam(
+        @Query(TEAM_ID) teamId: Int
+    ): Team
+
 }

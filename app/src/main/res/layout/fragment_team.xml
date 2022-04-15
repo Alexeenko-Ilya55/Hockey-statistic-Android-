@@ -1,13 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.FragmentTeam">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/awayTeamName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="USA"
+        android:textColor="?attr/colorOnSecondary"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="Detroit"
+        android:textColor="?attr/colorOnSecondary"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+        app:layout_constraintStart_toEndOf="@+id/imageView4"
+        app:layout_constraintTop_toTopOf="@+id/imageView4" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        tools:src="@tools:sample/avatars"
+        android:clipToOutline="true"
+        android:background="@drawable/round_outline"
+        tools:targetApi="s" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/leagueButton"
+        app:tabMode="scrollable">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/results" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/calendar" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/table" />
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/leagueButton"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4">
+
+        <ImageView
+            android:id="@+id/homeTeamEmblem"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="16dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars"
+            android:clipToOutline="true"
+            android:background="@drawable/round_outline"
+            tools:targetApi="s" />
+
+        <TextView
+            android:id="@+id/timeStartGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="League: NHL"
+            android:textColor="?attr/colorOnSecondary"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/homeTeamEmblem"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/awayTeamEmblem"
+            android:layout_width="20dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="8dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/arrow_forward" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="409dp"
+        android:layout_height="327dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout2">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

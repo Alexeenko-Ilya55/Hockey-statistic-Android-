@@ -2,25 +2,29 @@ package com.alexproject.testapplication.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.alexproject.testapplication.R
+import com.alexproject.testapplication.app.appComponent
 import com.alexproject.testapplication.databinding.ActivityMainBinding
+import com.alexproject.testapplication.viewModels.MainActivityViewModel
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-    //@Inject lateinit var navController: NavController
+
+    private lateinit var binding: ActivityMainBinding
+
+    @Inject
+    lateinit var viewModel: MainActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val binding = ActivityMainBinding.inflate(layoutInflater)
-
-
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
-
-       // navController.navigate(R.id.fragmentSearch)
+        applicationContext.appComponent.inject(this)
+        val navController = findNavController(R.id.activity_nav_container)
+        binding.bottomNavigationView.setupWithNavController(navController)
     }
+
 }

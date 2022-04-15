@@ -1,33 +1,33 @@
 package com.alexproject.testapplication.fragments
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.alexproject.testapplication.R
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.alexproject.testapplication.app.appComponent
+import com.alexproject.testapplication.databinding.FragmentStatisticsBinding
 import com.alexproject.testapplication.viewModels.FragmentStatisticsViewModel
+import com.alexproject.testapplication.viewModels.ViewModelFactory
+import javax.inject.Inject
 
 class FragmentStatistics : Fragment() {
 
-    companion object {
-        fun newInstance() = FragmentStatistics()
-    }
+    private lateinit var binding: FragmentStatisticsBinding
 
-    private lateinit var viewModel: FragmentStatisticsViewModel
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_statistics, container, false)
-    }
+    ): View {
+        binding = FragmentStatisticsBinding.inflate(inflater, container, false)
+        context?.appComponent?.inject(this)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(FragmentStatisticsViewModel::class.java)
-        // TODO: Use the ViewModel
+        val viewModel =
+            ViewModelProvider(this, viewModelFactory)[FragmentStatisticsViewModel::class.java]
+        return binding.root
     }
-
 }

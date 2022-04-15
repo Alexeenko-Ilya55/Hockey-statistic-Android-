@@ -1,33 +1,34 @@
 package com.alexproject.testapplication.fragments
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.alexproject.testapplication.R
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.alexproject.testapplication.app.appComponent
+import com.alexproject.testapplication.databinding.FragmentLiveBinding
 import com.alexproject.testapplication.viewModels.FragmentLiveViewModel
+import com.alexproject.testapplication.viewModels.ViewModelFactory
+import javax.inject.Inject
 
 class FragmentLive : Fragment() {
 
-    companion object {
-        fun newInstance() = FragmentLive()
-    }
+    private lateinit var binding: FragmentLiveBinding
 
-    private lateinit var viewModel: FragmentLiveViewModel
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_live, container, false)
-    }
+    ): View {
+        binding = FragmentLiveBinding.inflate(inflater, container, false)
+        context?.appComponent?.inject(this)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(FragmentLiveViewModel::class.java)
-        // TODO: Use the ViewModel
+        val viewModel =
+            ViewModelProvider(this, viewModelFactory)[FragmentLiveViewModel::class.java]
+        return binding.root
     }
 
 }

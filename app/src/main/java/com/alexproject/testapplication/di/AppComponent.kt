@@ -2,6 +2,7 @@ package com.alexproject.testapplication.di
 
 import com.alexproject.testapplication.activity.MainActivity
 import com.alexproject.testapplication.app.AppDependencies
+import com.alexproject.testapplication.fragments.*
 import dagger.Component
 import javax.inject.Singleton
 
@@ -12,6 +13,12 @@ import javax.inject.Singleton
 @Singleton
 interface AppComponent {
     fun inject(mainActivity: MainActivity)
+    fun inject(fragmentAllGames: FragmentAllGames)
+    fun inject(fragmentFavorites: FragmentFavorites)
+    fun inject(fragmentGame: FragmentGame)
+    fun inject(fragmentLive: FragmentLive)
+    fun inject(fragmentStatistics: FragmentStatistics)
+    fun inject(fragmentTeam: FragmentTeam)
 
     @Component.Builder
     interface Builder {

@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_fragmentFavorites_to_fragmentGame"
             app:destination="@id/fragmentGame" />
+        <action
+            android:id="@+id/open_teamFragment"
+            app:destination="@id/fragmentTeam" />
     </fragment>
     <fragment
         android:id="@+id/fragmentStatistics"
