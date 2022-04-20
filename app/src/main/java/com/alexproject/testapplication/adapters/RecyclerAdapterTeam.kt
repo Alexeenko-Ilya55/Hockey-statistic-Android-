@@ -10,16 +10,13 @@ import android.widget.TextView
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.alexproject.domain.models.Team
-import com.alexproject.domain.useCases.FavoritesUseCase
 import com.alexproject.testapplication.R
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 
 class RecyclerAdapterTeam(
     private val teamList: List<Team>,
     private val navController: NavController,
-    private val favoritesUseCase: FavoritesUseCase
+
 ) : RecyclerView.Adapter<RecyclerAdapterTeam.RecyclerHolder>() {
 
     inner class RecyclerHolder(item: View) : RecyclerView.ViewHolder(item) {
@@ -40,6 +37,7 @@ class RecyclerAdapterTeam(
             val team = teamList[position]
             fillDataInItem(holder, team)
 
+            /*
             buttonFavorites.setOnClickListener {
                 runBlocking(Dispatchers.IO) {
                     if (team.favoritesEnable)
@@ -50,7 +48,7 @@ class RecyclerAdapterTeam(
                 team.favoritesEnable = !team.favoritesEnable
                 notifyDataSetChanged()
             }
-
+*/
             itemView.setOnClickListener {
                 navController.navigate(R.id.fragmentTeam)
             }
@@ -62,11 +60,11 @@ class RecyclerAdapterTeam(
             teamName.text = team.name
             Picasso.get().load(team.logo).into(teamEmblem)
 
-            if (team.favoritesEnable)
+            //if (team.favoritesEnable)
                 buttonFavorites.setImageResource(R.drawable.favorites_enable)
-            else {
-                buttonFavorites.setImageResource(R.drawable.nav_menu_favorites)
-            }
+           // else {
+           //     buttonFavorites.setImageResource(R.drawable.nav_menu_favorites)
+           // }
         }
     }
 

@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.alexproject.domain.models.Response
+import com.alexproject.domain.models.Game
 import com.alexproject.testapplication.app.appComponent
 import com.alexproject.testapplication.databinding.FragmentGameBinding
 import com.alexproject.testapplication.viewModels.FragmentGameViewModel
@@ -15,7 +15,7 @@ import com.alexproject.testapplication.viewModels.ViewModelFactory
 import javax.inject.Inject
 
 class FragmentGame(
-    private val game: Response
+    private val game: Game
 ) : Fragment() {
 
     private lateinit var binding: FragmentGameBinding
@@ -36,12 +36,12 @@ class FragmentGame(
             ViewModelProvider(this, viewModelFactory)[FragmentGameViewModel::class.java]
 
         binding.apply {
-            homeTeamNameGame.text = game.teams.home.name
-            awayTeamNameGame.text = game.teams.away.name
-            timeGame.text = game.time
+            homeTeamNameGame.text = game.homeTeam.name
+            awayTeamNameGame.text = game.awayTeam.name
+            timeGame.text = game.date
 
             if (game.status != "NS")
-                ScoreGame.text = "${game.scores.home}-${game.scores.away}"
+                ScoreGame.text = "${game.homeScores}-${game.awayScores}"
             else
                 ScoreGame.text = "-"
         }

@@ -1,28 +1,53 @@
 package com.alexproject.database
 
+import androidx.room.*
 import androidx.room.Dao
+import com.alexproject.database.entities.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface Dao {
 
-    /*
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertGames(gamesEntity: GamesEntity)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertTeam(teamEntity: TeamEntity)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(article: ArticleEntity)
+    suspend fun insertCountry(countryEntity: CountryEntity)
 
-    @Query("SELECT * FROM $TABLE_NAME LIMIT :limit OFFSET :offset")
-    suspend fun getAllArticles(limit: Int, offset: Int): List<ArticleEntity>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertLeague(leagueEntity: LeagueEntity)
 
-    @Query("SELECT * FROM $TABLE_NAME WHERE bookmarkEnable")
-    suspend fun getBookmarks(): List<ArticleEntity>
+    @Transaction
+    @Query("SELECT * FROM $TABLE_GAMES WHERE date = :date")
+    fun getGamesByDate(date: String): Flow<List<Game>>
 
-    @Query("DELETE FROM $TABLE_NAME")
+    @Query("SELECT * FROM $TABLE_COUNTRIES")
+    suspend fun getCountries(): List<CountryEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCountries(listCountries: List<CountryEntity>)
+
+    @Query("DELETE FROM $TABLE_GAMES")
     suspend fun deleteAll()
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateElement(news: ArticleEntity)
-    */
+    @Query("UPDATE $TABLE_TEAM SET isFavorite =:isFavorite WHERE id = :teamId")
+    suspend fun updateTeam(teamId: Int, isFavorite: Boolean)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertGameEvents(gameEventsEntity: List<GameEventsEntity>)
+
+    @Query("SELECT * FROM $TABLE_GAME_EVENTS")
+    suspend fun getGameEvents(): List<GameEvents>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun addGameToFavorites(isFavorite: IsFavoriteGameEntity)
+
+    @Query("DELETE FROM $TABLE_FAVORITES_GAMES WHERE gameId = :gameId")
+    suspend fun deleteGameFromFavorites(gameId: Int)
 }
 
-const val TABLE_NAME = "Table"
 
 

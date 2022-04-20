@@ -11,19 +11,20 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
-import com.alexproject.domain.models.Games
-import com.alexproject.domain.models.Response
-import com.alexproject.domain.useCases.FavoritesUseCase
+import com.alexproject.domain.models.Game
+import com.alexproject.domain.useCases.AddGameToFavoritesUseCase
+import com.alexproject.domain.useCases.DeleteGameFromFavoritesUseCase
 import com.alexproject.testapplication.R
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class RecyclerAdapterGames(
-    private val games: Games,
+    private val games: List<Game>,
     private val coroutineScope: LifecycleCoroutineScope,
     private val navController: NavController,
-    private val favoritesUseCase: FavoritesUseCase
+    private val addGameToFavoritesUseCase: AddGameToFavoritesUseCase,
+    private val deleteGameFromFavoritesUseCase: DeleteGameFromFavoritesUseCase
 ) : RecyclerView.Adapter<RecyclerAdapterGames.RecyclerHolder>() {
 
     inner class RecyclerHolder(item: View) : RecyclerView.ViewHolder(item) {
@@ -46,16 +47,16 @@ class RecyclerAdapterGames(
     @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: RecyclerHolder, position: Int) {
         holder.apply {
-            val game = games.response[position]
+            val game = games[position]
             fillDataInItem(holder, game)
             buttonFavorites.setOnClickListener {
+                game.isFavorite = !game.isFavorite
                 coroutineScope.launch(Dispatchers.IO) {
-                    if (game.bookmarkEnable)
-                        favoritesUseCase.deleteFromFavoritesFavorites(game)
+                    if (game.isFavorite)
+                        addGameToFavoritesUseCase.addGameToFavorites(game.id)
                     else
-                        favoritesUseCase.addToFavorites(game)
+                        deleteGameFromFavoritesUseCase.deleteGameFromFavorites(game.id)
                 }
-                game.bookmarkEnable = !game.bookmarkEnable
                 notifyDataSetChanged()
             }
             itemView.setOnClickListener {
@@ -66,13 +67,13 @@ class RecyclerAdapterGames(
     }
 
 
-    private fun fillDataInItem(holder: RecyclerHolder, game: Response) {
+    private fun fillDataInItem(holder: RecyclerHolder, game: Game) {
         holder.apply {
-            homeTeamName.text = game.teams.home.name
-            awayTeamName.text = game.teams.away.name
+            homeTeamName.text = game.homeTeam.name
+            awayTeamName.text = game.awayTeam.name
 
-            Picasso.get().load(game.teams.home.logo).into(homeTeamEmblem)
-            Picasso.get().load(game.teams.away.logo).into(awayTeamEmblem)
+            Picasso.get().load(game.homeTeam.logo).into(homeTeamEmblem)
+            Picasso.get().load(game.awayTeam.logo).into(awayTeamEmblem)
 
             if (game.status == "NS") {
                 homeTeamScore.isVisible = false
@@ -83,11 +84,11 @@ class RecyclerAdapterGames(
                 timeStartGame.isVisible = false
                 homeTeamScore.isVisible = true
                 awayTeamScore.isVisible = true
-                homeTeamScore.text = game.scores.home.toString()
-                awayTeamScore.text = game.scores.away.toString()
+                homeTeamScore.text = game.homeScores.toString()
+                awayTeamScore.text = game.awayScores.toString()
             }
 
-            if (game.bookmarkEnable)
+            if (game.isFavorite)
                 buttonFavorites.setImageResource(R.drawable.favorites_enable)
             else {
                 buttonFavorites.setImageResource(R.drawable.nav_menu_favorites)
@@ -96,7 +97,7 @@ class RecyclerAdapterGames(
     }
 
     override fun getItemCount(): Int {
-        return games.response.size
+        return games.size
     }
 }
 

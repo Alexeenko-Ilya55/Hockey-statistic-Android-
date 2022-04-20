@@ -1,12 +1,11 @@
 package com.alexproject.testapplication.viewModels
 
 import androidx.lifecycle.ViewModel
-import com.alexproject.domain.useCases.StatisticsUseCase
+import com.alexproject.domain.useCases.LoadStatisticsUseCase
 import javax.inject.Inject
 
 class FragmentStatisticsViewModel @Inject constructor(
-    private val statisticsUseCase: StatisticsUseCase
+    private val loadStatisticsUseCase: LoadStatisticsUseCase
 ) : ViewModel() {
-
-    suspend fun loadStatistic() = statisticsUseCase.loadStatistic()
+    suspend fun loadStatistic() = loadStatisticsUseCase.loadStatistic()
 }

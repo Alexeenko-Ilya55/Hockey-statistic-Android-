@@ -9,8 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.alexproject.domain.models.Games
-import com.alexproject.domain.useCases.FavoritesUseCase
+import com.alexproject.domain.models.Game
+import com.alexproject.domain.useCases.AddGameToFavoritesUseCase
+import com.alexproject.domain.useCases.DeleteGameFromFavoritesUseCase
 import com.alexproject.testapplication.adapters.RecyclerAdapterGames
 import com.alexproject.testapplication.app.appComponent
 import com.alexproject.testapplication.databinding.FragmentAllGamesBinding
@@ -29,7 +30,11 @@ class FragmentAllGames : Fragment() {
     lateinit var viewModelFactory: ViewModelFactory
 
     @Inject
-    lateinit var favoritesUseCase: FavoritesUseCase
+    lateinit var addGameToFavoritesUseCase: AddGameToFavoritesUseCase
+
+    @Inject
+    lateinit var deleteGameFromFavoritesUseCase: DeleteGameFromFavoritesUseCase
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,17 +52,23 @@ class FragmentAllGames : Fragment() {
         val viewModel =
             ViewModelProvider(this, viewModelFactory)[FragmentAllGamesViewModel::class.java]
         lifecycleScope.launchWhenStarted {
-            viewModel.loadGamesByDate("2022-04-15").collectLatest {
+            viewModel.loadGamesByDate("2022-04-20").collectLatest {
                 initRecyclerAdapter(it)
             }
         }
     }
 
-    private fun initRecyclerAdapter(games: Games) {
+    private fun initRecyclerAdapter(games: List<Game>) {
         lifecycleScope.launch(Dispatchers.Main) {
             binding.rcView.layoutManager = LinearLayoutManager(context)
             val adapter =
-                RecyclerAdapterGames(games, lifecycleScope, findNavController(), favoritesUseCase)
+                RecyclerAdapterGames(
+                    games,
+                    lifecycleScope,
+                    findNavController(),
+                    addGameToFavoritesUseCase,
+                    deleteGameFromFavoritesUseCase
+                )
             binding.rcView.adapter = adapter
         }
 

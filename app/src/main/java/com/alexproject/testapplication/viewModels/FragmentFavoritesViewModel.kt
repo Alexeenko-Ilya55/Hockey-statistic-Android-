@@ -2,41 +2,48 @@ package com.alexproject.testapplication.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.alexproject.domain.models.Response
-import com.alexproject.domain.models.Team
-import com.alexproject.domain.useCases.FavoritesUseCase
+import com.alexproject.domain.useCases.*
 import com.alexproject.testapplication.contracts.GameFavorites
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class FragmentFavoritesViewModel @Inject constructor(
-    private val useCaseFavorites: FavoritesUseCase
+    private val addTeamToFavoritesUseCase: AddTeamToFavoritesUseCase,
+    private val deleteTeamFromFavoritesUseCase: DeleteTeamFromFavoritesUseCase,
+    private val addGameToFavoritesUseCase: AddGameToFavoritesUseCase,
+    private val deleteGameFromFavoritesUseCase: DeleteGameFromFavoritesUseCase,
+    private val loadFavoritesGamesUseCase: LoadFavoritesGamesUseCase,
+    private val loadFavoritesTeamsUseCase: LoadFavoritesTeamsUseCase
 ) : ViewModel(), GameFavorites {
 
-    override fun addGameToFavorites(game: Response) = viewModelScope.launch(Dispatchers.IO) {
-        useCaseFavorites.addToFavorites(game)
-    }
+    override fun addGameToFavorites(gameId: Int) =
+        viewModelScope.launch(Dispatchers.IO) {
+            addGameToFavoritesUseCase.addGameToFavorites(gameId)
+        }
 
 
-    fun addGameToFavorites(team: Team) = viewModelScope.launch(Dispatchers.IO) {
-        useCaseFavorites.addToFavorites(team)
-    }
+    fun addTeamToFavorites(teamId: Int, isFavorite: Boolean) =
+        viewModelScope.launch(Dispatchers.IO) {
+            addTeamToFavoritesUseCase.addTeamToFavorites(teamId)
+        }
 
 
-    override fun deleteGameFromFavorites(game: Response) = viewModelScope.launch(Dispatchers.IO) {
-        useCaseFavorites.deleteFromFavoritesFavorites(game)
-    }
+    override fun deleteGameFromFavorites(gameId: Int) =
+        viewModelScope.launch(Dispatchers.IO) {
+            deleteGameFromFavoritesUseCase.deleteGameFromFavorites(gameId)
+        }
 
-    fun deleteGameFromFavorites(team: Team) = viewModelScope.launch(Dispatchers.IO) {
-        useCaseFavorites.deleteFromFavoritesFavorites(team)
-    }
+    fun deleteTeamFromFavorites(teamId: Int, isFavorite: Boolean) =
+        viewModelScope.launch(Dispatchers.IO) {
+            deleteTeamFromFavoritesUseCase.deleteTeamFromFavorites(teamId)
+        }
 
     fun loadFavoritesGames() = viewModelScope.launch(Dispatchers.IO) {
-        useCaseFavorites.loadFavoritesGames()
+        loadFavoritesGamesUseCase.loadFavoritesGames()
     }
 
     fun loadFavoritesTeams() = viewModelScope.launch(Dispatchers.IO) {
-        useCaseFavorites.loadFavoritesTeams()
+        loadFavoritesTeamsUseCase.loadFavoritesTeams()
     }
 }

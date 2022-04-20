@@ -2,30 +2,35 @@ package com.alexproject.testapplication.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.alexproject.domain.models.Team
-import com.alexproject.domain.useCases.FavoritesUseCase
-import com.alexproject.domain.useCases.GameUseCase
+import com.alexproject.domain.useCases.AddTeamToFavoritesUseCase
+import com.alexproject.domain.useCases.DeleteTeamFromFavoritesUseCase
+import com.alexproject.domain.useCases.LoadGameEventsUseCase
+import com.alexproject.domain.useCases.LoadH2HGamesUseCase
 import com.alexproject.testapplication.contracts.TeamFavorites
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class FragmentGameViewModel @Inject constructor(
-    private val gameUseCase: GameUseCase,
-    private val favoritesUseCase: FavoritesUseCase
+    private val loadH2HGamesUseCase: LoadH2HGamesUseCase,
+    private val loadGameEventsUseCase: LoadGameEventsUseCase,
+    private val addTeamToFavoritesUseCase: AddTeamToFavoritesUseCase,
+    private val deleteTeamFromFavoritesUseCase: DeleteTeamFromFavoritesUseCase
 ) : ViewModel(), TeamFavorites {
 
     fun loadH2HGames(idHomeTeam: String, idAwayTeam: String) =
-        gameUseCase.loadH2HGames(idHomeTeam, idAwayTeam)
+        loadH2HGamesUseCase.loadH2HGames(idHomeTeam, idAwayTeam)
 
     fun loadInfoAboutGame(gameId: String) =
-        gameUseCase.loadInfoAboutGame(gameId)
+        loadGameEventsUseCase.loadInfoAboutGame(gameId)
 
-    override fun addTeamToFavorites(team: Team) = viewModelScope.launch(Dispatchers.IO){
-        favoritesUseCase.addToFavorites(team)
-    }
+    override fun addTeamToFavorites(teamId: Int) =
+        viewModelScope.launch(Dispatchers.IO) {
+            addTeamToFavoritesUseCase.addTeamToFavorites(teamId)
+        }
 
-    override fun deleteTeamFromFavorites(team: Team) = viewModelScope.launch(Dispatchers.IO){
-        favoritesUseCase.deleteFromFavoritesFavorites(team)
-    }
+    override fun deleteTeamFromFavorites(teamId: Int) =
+        viewModelScope.launch(Dispatchers.IO) {
+            deleteTeamFromFavoritesUseCase.deleteTeamFromFavorites(teamId)
+        }
 }

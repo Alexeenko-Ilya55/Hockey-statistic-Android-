@@ -1,9 +1,7 @@
 package com.alexproject.repository
 
 import com.alexproject.domain.Repository
-import com.alexproject.domain.models.Games
-import com.alexproject.domain.models.Response
-import com.alexproject.domain.models.Team
+import com.alexproject.domain.models.Game
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -12,19 +10,19 @@ class RepositoryImpl @Inject constructor(
     val apiRepository: ApiRepository,
     val database: Database
 ) : Repository {
-    override suspend fun addToFavorites(game: Response) {
+    override suspend fun addGameToFavorites(gameId: Int) {
+        database.addGametoFavorites(gameId)
+    }
+
+    override suspend fun addTeamToFavorites(teamId: Int) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun addToFavorites(team: Team) {
+    override suspend fun deleteGameFromFavorites(gameId: Int) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteFromFavorites(game: Response) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun deleteFromFavorites(team: Team) {
+    override suspend fun deleteTeamFromFavorites(teamId: Int) {
         TODO("Not yet implemented")
     }
 
@@ -52,12 +50,14 @@ class RepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-
-    override suspend fun loadGamesByDate(date: String): Flow<Games> {
-        return apiRepository.loadGamesByDate(date).map {
-            it.mapper()
-        }
+    override suspend fun loadGamesFromApiToDB(date: String) {
+        val games = apiRepository.loadGamesByDate(date)
+        database.insertGame(games)
     }
+
+    override suspend fun loadGamesByDate(date: String): Flow<List<Game>> =
+        database.getGamesByDate(date).map { it.map { gameDTO -> gameDTO.mapper() } }
+
 
     override suspend fun searchGameByTeamName(teamName: String) {
         TODO("Not yet implemented")

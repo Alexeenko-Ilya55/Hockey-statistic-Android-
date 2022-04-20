@@ -1,18 +1,14 @@
 package com.alexproject.testapplication.contracts
 
-
-import com.alexproject.domain.models.Response
-import com.alexproject.domain.models.Team
 import kotlinx.coroutines.Job
 
 interface GameFavorites {
-
-    fun addGameToFavorites(game: Response): Job
-    fun deleteGameFromFavorites(game: Response): Job
+    fun addGameToFavorites(gameId: Int): Job
+    fun deleteGameFromFavorites(gameId: Int): Job
 }
 
 interface TeamFavorites {
 
-    fun addTeamToFavorites(team: Team): Job
-    fun deleteTeamFromFavorites(team: Team): Job
+    fun addTeamToFavorites(teamId: Int): Job
+    fun deleteTeamFromFavorites(teamId: Int): Job
 }

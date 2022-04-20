@@ -2,43 +2,58 @@ package com.alexproject.testapplication.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.alexproject.domain.useCases.FavoritesUseCase
-import com.alexproject.domain.useCases.GameUseCase
-import com.alexproject.domain.useCases.LoadGamesUseCase
-import com.alexproject.domain.useCases.StatisticsUseCase
-
+import com.alexproject.domain.useCases.*
+import javax.inject.Inject
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory(
-    private val favoritesUseCase: FavoritesUseCase,
-    private val gameUseCase: GameUseCase,
-    private val loadGamesUseCase: LoadGamesUseCase,
-    private val statisticsUseCase: StatisticsUseCase
+    private val addGameToFavoritesUseCase: AddGameToFavoritesUseCase,
+    private val deleteGameFromFavoritesUseCase: DeleteGameFromFavoritesUseCase,
+    private val loadGamesByDateUseCase: LoadGamesByDateUseCase,
+    private val addTeamToFavoritesUseCase: AddTeamToFavoritesUseCase,
+    private val deleteTeamFromFavoritesUseCase: DeleteTeamFromFavoritesUseCase,
+    private val loadStatisticsUseCase: LoadStatisticsUseCase,
+    private val loadFavoritesGamesUseCase: LoadFavoritesGamesUseCase,
+    private val loadFavoritesTeamsUseCase: LoadFavoritesTeamsUseCase,
+    private val loadH2HGamesUseCase: LoadH2HGamesUseCase,
+    private val loadGameEventsUseCase: LoadGameEventsUseCase,
+    private val loadLiveGamesUseCase: LoadLiveGamesUseCase,
+    private val loadTeamGamesUseCase: LoadTeamGamesUseCase,
+    private val loadGamesFromApiToDBUseCase: LoadGamesFromApiToDBUseCase
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when (modelClass) {
             FragmentAllGamesViewModel::class.java -> FragmentAllGamesViewModel(
-                favoritesUseCase = favoritesUseCase,
-                loadGamesUseCase = loadGamesUseCase
+                loadGamesByDateUseCase, addGameToFavoritesUseCase, deleteGameFromFavoritesUseCase,
+                loadGamesFromApiToDBUseCase
             )
             FragmentFavoritesViewModel::class.java -> FragmentFavoritesViewModel(
-                useCaseFavorites = favoritesUseCase
+                addTeamToFavoritesUseCase,
+                deleteTeamFromFavoritesUseCase,
+                addGameToFavoritesUseCase,
+                deleteGameFromFavoritesUseCase,
+                loadFavoritesGamesUseCase,
+                loadFavoritesTeamsUseCase
             )
             FragmentGameViewModel::class.java -> FragmentGameViewModel(
-                gameUseCase = gameUseCase,
-                favoritesUseCase = favoritesUseCase
+                loadH2HGamesUseCase,
+                loadGameEventsUseCase,
+                addTeamToFavoritesUseCase,
+                deleteTeamFromFavoritesUseCase
             )
             FragmentLiveViewModel::class.java -> FragmentLiveViewModel(
-                favoritesUseCase = favoritesUseCase,
-                loadGamesUseCase = loadGamesUseCase
+                addGameToFavoritesUseCase,
+                deleteGameFromFavoritesUseCase,
+                loadLiveGamesUseCase
             )
             FragmentStatisticsViewModel::class.java -> FragmentStatisticsViewModel(
-                statisticsUseCase = statisticsUseCase
+                loadStatisticsUseCase
             )
             FragmentTeamViewModel::class.java -> FragmentTeamViewModel(
-                favoritesUseCase = favoritesUseCase,
-                loadGamesUseCase = loadGamesUseCase
+              addTeamToFavoritesUseCase,
+                deleteTeamFromFavoritesUseCase,
+                loadTeamGamesUseCase
             )
             MainActivityViewModel::class.java -> MainActivityViewModel()
             else -> MainActivityViewModel()
