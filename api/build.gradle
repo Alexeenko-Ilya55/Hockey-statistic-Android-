@@ -19,6 +19,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            buildConfigField("String", "API_KEY", "\"fe87bd860eed9ce3c489d8b4c5c432ac\"")
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -27,6 +30,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
 }
 
 dependencies {
@@ -43,5 +47,6 @@ dependencies {
 
     implementation 'javax.inject:javax.inject:1'
 
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
 
 }

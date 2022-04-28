@@ -1,4 +1,9 @@
 package com.alexproject.testapplication.viewModels
 
-class MainActivityViewModel {
+import androidx.lifecycle.ViewModel
+import javax.inject.Inject
+
+class MainActivityViewModel @Inject constructor() : ViewModel() {
+
+
 }

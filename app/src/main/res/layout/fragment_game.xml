@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F3F3"
+    tools:context=".fragments.FragmentGame">
+
+
+    <ImageView
+        android:id="@+id/homeTeamLabelGame"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/round_outline"
+        android:clipToOutline="true"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toEndOf="@+id/homeTeamFavorites"
+        app:layout_constraintTop_toBottomOf="@+id/leagueButton"
+        tools:src="@tools:sample/avatars"
+        tools:targetApi="s" />
+
+    <ImageView
+        android:id="@+id/awayTeamLabelGame"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/round_outline"
+        android:clipToOutline="true"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toStartOf="@+id/awayTeamFavorites"
+        app:layout_constraintTop_toBottomOf="@+id/leagueButton"
+        tools:src="@tools:sample/avatars"
+        tools:targetApi="s" />
+
+    <TextView
+        android:id="@+id/homeTeamNameGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        android:textColor="?attr/colorOnSecondary"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="@+id/homeTeamLabelGame"
+        app:layout_constraintStart_toStartOf="@+id/homeTeamLabelGame"
+        app:layout_constraintTop_toBottomOf="@+id/homeTeamLabelGame" />
+
+    <TextView
+        android:id="@+id/awayTeamNameGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/DefaultMargin"
+        android:text="TextView"
+        android:textColor="?attr/colorOnSecondary"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="@+id/awayTeamLabelGame"
+        app:layout_constraintStart_toStartOf="@+id/awayTeamLabelGame"
+        app:layout_constraintTop_toBottomOf="@+id/awayTeamLabelGame" />
+
+    <TextView
+        android:id="@+id/timeGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="11.04.22 00:00"
+        android:textColor="?attr/colorOnSecondary"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/homeTeamLabelGame"
+        app:layout_constraintEnd_toStartOf="@+id/awayTeamLabelGame"
+        app:layout_constraintStart_toEndOf="@+id/homeTeamLabelGame" />
+
+    <TextView
+        android:id="@+id/ScoreGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="6-5"
+        android:textColor="?attr/colorOnSecondary"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/homeTeamLabelGame"
+        app:layout_constraintEnd_toEndOf="@+id/timeGame"
+        app:layout_constraintStart_toStartOf="@+id/timeGame"
+        app:layout_constraintTop_toTopOf="@+id/homeTeamLabelGame" />
+
+    <ImageButton
+        android:id="@+id/homeTeamFavorites"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="@dimen/defaultMarginStart"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/nav_menu_favorites"
+        app:layout_constraintBottom_toBottomOf="@+id/homeTeamLabelGame"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/homeTeamLabelGame" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/leagueButton"
+        android:layout_width="@dimen/match_constraint"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/leagueEmblem"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="@dimen/DefaultMargin"
+            android:background="@drawable/round_outline"
+            android:clipToOutline="true"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars"
+            tools:targetApi="s" />
+
+        <TextView
+            android:id="@+id/leagueName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/DefaultMargin"
+            android:text="League: NHL"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/leagueEmblem"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="@dimen/defaultMarginStart"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/arrow_forward" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/awayTeamFavorites"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="@dimen/defaultMarginStart"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/nav_menu_favorites"
+        app:layout_constraintBottom_toBottomOf="@+id/awayTeamLabelGame"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/awayTeamLabelGame" />
+
+    <TextView
+        android:id="@+id/statusGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Завершен"
+        android:textColor="?attr/colorOnSecondary"
+        android:textSize="11dp"
+        app:layout_constraintEnd_toEndOf="@+id/timeGame"
+        app:layout_constraintStart_toStartOf="@+id/timeGame"
+        app:layout_constraintTop_toBottomOf="@+id/ScoreGame" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="@dimen/match_constraint"
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/DefaultMargin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homeTeamNameGame"
+        app:tabMode="scrollable">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reviewTabMenu" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/h2hTabMenu" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <TextView
+        android:id="@+id/matchInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/DefaultMargin"
+        android:layout_marginTop="@dimen/DefaultMargin"
+        android:text="@string/noInfoAboutGame"
+        android:textColor="?attr/colorOnSecondary"
+        android:textSize="16sp"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/match_constraint"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
