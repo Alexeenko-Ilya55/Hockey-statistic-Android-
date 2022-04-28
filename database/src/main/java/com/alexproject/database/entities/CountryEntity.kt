@@ -14,5 +14,5 @@ data class CountryEntity(
     val id: Int,
     val name: String
 ) {
-    fun toCountry() = CountryDTO(code, flag, id, name)
+    fun mapToDTO() = CountryDTO(code, flag, id, name)
 }

@@ -6,6 +6,5 @@ import javax.inject.Inject
 class LoadStatisticsUseCase @Inject constructor(
     private val repository: Repository
 ) {
-    suspend fun loadStatistic() =
-        repository.loadStatistics()
+    suspend fun loadStatistic(leagueId: Int) = repository.loadStatistics(leagueId)
 }

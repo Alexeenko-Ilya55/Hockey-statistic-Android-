@@ -8,5 +8,5 @@ data class TeamDTO(
     val name: String,
     var isFavorite: Boolean
 ) {
-    fun mapper() = Team(id, logo, name,isFavorite)
+    fun mapToTeam() = Team(id, logo, name,isFavorite)
 }

@@ -26,4 +26,22 @@
     <string name="results">Результаты</string>
     <string name="calendar">Календарь</string>
     <string name="table">Таблица</string>
+    <string name="game_canceled">Отменён</string>
+    <string name="gameTabItem">Game</string>
+    <string name="teamsTabItem">Teams</string>
+    <string name="reviewTabMenu">Обзор</string>
+    <string name="h2hTabMenu">H2h</string>
+    <string name="after">После</string>
+    <string name="overtime">ОТ</string>
+    <string name="penalty">бул.</string>
+    <string name="breakGAME">Перерыв</string>
+
+    <string name="assists">%1$s + %2$s</string>
+    <string name="penaltyComment">%1$s (%2$s)</string>
+    <string name="score">счёт: %s</string>
+
+    <string name="period">%s-Й ПЕРИОД</string>
+    <string name="noInfoAboutGame">Информации пока нет, так как матч еще не начался</string>
+
+
 </resources>

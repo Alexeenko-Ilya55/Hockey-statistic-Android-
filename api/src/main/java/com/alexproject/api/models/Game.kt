@@ -7,8 +7,8 @@ data class Game(
     val response: List<GamesResponse>,
     val results: Int
 ) {
-    fun mapper():List<GameDTO> = response.map {
-        it.mapper()
+    fun mapToDTO():List<GameDTO> = response.map {
+        it.mapToDTO()
     }
 }
 
@@ -26,18 +26,18 @@ data class GamesResponse(
     val timer: String?,
     val timezone: String?,
 ) {
-    fun mapper() = GameDTO(
+    fun mapToDTO() = GameDTO(
         id,
-        country.mapper(),
+        country.mapToDTO(),
         date.substringBefore("T"),
         time,
         events,
-        league.mapper(),
+        league.mapToDTO(),
         scores.away,
         scores.home,
         status.short,
-        teams.away.mapper(),
-        teams.home.mapper(),
+        teams.away.mapToDTO(),
+        teams.home.mapToDTO(),
         timer,
         periods.first,
         periods.overtime,

@@ -7,7 +7,7 @@ data class Countries(
     val response: List<Country>,
     val results: Int
 ){
-    fun mapper():List<CountryDTO> = response.map {
-        it.mapper()
+    fun mapToDTO():List<CountryDTO> = response.map {
+        it.mapToDTO()
     }
 }

@@ -23,18 +23,18 @@ data class GameDTO(
     val thirdPeriod: String?,
     var isFavorite:Boolean
 ) {
-    fun mapper() = Game(
+    fun mapToGame() = Game(
         id,
-        country.mapper(),
+        country.mapToCountry(),
         date,
         time,
         events,
-        league.mapper(),
+        league.mapToLeague(),
         awayScores,
         homeScores,
         status,
-        awayTeam.mapper(),
-        homeTeam.mapper(),
+        awayTeam.mapToTeam(),
+        homeTeam.mapToTeam(),
         timer,
         firstPeriod,
         overtime,

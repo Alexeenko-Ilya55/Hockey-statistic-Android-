@@ -9,5 +9,5 @@ data class Country(
     val id: Int,
     val name: String
 ){
-    fun mapper() = CountryDTO(code,flag, id, name)
+    fun mapToDTO() = CountryDTO(code,flag, id, name)
 }

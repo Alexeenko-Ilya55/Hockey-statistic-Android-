@@ -8,6 +8,5 @@ const val TABLE_FAVORITES_GAMES = "favoritesGames"
 @Entity(tableName = TABLE_FAVORITES_GAMES)
 data class IsFavoriteGameEntity(
     @PrimaryKey
-    val gameId: Int,
-    val favorite: Boolean
+    val gameId: Int
 )

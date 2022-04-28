@@ -7,7 +7,7 @@ data class Leagues(
     val response: List<LeagueResponse>,
     val results: Int
 ){
-    fun mapper():List<LeagueInfoDTO> = response.map {
+    fun mapToDTO():List<LeagueInfoDTO> = response.map {
         it.toLeagueInfo()
     }
 }
@@ -20,5 +20,5 @@ data class LeagueResponse(
     val seasons: List<Season>,
     val type: String
 ) {
-    fun toLeagueInfo() = LeagueInfoDTO(country.mapper(), id, logo, name, type)
+    fun toLeagueInfo() = LeagueInfoDTO(country.mapToDTO(), id, logo, name, type)
 }

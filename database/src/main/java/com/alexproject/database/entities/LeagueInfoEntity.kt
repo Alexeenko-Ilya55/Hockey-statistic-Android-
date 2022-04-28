@@ -1,23 +1,13 @@
 package com.alexproject.database.entities
 
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import androidx.room.Relation
 import com.alexproject.repository.models.LeagueInfoDTO
 
 const val TABLE_LEAGUE_INFO = "LeagueInfo"
 
-@Entity(
-    tableName = TABLE_LEAGUE_INFO,
-    foreignKeys = [
-        ForeignKey(
-            entity = CountryEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["countryId"]
-        )
-    ]
-)
+@Entity(tableName = TABLE_LEAGUE_INFO)
 data class LeagueInfoEntity(
     val countryId: Int,
     @PrimaryKey
@@ -38,8 +28,8 @@ data class LeagueInfo(
     val name: String,
     val type: String
 ) {
-    fun mapper() = LeagueInfoDTO(
-        country.toCountry(),
+    fun mapToDTO() = LeagueInfoDTO(
+        country.mapToDTO(),
         id,
         logo,
         name,

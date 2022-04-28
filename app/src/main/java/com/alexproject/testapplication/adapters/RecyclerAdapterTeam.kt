@@ -1,22 +1,20 @@
 package com.alexproject.testapplication.adapters
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.alexproject.domain.models.Team
 import com.alexproject.testapplication.R
+import com.alexproject.testapplication.contracts.TeamClickListener
 import com.squareup.picasso.Picasso
 
 class RecyclerAdapterTeam(
     private val teamList: List<Team>,
-    private val navController: NavController,
-
+    private val clickListener: TeamClickListener
 ) : RecyclerView.Adapter<RecyclerAdapterTeam.RecyclerHolder>() {
 
     inner class RecyclerHolder(item: View) : RecyclerView.ViewHolder(item) {
@@ -31,26 +29,16 @@ class RecyclerAdapterTeam(
         return RecyclerHolder(view)
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: RecyclerHolder, position: Int) {
         holder.apply {
             val team = teamList[position]
             fillDataInItem(holder, team)
-
-            /*
             buttonFavorites.setOnClickListener {
-                runBlocking(Dispatchers.IO) {
-                    if (team.favoritesEnable)
-                        favoritesUseCase.deleteFromFavoritesFavorites(team)
-                    else
-                        favoritesUseCase.addToFavorites(team)
-                }
-                team.favoritesEnable = !team.favoritesEnable
-                notifyDataSetChanged()
+                team.isFavorite = !team.isFavorite
+                clickListener.buttonTeamFavoriteClicked(team.id, team.isFavorite)
             }
-*/
             itemView.setOnClickListener {
-                navController.navigate(R.id.fragmentTeam)
+                clickListener.itemTeamClicked(team.id)
             }
         }
     }
@@ -59,12 +47,11 @@ class RecyclerAdapterTeam(
         holder.apply {
             teamName.text = team.name
             Picasso.get().load(team.logo).into(teamEmblem)
-
-            //if (team.favoritesEnable)
+            if (team.isFavorite)
                 buttonFavorites.setImageResource(R.drawable.favorites_enable)
-           // else {
-           //     buttonFavorites.setImageResource(R.drawable.nav_menu_favorites)
-           // }
+            else {
+                buttonFavorites.setImageResource(R.drawable.nav_menu_favorites)
+            }
         }
     }
 

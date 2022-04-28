@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alexproject.domain.useCases.AddTeamToFavoritesUseCase
 import com.alexproject.domain.useCases.DeleteTeamFromFavoritesUseCase
+import com.alexproject.domain.useCases.LoadTeamByIdUseCase
 import com.alexproject.domain.useCases.LoadTeamGamesUseCase
 import com.alexproject.testapplication.contracts.TeamFavorites
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +14,8 @@ import javax.inject.Inject
 class FragmentTeamViewModel @Inject constructor(
     private val addTeamToFavoritesUseCase: AddTeamToFavoritesUseCase,
     private val deleteTeamFromFavoritesUseCase: DeleteTeamFromFavoritesUseCase,
-    private val loadTeamGamesUseCase: LoadTeamGamesUseCase
+    private val loadTeamGamesUseCase: LoadTeamGamesUseCase,
+    private val loadTeamByIdUseCase: LoadTeamByIdUseCase
 ) : ViewModel(), TeamFavorites {
 
     override fun addTeamToFavorites(teamId: Int) =
@@ -26,6 +28,9 @@ class FragmentTeamViewModel @Inject constructor(
             deleteTeamFromFavoritesUseCase.deleteTeamFromFavorites(teamId)
         }
 
-    suspend fun loadAllGamesForTeam(teamId: String) =
+    suspend fun loadTeamById(teamId: Int) = loadTeamByIdUseCase.loadTeamById(teamId)
+
+    suspend fun loadAllGamesForTeam(teamId: Int) =
         loadTeamGamesUseCase.loadAllGamesForTeam(teamId)
+
 }

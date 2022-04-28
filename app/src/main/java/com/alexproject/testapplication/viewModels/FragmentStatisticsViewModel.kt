@@ -7,5 +7,5 @@ import javax.inject.Inject
 class FragmentStatisticsViewModel @Inject constructor(
     private val loadStatisticsUseCase: LoadStatisticsUseCase
 ) : ViewModel() {
-    suspend fun loadStatistic() = loadStatisticsUseCase.loadStatistic()
+    suspend fun loadStatistic(leagueId: Int) = loadStatisticsUseCase.loadStatistic(leagueId)
 }

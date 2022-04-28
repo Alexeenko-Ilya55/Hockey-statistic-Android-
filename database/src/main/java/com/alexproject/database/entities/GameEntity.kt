@@ -58,24 +58,24 @@ data class Game(
     )
     val favoritesGame: IsFavoriteGameEntity?
 ) {
-    fun mapper() = GameDTO(
+    fun mapToDTO() = GameDTO(
         gamesEntity.id,
-        country.toCountry(),
+        country.mapToDTO(),
         gamesEntity.date,
         gamesEntity.time,
         gamesEntity.events,
-        league.mapper(),
+        league.mapToDTO(),
         gamesEntity.awayScores,
         gamesEntity.homeScores,
         gamesEntity.status,
-        awayTeam.toTeam(),
-        homeTeam.toTeam(),
+        awayTeam.mapToDTO(),
+        homeTeam.mapToDTO(),
         gamesEntity.timer,
         gamesEntity.firstPeriod,
         gamesEntity.overtime,
         gamesEntity.penalties,
         gamesEntity.secondPeriod,
         gamesEntity.thirdPeriod,
-        favoritesGame?.favorite ?: false
+        favoritesGame != null
     )
 }

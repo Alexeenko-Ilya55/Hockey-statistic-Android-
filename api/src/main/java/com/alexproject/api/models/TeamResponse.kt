@@ -7,7 +7,7 @@ data class TeamInfo(
     val response: List<TeamResponse>,
     val results: Int
 ){
-    fun mapper():List<TeamInfoDTO> = response.map {
+    fun mapToDTO():List<TeamInfoDTO> = response.map {
         it.toTeamInfoDTO()
     }
 }
@@ -23,7 +23,7 @@ data class TeamResponse(
     val national: Boolean
 ) {
     fun toTeamInfoDTO() = TeamInfoDTO(
-        country.mapper(),
+        country.mapToDTO(),
         founded,
         id,
         logo,

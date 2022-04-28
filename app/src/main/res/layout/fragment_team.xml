@@ -7,9 +7,9 @@
     tools:context=".fragments.FragmentTeam">
 
     <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:id="@+id/countryFlag"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,19 +17,19 @@
         tools:src="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/awayTeamName"
+        android:id="@+id/countryName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="USA"
         android:textColor="?attr/colorOnSecondary"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+        app:layout_constraintBottom_toBottomOf="@+id/countryFlag"
+        app:layout_constraintStart_toEndOf="@+id/countryFlag"
+        app:layout_constraintTop_toTopOf="@+id/countryFlag" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/teamName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -37,25 +37,25 @@
         android:textColor="?attr/colorOnSecondary"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-        app:layout_constraintStart_toEndOf="@+id/imageView4"
-        app:layout_constraintTop_toTopOf="@+id/imageView4" />
+        app:layout_constraintBottom_toBottomOf="@+id/teamEmblem"
+        app:layout_constraintStart_toEndOf="@+id/teamEmblem"
+        app:layout_constraintTop_toTopOf="@+id/teamEmblem" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/teamEmblem"
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/countryFlag"
         tools:src="@tools:sample/avatars"
         android:clipToOutline="true"
         android:background="@drawable/round_outline"
         tools:targetApi="s" />
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout2"
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -65,16 +65,19 @@
         app:tabMode="scrollable">
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabItemResults"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/results" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabItemCalendar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/calendar" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabItemStatisticTable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/table" />
@@ -87,10 +90,10 @@
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4">
+        app:layout_constraintTop_toBottomOf="@+id/teamEmblem">
 
         <ImageView
-            android:id="@+id/homeTeamEmblem"
+            android:id="@+id/leagueLogo"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="16dp"
@@ -104,7 +107,7 @@
             tools:targetApi="s" />
 
         <TextView
-            android:id="@+id/timeStartGame"
+            android:id="@+id/leagueName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -112,11 +115,10 @@
             android:textColor="?attr/colorOnSecondary"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/homeTeamEmblem"
+            app:layout_constraintStart_toEndOf="@+id/leagueLogo"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/awayTeamEmblem"
             android:layout_width="20dp"
             android:layout_height="30dp"
             android:layout_marginEnd="8dp"
@@ -128,16 +130,13 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ScrollView
-        android:layout_width="409dp"
-        android:layout_height="327dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout2">
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

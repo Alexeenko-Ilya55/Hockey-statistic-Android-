@@ -1,19 +1,11 @@
 package com.alexproject.api
 
-import com.alexproject.api.models.Countries
-import com.alexproject.api.models.GameEvents
-import com.alexproject.api.models.Game
-import com.alexproject.api.models.Leagues
-import com.alexproject.api.models.LeaguesGroup
-import com.alexproject.api.models.StatisticTable
-import com.alexproject.api.models.TeamInfo
-import com.alexproject.repository.models.*
+import com.alexproject.api.models.*
 import com.alexproject.repository.objects.*
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
-import java.util.*
 
 
 interface ApiService {
@@ -27,6 +19,8 @@ interface ApiService {
         @Path(END_POINT) endPoint: String,
         @Query("date") date: String?,
         @Query("h2h") h2h: String?,
+        @Query("team") teamId: Int?,
+        @Query("season") season: Int?,
         @Query("timezone") timeZone: String
     ): Game
 
@@ -45,7 +39,7 @@ interface ApiService {
     suspend fun loadLeagues(
         @Query(COUNTRY) countryName: String?,
         @Query(SEASON) season: Int
-    ):  Leagues
+    ): Leagues
 
     @Headers(
         "$HOST $API_SPORTS",

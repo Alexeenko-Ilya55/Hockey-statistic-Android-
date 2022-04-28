@@ -3,7 +3,6 @@ package com.alexproject.testapplication.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.alexproject.domain.useCases.*
-import javax.inject.Inject
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory(
@@ -19,7 +18,9 @@ class ViewModelFactory(
     private val loadGameEventsUseCase: LoadGameEventsUseCase,
     private val loadLiveGamesUseCase: LoadLiveGamesUseCase,
     private val loadTeamGamesUseCase: LoadTeamGamesUseCase,
-    private val loadGamesFromApiToDBUseCase: LoadGamesFromApiToDBUseCase
+    private val loadGamesFromApiToDBUseCase: LoadGamesFromApiToDBUseCase,
+    private val loadGameByIdUseCase: LoadGameByIdUseCase,
+    private val loadTeamByIdUseCase: LoadTeamByIdUseCase
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -40,7 +41,10 @@ class ViewModelFactory(
                 loadH2HGamesUseCase,
                 loadGameEventsUseCase,
                 addTeamToFavoritesUseCase,
-                deleteTeamFromFavoritesUseCase
+                deleteTeamFromFavoritesUseCase,
+                loadGameByIdUseCase,
+                addGameToFavoritesUseCase,
+                deleteGameFromFavoritesUseCase
             )
             FragmentLiveViewModel::class.java -> FragmentLiveViewModel(
                 addGameToFavoritesUseCase,
@@ -51,9 +55,10 @@ class ViewModelFactory(
                 loadStatisticsUseCase
             )
             FragmentTeamViewModel::class.java -> FragmentTeamViewModel(
-              addTeamToFavoritesUseCase,
+                addTeamToFavoritesUseCase,
                 deleteTeamFromFavoritesUseCase,
-                loadTeamGamesUseCase
+                loadTeamGamesUseCase,
+                loadTeamByIdUseCase
             )
             MainActivityViewModel::class.java -> MainActivityViewModel()
             else -> MainActivityViewModel()

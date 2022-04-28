@@ -19,16 +19,16 @@ data class StatisticDTO(
     val againstGoals: Int,
     val forGoals: Int
 ) {
-    fun mapper() = Statistic(
-        country.mapper(),
+    fun mapToStatistic() = Statistic(
+        country.mapToCountry(),
         description,
         form,
         nameGroup,
-        league.mapper(),
+        league.mapToLeague(),
         points,
         position,
         stage,
-        team.mapper(),
+        team.mapToTeam(),
         winOvertime,
         win,
         loseOvertime,

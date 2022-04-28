@@ -7,5 +7,5 @@ data class Team(
     val logo: String,
     val name: String
 ){
-    fun mapper() = TeamDTO(id, logo, name,false)
+    fun mapToDTO() = TeamDTO(id, logo, name,false)
 }

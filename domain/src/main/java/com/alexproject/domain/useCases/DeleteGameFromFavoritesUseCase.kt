@@ -6,6 +6,5 @@ import javax.inject.Inject
 class DeleteGameFromFavoritesUseCase @Inject constructor(
     private val repository: Repository
 ) {
-    suspend fun deleteGameFromFavorites(gameId: Int) =
-        repository.deleteGameFromFavorites(gameId)
+    suspend fun deleteGameFromFavorites(gameId: Int) = repository.deleteGameFromFavorites(gameId)
 }

@@ -7,11 +7,7 @@ data class GameEvents(
     val `get`: String,
     val response: List<EventsResponse>,
     val results: Int
-){
-    fun mapper():List<GameEventsDTO> = response.map {
-        it.mapper()
-    }
-}
+)
 
 data class EventsResponse(
     val assists: List<String>,
@@ -23,15 +19,26 @@ data class EventsResponse(
     val team: Team,
     val type: String
 ) {
-    fun mapper() = GameEventsDTO(
-        assists.first(),
-        assists[1],
-        comment,
-        game_id,
-        minute,
-        period,
-        players.first(),
-        team.mapper(),
-        type
-    )
+    fun mapToDTO(): GameEventsDTO {
+        val assists = checkAssists(assists)
+        return GameEventsDTO(
+            assists[0],
+            assists[1],
+            comment,
+            game_id,
+            minute,
+            period,
+            players[0],
+            team.mapToDTO(),
+            type
+        )
+    }
+
+    private fun checkAssists(listAssists: List<String>): List<String?>{
+        return when(listAssists.size){
+            0 -> listOf(null,null)
+            1 -> listOf(listAssists[0],null)
+            else -> listOf(listAssists[0],listAssists[1])
+        }
+    }
 }

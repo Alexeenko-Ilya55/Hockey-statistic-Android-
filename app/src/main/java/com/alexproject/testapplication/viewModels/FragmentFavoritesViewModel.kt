@@ -39,11 +39,7 @@ class FragmentFavoritesViewModel @Inject constructor(
             deleteTeamFromFavoritesUseCase.deleteTeamFromFavorites(teamId)
         }
 
-    fun loadFavoritesGames() = viewModelScope.launch(Dispatchers.IO) {
-        loadFavoritesGamesUseCase.loadFavoritesGames()
-    }
+    suspend fun loadFavoritesGames() = loadFavoritesGamesUseCase.loadFavoritesGames()
 
-    fun loadFavoritesTeams() = viewModelScope.launch(Dispatchers.IO) {
-        loadFavoritesTeamsUseCase.loadFavoritesTeams()
-    }
+    suspend fun loadFavoritesTeams() = loadFavoritesTeamsUseCase.loadFavoritesTeams()
 }

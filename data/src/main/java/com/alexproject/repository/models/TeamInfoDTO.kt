@@ -13,8 +13,8 @@ data class TeamInfoDTO(
     val locationArena: String,
     val nameArena: String
 ) {
-    fun mapper() = TeamInfo(
-        country.mapper(),
+    fun mapToTeamInfo() = TeamInfo(
+        country.mapToCountry(),
         founded,
         id,
         logo,

@@ -10,5 +10,5 @@ data class League(
     val season: Int,
     val type: String
 ){
-    fun mapper() = LeagueDTO(id, logo, name, type)
+    fun mapToDTO() = LeagueDTO(id, logo, name, type)
 }

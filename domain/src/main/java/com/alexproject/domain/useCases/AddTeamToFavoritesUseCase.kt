@@ -6,6 +6,5 @@ import javax.inject.Inject
 class AddTeamToFavoritesUseCase @Inject constructor(
     private val repository: Repository
 ) {
-    suspend fun addTeamToFavorites(teamId: Int) =
-        repository.addTeamToFavorites(teamId)
+    suspend fun addTeamToFavorites(teamId: Int) = repository.addTeamToFavorites(teamId)
 }

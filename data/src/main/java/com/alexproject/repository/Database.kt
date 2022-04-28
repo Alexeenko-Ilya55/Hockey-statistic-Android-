@@ -1,9 +1,6 @@
 package com.alexproject.repository
 
-import com.alexproject.domain.models.Game
-import com.alexproject.repository.models.CountryDTO
-import com.alexproject.repository.models.GameDTO
-import com.alexproject.repository.models.GameEventsDTO
+import com.alexproject.repository.models.*
 import kotlinx.coroutines.flow.Flow
 
 interface Database {
@@ -11,5 +8,18 @@ interface Database {
     suspend fun insertGameEvents(gameEventsDTO: List<GameEventsDTO>)
     suspend fun getCountries(): List<CountryDTO>
     suspend fun getGamesByDate(date: String): Flow<List<GameDTO>>
-    suspend fun addGametoFavorites(gameId: Int)
+    suspend fun addGameToFavorites(gameId: Int)
+    suspend fun deleteGameFromFavorites(gameId: Int)
+    suspend fun getFavoritesGames(): Flow<List<GameDTO>>
+    suspend fun getFavoritesTeams(): Flow<List<TeamDTO>>
+    suspend fun getLiveGames(date: String): Flow<List<GameDTO>>
+    suspend fun getGameById(gameId: Int): Flow<GameDTO>
+    suspend fun loadGameEvents(gameId: Int): Flow<List<GameEventsDTO>>
+    suspend fun addTeamToFavorites(teamId: Int)
+    suspend fun deleteTeamFromFavorites(teamId: Int)
+    suspend fun getH2HGames(homeTeamId: Int, awayTeamId: Int): Flow<List<GameDTO>>
+    suspend fun getTeamGames(teamId: Int): Flow<List<GameDTO>>
+    suspend fun getTeamById(teamId: Int): Flow<TeamDTO>
+    suspend fun getStatistic(leagueId: Int): Flow<List<List<StatisticDTO>>>
+
 }

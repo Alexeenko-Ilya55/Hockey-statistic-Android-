@@ -1,6 +1,6 @@
 package com.alexproject.repository.models
 
-import com.alexproject.domain.models.GameEvents
+import com.alexproject.domain.models.EventsAdapterItem
 
 data class GameEventsDTO(
     val assistsFirst: String?,
@@ -13,7 +13,7 @@ data class GameEventsDTO(
     val team: TeamDTO,
     val type: String
 ) {
-    fun mapper() = GameEvents(
+    fun mapToGameEvents() = EventsAdapterItem.GameEvents(
         assistsFirst,
         assistsSecond,
         comment,
@@ -21,7 +21,7 @@ data class GameEventsDTO(
         minute,
         period,
         players,
-        team.mapper(),
+        team.mapToTeam(),
         type
     )
 }

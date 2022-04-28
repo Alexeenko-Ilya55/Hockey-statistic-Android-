@@ -1,5 +1,6 @@
 package com.alexproject.database.entities
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.Relation
 import com.alexproject.repository.models.StatisticDTO
@@ -8,30 +9,7 @@ const val TABLE_STATISTIC = "Statistic"
 
 @Entity(
     tableName = TABLE_STATISTIC,
-    primaryKeys = ["nameGroup"],
-    foreignKeys = [
-        androidx.room.ForeignKey(
-            entity = CountryEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["countryId"],
-            onDelete = androidx.room.ForeignKey.NO_ACTION,
-            onUpdate = androidx.room.ForeignKey.CASCADE
-        ),
-        androidx.room.ForeignKey(
-            entity = LeagueEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["leagueId"],
-            onDelete = androidx.room.ForeignKey.NO_ACTION,
-            onUpdate = androidx.room.ForeignKey.CASCADE
-        ),
-        androidx.room.ForeignKey(
-            entity = TeamEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["teamId"],
-            onDelete = androidx.room.ForeignKey.NO_ACTION,
-            onUpdate = androidx.room.ForeignKey.CASCADE
-        ),
-    ]
+    primaryKeys = ["nameGroup", "position"],
 )
 data class StatisticEntity(
     val countryId: Int,
@@ -52,50 +30,39 @@ data class StatisticEntity(
 )
 
 data class Statistic(
+    @Embedded val statisticEntity: StatisticEntity,
     @Relation(
         parentColumn = "countryId",
         entityColumn = "id"
     )
     val country: CountryEntity,
-    val description: String?,
-    val form: String,
-    val nameGroup: String,
     @Relation(
         parentColumn = "leagueId",
         entityColumn = "id"
     )
     val league: LeagueEntity,
-    val points: Int,
-    val position: Int,
-    val stage: String,
     @Relation(
         parentColumn = "teamId",
         entityColumn = "id"
     )
-    val team: TeamEntity,
-    val winOvertime: Int,
-    val win: Int,
-    val loseOvertime: Int,
-    val lose: Int,
-    val againstGoals: Int,
-    val forGoals: Int
+    val team: TeamEntity
 ) {
-    fun mapper() = StatisticDTO(
-        country.toCountry(),
-        description,
-        form,
-        nameGroup,
-        league.mapper(),
-        points,
-        position,
-        stage,
-        team.toTeam(),
-        winOvertime,
-        win,
-        loseOvertime,
-        lose,
-        againstGoals,
-        forGoals
+    fun mapToDTO() = StatisticDTO(
+        country.mapToDTO(),
+        statisticEntity.description,
+        statisticEntity.form,
+        statisticEntity.nameGroup,
+        league.mapToDTO(),
+        statisticEntity.points,
+        statisticEntity.position,
+        statisticEntity.stage,
+        team.mapToDTO(),
+        statisticEntity.winOvertime,
+        statisticEntity.win,
+        statisticEntity.loseOvertime,
+        statisticEntity.lose,
+        statisticEntity.againstGoals,
+        statisticEntity.forGoals
     )
 }
 

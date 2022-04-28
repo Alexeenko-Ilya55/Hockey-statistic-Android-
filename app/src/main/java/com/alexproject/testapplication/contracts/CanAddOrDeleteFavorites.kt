@@ -1,6 +1,8 @@
 package com.alexproject.testapplication.contracts
 
+import com.alexproject.domain.models.Game
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
 
 interface GameFavorites {
     fun addGameToFavorites(gameId: Int): Job
@@ -8,7 +10,6 @@ interface GameFavorites {
 }
 
 interface TeamFavorites {
-
     fun addTeamToFavorites(teamId: Int): Job
     fun deleteTeamFromFavorites(teamId: Int): Job
 }

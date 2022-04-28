@@ -7,7 +7,7 @@ data class StatisticTable(
     val response: List<List<StatisticResponse>>,
     val results: Int
 ){
-    fun mapper():List<List<StatisticDTO>> = response.map {
+    fun mapToDTO():List<List<StatisticDTO>> = response.map {
         it.map { statisticResponse ->
             statisticResponse.toStatistic()
         }
@@ -28,15 +28,15 @@ data class StatisticResponse(
     val team: Team
 ) {
     fun toStatistic() = StatisticDTO(
-        country.mapper(),
+        country.mapToDTO(),
         description,
         form,
         group.name,
-        league.mapper(),
+        league.mapToDTO(),
         points,
         position,
         stage,
-        team.mapper(),
+        team.mapToDTO(),
         games.win_overtime.total,
         games.win.total,
         games.lose_overtime.total,
