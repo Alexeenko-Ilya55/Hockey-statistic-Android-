@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -31,7 +34,6 @@ class FragmentAllGames : Fragment(), GameClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-
     lateinit var viewModel: FragmentAllGamesViewModel
 
     override fun onCreateView(

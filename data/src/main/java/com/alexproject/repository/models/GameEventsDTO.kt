@@ -9,7 +9,7 @@ data class GameEventsDTO(
     val game_id: Int,
     val minute: String,
     val period: String,
-    val players: String,
+    val players: String?,
     val team: TeamDTO,
     val type: String
 ) {

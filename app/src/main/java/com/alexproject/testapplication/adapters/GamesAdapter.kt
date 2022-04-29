@@ -138,6 +138,8 @@ class GamesAdapter(
             periodGame.isVisible = false
             timerGame.isVisible = false
             breakGame.isVisible = false
+            awayTeamScore.setTextColor(itemView.context.getColor(R.color.black))
+            homeTeamScore.setTextColor(itemView.context.getColor(R.color.black))
             awayTeamScore.text = game.awayScores.toString()
             homeTeamScore.text = game.homeScores.toString()
         }
@@ -152,8 +154,10 @@ class GamesAdapter(
             periodGame.isVisible = true
             timerGame.isVisible = true
             breakGame.isVisible = false
-            timerGame.setTextColor(com.google.android.material.R.attr.colorOnSecondary)
-            periodGame.setTextColor(com.google.android.material.R.attr.colorOnSecondary)
+            awayTeamScore.setTextColor(itemView.context.getColor(R.color.black))
+            homeTeamScore.setTextColor(itemView.context.getColor(R.color.black))
+
+
             homeTeamScore.text = game.homeScores.toString()
             awayTeamScore.text = game.awayScores.toString()
             periodGame.text = itemView.context.getString(R.string.after)

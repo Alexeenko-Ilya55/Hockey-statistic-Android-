@@ -17,6 +17,7 @@ import com.alexproject.domain.models.Game
 import com.alexproject.testapplication.R
 import com.alexproject.testapplication.adapters.GameEventsAdapter
 import com.alexproject.testapplication.adapters.GamesAdapter
+import com.alexproject.testapplication.adapters.T
 import com.alexproject.testapplication.app.appComponent
 import com.alexproject.testapplication.contracts.GameClickListener
 import com.alexproject.testapplication.databinding.FragmentGameBinding
@@ -143,7 +144,7 @@ class FragmentGame : Fragment(), GameClickListener {
             binding.matchInfo.isVisible = false
             binding.rcView.isVisible = true
             binding.rcView.layoutManager = LinearLayoutManager(context)
-            val adapter = GameEventsAdapter(game)
+            val adapter = T(game)
             adapter.eventsItem = gameEvents
             binding.rcView.adapter = adapter
         }

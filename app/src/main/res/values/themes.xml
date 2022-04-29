@@ -13,4 +13,12 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="myStyle" >
+        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">#656565</item>
+    </style>
+    <style name="imageEvent">
+        <item name="maxImageSize">35dp</item>
+        <item name="android:width">35dp</item>
+    </style>
 </resources>
