@@ -4,9 +4,11 @@ import com.alexproject.domain.Repository
 import com.alexproject.domain.models.EventsAdapterItem
 import com.alexproject.domain.models.Game
 import com.alexproject.domain.models.Team
+import com.alexproject.repository.models.GameDTO
 import com.alexproject.repository.models.GameEventsDTO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -86,11 +88,11 @@ class RepositoryImpl @Inject constructor(
     }
 
     override suspend fun loadH2HGames(homeTeamId: Int, awayTeamId: Int): Flow<List<Game>> {
-        val games = apiRepository.loadGamesH2H("$homeTeamId-$awayTeamId")
-        database.insertGame(games)
-        return database.getH2HGames(homeTeamId, awayTeamId).map { listGameDTO ->
-            listGameDTO.map { it.mapToGame() }
+        val gamesH2h = database.getH2HGames(homeTeamId, awayTeamId)
+        if (gamesH2h.first().size == 1){
+            database.insertGame(apiRepository.loadGamesH2H("$homeTeamId-$awayTeamId"))
         }
+        return gamesH2h.map { listGameDTO -> listGameDTO.map { it.mapToGame() } }
     }
 
     override suspend fun loadTeamById(teamId: Int): Flow<Team> =

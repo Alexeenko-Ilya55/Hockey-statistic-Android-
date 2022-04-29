@@ -3,19 +3,17 @@ package com.alexproject.testapplication.adapters
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.alexproject.domain.models.EventsAdapterItem
 import com.alexproject.domain.models.Game
 import com.alexproject.testapplication.R
-import com.alexproject.testapplication.databinding.GameEventsItemBinding
+import com.alexproject.testapplication.databinding.EventsGameItemBinding
 import com.alexproject.testapplication.databinding.GameEventsPeriodItemBinding
-import com.alexproject.testapplication.databinding.KBinding
 import com.alexproject.testapplication.objects.EMPTY_STRING
 import com.alexproject.testapplication.objects.GOAL
 
-class T(
+class TestEventsAdapter(
     private val game: Game,
 ) : RecyclerView.Adapter<RecyclerTHolder>() {
 
@@ -28,8 +26,8 @@ class T(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerTHolder {
         return when (viewType) {
-            R.layout.k -> RecyclerTHolder.EventsViewHolder(
-                KBinding.inflate(
+            R.layout.events_game_item -> RecyclerTHolder.EventsViewHolder(
+                EventsGameItemBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
@@ -62,7 +60,7 @@ class T(
 
     override fun getItemViewType(position: Int): Int {
         return when (eventsItem[position]) {
-            is EventsAdapterItem.GameEvents -> R.layout.k
+            is EventsAdapterItem.GameEvents -> R.layout.events_game_item
             is EventsAdapterItem.Period -> R.layout.game_events_period_item
         }
     }
@@ -70,7 +68,7 @@ class T(
 
 sealed class RecyclerTHolder(binding: ViewBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    class EventsViewHolder(private val binding: KBinding) : RecyclerTHolder(binding) {
+    class EventsViewHolder(private val binding: EventsGameItemBinding) : RecyclerTHolder(binding) {
 
         fun bind(gameEvents: EventsAdapterItem.GameEvents, homeTeamId: Int) {
             binding.gameEventsItemView.apply {

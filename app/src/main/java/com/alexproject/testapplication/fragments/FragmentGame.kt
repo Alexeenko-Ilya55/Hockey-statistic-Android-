@@ -15,22 +15,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.alexproject.domain.models.EventsAdapterItem
 import com.alexproject.domain.models.Game
 import com.alexproject.testapplication.R
-import com.alexproject.testapplication.adapters.GameEventsAdapter
 import com.alexproject.testapplication.adapters.GamesAdapter
-import com.alexproject.testapplication.adapters.T
+import com.alexproject.testapplication.adapters.TestEventsAdapter
 import com.alexproject.testapplication.app.appComponent
 import com.alexproject.testapplication.contracts.GameClickListener
 import com.alexproject.testapplication.databinding.FragmentGameBinding
 import com.alexproject.testapplication.objects.*
 import com.alexproject.testapplication.viewModels.FragmentGameViewModel
 import com.alexproject.testapplication.viewModels.ViewModelFactory
+import com.alexproject.testapplication.views.TabItemClickListener
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class FragmentGame : Fragment(), GameClickListener {
+class FragmentGame : Fragment(), GameClickListener, TabItemClickListener {
 
     private lateinit var binding: FragmentGameBinding
 
@@ -63,6 +63,9 @@ class FragmentGame : Fragment(), GameClickListener {
                 }
             }
         }
+
+        binding.customTabView.setClickListener(this)
+
         binding.homeTeamFavorites.setOnClickListener {
             game.homeTeam.isFavorite = !game.homeTeam.isFavorite
             onButtonFavoriteClicked(game.homeTeam.id, game.homeTeam.isFavorite)
@@ -84,6 +87,7 @@ class FragmentGame : Fragment(), GameClickListener {
         return binding.root
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun initH2HAdapter(listGames: List<Game>) {
         lifecycleScope.launch(Dispatchers.Main) {
             binding.matchInfo.isVisible = false
@@ -91,6 +95,7 @@ class FragmentGame : Fragment(), GameClickListener {
             binding.rcView.layoutManager = LinearLayoutManager(context)
             val adapter = GamesAdapter(listGames, this@FragmentGame)
             binding.rcView.adapter = adapter
+            adapter.notifyDataSetChanged()
         }
     }
 
@@ -144,7 +149,7 @@ class FragmentGame : Fragment(), GameClickListener {
             binding.matchInfo.isVisible = false
             binding.rcView.isVisible = true
             binding.rcView.layoutManager = LinearLayoutManager(context)
-            val adapter = T(game)
+            val adapter = TestEventsAdapter(game)
             adapter.eventsItem = gameEvents
             binding.rcView.adapter = adapter
         }
@@ -165,5 +170,21 @@ class FragmentGame : Fragment(), GameClickListener {
 
     override fun itemGameClicked(gameId: Int) {
         findNavController().navigate(R.id.fragmentGame, bundleOf(GAME_ID to gameId))
+    }
+
+    override fun firstTabClicked() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            viewModel.loadGameEvents(game.id).collectLatest {
+                initEntityAdapter(it)
+            }
+        }
+    }
+
+    override fun secondTabClicked() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            viewModel.loadH2HGames(game.homeTeam.id, game.awayTeam.id).collectLatest { list ->
+                initH2HAdapter(list.filter { it.id != game.id })
+            }
+        }
     }
 }

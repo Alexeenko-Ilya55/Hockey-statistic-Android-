@@ -36,9 +36,6 @@ interface Dao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertGameEvents(gameEventsEntity: List<GameEventsEntity>)
 
-    @Query("SELECT * FROM $TABLE_GAME_EVENTS")
-    suspend fun getGameEvents(): List<GameEvents>
-
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addGameToFavorites(isFavoriteGameEntity: IsFavoriteGameEntity)
 
@@ -68,7 +65,7 @@ interface Dao {
     fun loadGameEvents(gameId: Int): Flow<List<GameEvents>>
 
     @Transaction
-    @Query("SELECT * FROM $TABLE_GAMES WHERE homeTeamId = :homeTeamId AND awayTeamId = :awayTeamId")
+    @Query("SELECT * FROM $TABLE_GAMES WHERE homeTeamId = :homeTeamId AND awayTeamId = :awayTeamId ORDER BY date DESC")
     fun getH2HGames(homeTeamId: Int, awayTeamId: Int): Flow<List<Game>>
 
     @Transaction
@@ -79,9 +76,6 @@ interface Dao {
     @Query("SELECT * FROM $TABLE_TEAM WHERE id = :teamId ")
     fun getTeamById(teamId: Int): Flow<Team>
 
-    //@Transaction
-    //@Query("SELECT * FROM $TABLE_STATISTIC WHERE leagueId = :leagueId")
-    //fun getStatistic(leagueId:Int): Flow<List<List<Statistic>>>
 }
 
 

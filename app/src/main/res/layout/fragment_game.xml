@@ -167,49 +167,39 @@
         app:layout_constraintStart_toStartOf="@+id/timeGame"
         app:layout_constraintTop_toBottomOf="@+id/ScoreGame" />
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="@dimen/match_constraint"
-        android:layout_height="40dp"
-        android:layout_marginTop="@dimen/DefaultMargin"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/match_constraint"
+        android:background="?attr/colorOnPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeTeamNameGame"
-        app:tabMode="scrollable">
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/reviewTabMenu" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/h2hTabMenu" />
-
-    </com.google.android.material.tabs.TabLayout>
+        app:layout_constraintTop_toBottomOf="@+id/customTabView" />
 
     <TextView
         android:id="@+id/matchInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/DefaultMargin"
-        android:layout_marginTop="@dimen/DefaultMargin"
         android:text="@string/noInfoAboutGame"
         android:textColor="?attr/colorOnSecondary"
         android:textSize="16sp"
         android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcView"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/match_constraint"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+        app:layout_constraintTop_toTopOf="@+id/rcView" />
+
+    <com.alexproject.testapplication.views.CustomTabView
+        android:id="@+id/customTabView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/leagueButton"
+        app:layout_constraintTop_toBottomOf="@+id/homeTeamNameGame" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
