@@ -4,16 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.20037926675094817" />
-        <entry key="app/src/main/res/drawable-anydpi/arrow_forward.xml" value="0.227" />
         <entry key="app/src/main/res/drawable-anydpi/nav_menu_all_games.xml" value="0.202" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.235" />
-        <entry key="app/src/main/res/drawable/custom_border.xml" value="0.19" />
         <entry key="app/src/main/res/drawable/round_border.xml" value="0.2875" />
         <entry key="app/src/main/res/drawable/round_outline.xml" value="0.1985" />
         <entry key="app/src/main/res/layout-v31/fragment_game.xml" value="0.18177083333333333" />
         <entry key="app/src/main/res/layout-v31/game_item_layout.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/events_game_item.xml" value="0.2203125" />
+        <entry key="app/src/main/res/layout/events_game_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_all_games.xml" value="0.18177083333333333" />
         <entry key="app/src/main/res/layout/fragment_favorites.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_game.xml" value="0.25" />
@@ -28,8 +26,7 @@
         <entry key="app/src/main/res/layout/game_events_home_item.xml" value="0.23385416666666667" />
         <entry key="app/src/main/res/layout/game_events_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/game_events_period_item.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/game_item_layout.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/k.xml" value="0.22864583333333333" />
+        <entry key="app/src/main/res/layout/game_item_layout.xml" value="1.0" />
         <entry key="app/src/main/res/layout/tab_item.xml" value="0.2203125" />
         <entry key="app/src/main/res/layout/team_item_layout.xml" value="0.25" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.18177083333333333" />

@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.alexproject.domain.models.EventsAdapterItem
 import com.alexproject.domain.models.Game
 import com.alexproject.testapplication.R
+import com.alexproject.testapplication.adapters.GameEventsAdapter
 import com.alexproject.testapplication.adapters.GamesAdapter
-import com.alexproject.testapplication.adapters.TestEventsAdapter
 import com.alexproject.testapplication.app.appComponent
 import com.alexproject.testapplication.contracts.GameClickListener
 import com.alexproject.testapplication.databinding.FragmentGameBinding
@@ -130,7 +130,7 @@ class FragmentGame : Fragment(), GameClickListener, TabItemClickListener {
                 ScoreGame.text = "${game.homeScores}-${game.awayScores}"
                 lifecycleScope.launchWhenStarted {
                     viewModel.loadGameEvents(game.id).collectLatest {
-                        initEntityAdapter(it)
+                        initEventsAdapter(it)
                     }
                 }
             } else
@@ -144,12 +144,12 @@ class FragmentGame : Fragment(), GameClickListener, TabItemClickListener {
         }
     }
 
-    private fun initEntityAdapter(gameEvents: List<EventsAdapterItem>) {
+    private fun initEventsAdapter(gameEvents: List<EventsAdapterItem>) {
         lifecycleScope.launch(Dispatchers.Main) {
             binding.matchInfo.isVisible = false
             binding.rcView.isVisible = true
             binding.rcView.layoutManager = LinearLayoutManager(context)
-            val adapter = TestEventsAdapter(game)
+            val adapter = GameEventsAdapter(game)
             adapter.eventsItem = gameEvents
             binding.rcView.adapter = adapter
         }
@@ -175,7 +175,7 @@ class FragmentGame : Fragment(), GameClickListener, TabItemClickListener {
     override fun firstTabClicked() {
         lifecycleScope.launch(Dispatchers.IO) {
             viewModel.loadGameEvents(game.id).collectLatest {
-                initEntityAdapter(it)
+                initEventsAdapter(it)
             }
         }
     }

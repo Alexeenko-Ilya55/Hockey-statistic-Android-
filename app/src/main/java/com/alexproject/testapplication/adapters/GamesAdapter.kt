@@ -20,7 +20,7 @@ class GamesAdapter(
     private val clickListener: GameClickListener,
 ) : RecyclerView.Adapter<GamesAdapter.RecyclerHolder>() {
 
-    lateinit var holder: RecyclerHolder
+    private lateinit var holder: RecyclerHolder
 
     inner class RecyclerHolder(item: View) : RecyclerView.ViewHolder(item) {
         val homeTeamName = item.findViewById<TextView>(R.id.homeTeamName)!!
@@ -162,7 +162,7 @@ class GamesAdapter(
             awayTeamScore.text = game.awayScores.toString()
             periodGame.text = itemView.context.getString(R.string.after)
             if (game.status == Status.AFTER_OVER_TIME.get)
-                timerGame.text = itemView.context.getString(R.string.overtime)
+                timerGame.text = itemView.context.getString(R.string.overtimeShort)
             else
                 timerGame.text = itemView.context.getString(R.string.penalty)
         }
