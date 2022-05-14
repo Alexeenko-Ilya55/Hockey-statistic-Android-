@@ -20,7 +20,9 @@ data class EventsResponse(
     val type: String
 ) {
     fun mapToDTO(): GameEventsDTO {
-        val assists = checkAssists(assists)
+        val assists = parseAssists(assists)
+        val player = if(players.isEmpty()) null
+                     else players[0]
         return GameEventsDTO(
             assists[0],
             assists[1],
@@ -28,13 +30,13 @@ data class EventsResponse(
             game_id,
             minute,
             period,
-            players[0],
+            player,
             team.mapToDTO(),
             type
         )
     }
 
-    private fun checkAssists(listAssists: List<String>): List<String?>{
+    private fun parseAssists(listAssists: List<String>): List<String?>{
         return when(listAssists.size){
             0 -> listOf(null,null)
             1 -> listOf(listAssists[0],null)

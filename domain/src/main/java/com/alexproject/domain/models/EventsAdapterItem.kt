@@ -9,7 +9,7 @@ sealed class EventsAdapterItem {
         val game_id: Int,
         val minute: String,
         val period: String,
-        val players: String,
+        val players: String?,
         val team: Team,
         val type: String
     ) : EventsAdapterItem()

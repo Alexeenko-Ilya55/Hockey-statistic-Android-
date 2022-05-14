@@ -3,20 +3,19 @@ package com.alexproject.testapplication.adapters
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.alexproject.domain.models.EventsAdapterItem
 import com.alexproject.domain.models.Game
 import com.alexproject.testapplication.R
-import com.alexproject.testapplication.databinding.GameEventsItemBinding
+import com.alexproject.testapplication.databinding.EventsGameItemBinding
 import com.alexproject.testapplication.databinding.GameEventsPeriodItemBinding
 import com.alexproject.testapplication.objects.EMPTY_STRING
 import com.alexproject.testapplication.objects.GOAL
 
 class GameEventsAdapter(
     private val game: Game,
-) : RecyclerView.Adapter<RecyclerHolder>() {
+) : RecyclerView.Adapter<RecyclerTHolder>() {
 
     var eventsItem = listOf<EventsAdapterItem>()
         @SuppressLint("NotifyDataSetChanged")
@@ -25,16 +24,16 @@ class GameEventsAdapter(
             notifyDataSetChanged()
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerTHolder {
         return when (viewType) {
-            R.layout.game_events_item -> RecyclerHolder.EventsViewHolder(
-                GameEventsItemBinding.inflate(
+            R.layout.events_game_item -> RecyclerTHolder.EventsViewHolder(
+                EventsGameItemBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
                 )
             )
-            R.layout.game_events_period_item -> RecyclerHolder.PeriodsViewHolder(
+            R.layout.game_events_period_item -> RecyclerTHolder.PeriodsViewHolder(
                 GameEventsPeriodItemBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
@@ -45,13 +44,13 @@ class GameEventsAdapter(
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerTHolder, position: Int) {
         when (holder) {
-            is RecyclerHolder.EventsViewHolder -> holder.bind(
+            is RecyclerTHolder.EventsViewHolder -> holder.bind(
                 eventsItem[position] as EventsAdapterItem.GameEvents,
                 game.homeTeam.id
             )
-            is RecyclerHolder.PeriodsViewHolder -> holder.bind(
+            is RecyclerTHolder.PeriodsViewHolder -> holder.bind(
                 (eventsItem[position] as EventsAdapterItem.Period).number
             )
         }
@@ -61,79 +60,31 @@ class GameEventsAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return when (eventsItem[position]) {
-            is EventsAdapterItem.GameEvents -> R.layout.game_events_item
+            is EventsAdapterItem.GameEvents -> R.layout.events_game_item
             is EventsAdapterItem.Period -> R.layout.game_events_period_item
         }
     }
 }
 
-sealed class RecyclerHolder(binding: ViewBinding) : RecyclerView.ViewHolder(binding.root) {
+sealed class RecyclerTHolder(binding: ViewBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    class EventsViewHolder(private val binding: GameEventsItemBinding) : RecyclerHolder(binding) {
+    class EventsViewHolder(private val binding: EventsGameItemBinding) : RecyclerTHolder(binding) {
 
         fun bind(gameEvents: EventsAdapterItem.GameEvents, homeTeamId: Int) {
-            if (gameEvents.team.id == homeTeamId)
-                homeTeamBindEvent(gameEvents)
-            else
-                awayTeamBindEvents(gameEvents)
-        }
-
-        private fun awayTeamBindEvents(gameEvents: EventsAdapterItem.GameEvents) {
-            binding.apply {
-                groupAway.isVisible = true
-                groupHome.isVisible = false
-                if (gameEvents.type == GOAL) {
-                    awayPlayer.isVisible = true
-                    awayAssists.isVisible = true
-                    awayPlayerRemove.isVisible = false
-                    awayPlayer.text = gameEvents.players
-                    awayAssists.text = setAssists(gameEvents.assistsFirst, gameEvents.assistsSecond)
-                    awayEventImage.setImageResource(R.drawable.goal)
-                    awayTimerEvent.text = gameEvents.minute
+            binding.gameEventsItemView.apply {
+                setSide(gameEvents.team.id == homeTeamId)
+                if (gameEvents.type == GOAL){
+                    setImage(R.drawable.goal)
                 } else {
-                    awayPlayer.isVisible = false
-                    awayAssists.isVisible = false
-                    awayEventImage.setImageResource(R.drawable.penalty)
-                    awayTimerEvent.text = gameEvents.minute
-                    awayPlayerRemove.isVisible = true
-                    awayPlayerRemove.text = itemView.context.getString(
-                        R.string.penaltyComment,
-                        gameEvents.players,
-                        gameEvents.comment
-                    )
+                    setImage(R.drawable.penalty)
                 }
+                setPlayerText(gameEvents.players ?: "team ${gameEvents.team.name}")
+                setTimerText(gameEvents.minute)
+                setAssistsText(parseAssists(gameEvents.assistsFirst,gameEvents.assistsSecond))
             }
         }
 
-        private fun homeTeamBindEvent(gameEvents: EventsAdapterItem.GameEvents) {
-            binding.apply {
-                groupAway.isVisible = false
-                groupHome.isVisible = true
-                if (gameEvents.type == GOAL) {
-                    homePlayer.isVisible = true
-                    homeAssists.isVisible = true
-                    homePlayerRemove.isVisible = false
-
-                    homePlayer.text = gameEvents.players
-                    homeAssists.text = setAssists(gameEvents.assistsFirst, gameEvents.assistsSecond)
-                    homeEventImage.setImageResource(R.drawable.goal)
-                    homeTimerEvent.text = gameEvents.minute
-                } else {
-                    homePlayer.isVisible = false
-                    homeAssists.isVisible = false
-                    homeEventImage.setImageResource(R.drawable.penalty)
-                    homeTimerEvent.text = gameEvents.minute
-                    homePlayerRemove.isVisible = true
-                    homePlayerRemove.text = itemView.context.getString(
-                        R.string.penaltyComment,
-                        gameEvents.players,
-                        gameEvents.comment
-                    )
-                }
-            }
-        }
-
-        private fun setAssists(firstAssists: String?, secondAssists: String?): String {
+        private fun parseAssists(firstAssists: String?, secondAssists: String?): String {
             return when {
                 firstAssists.isNullOrEmpty() -> EMPTY_STRING
                 secondAssists.isNullOrEmpty() -> firstAssists
@@ -148,13 +99,14 @@ sealed class RecyclerHolder(binding: ViewBinding) : RecyclerView.ViewHolder(bind
 
     class PeriodsViewHolder(
         private val binding: GameEventsPeriodItemBinding
-    ) : RecyclerHolder(binding) {
+    ) : RecyclerTHolder(binding) {
 
         fun bind(gamePeriod: String) {
-            binding.period.text = itemView.context.getString(R.string.period, gamePeriod)
-            //binding.score.text = itemView.context.getString(R.string.score, score)
+            if(gamePeriod == "T")
+                binding.period.text = itemView.context.getString(R.string.overtime)
+            else
+                binding.period.text = itemView.context.getString(R.string.period, gamePeriod)
         }
     }
 
 }
-

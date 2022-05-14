@@ -32,7 +32,7 @@ class FragmentAllGamesViewModel @Inject constructor(
         }
 
     suspend fun loadGamesByDate(date: String): Flow<List<Game>> {
-        if (true) {
+        if (false) {
             loadGamesFromApiToDBUseCase.loadGamesFromApiToDB(date)
         }
         return loadGamesByDateUseCase.loadGamesByDate(date)

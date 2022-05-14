@@ -18,7 +18,7 @@ data class GameEventsEntity(
     val game_id: Int,
     val minute: String,
     val period: String,
-    val players: String,
+    val players: String?,
     val teamId: Int,
     val type: String
 )
