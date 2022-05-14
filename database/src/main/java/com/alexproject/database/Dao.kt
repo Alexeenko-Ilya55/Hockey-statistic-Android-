@@ -79,6 +79,12 @@ interface Dao {
     @Query("SELECT * FROM $TABLE_TEAM WHERE id = :teamId ")
     fun getTeamById(teamId: Int): Flow<Team>
 
+    @Query("SELECT * FROM $TABLE_COUNTRIES WHERE id = :countryId ")
+    fun getCountryById(countryId: Int): Flow<CountryEntity>
+
+    @Query("SELECT * FROM $TABLE_LEAGUE WHERE id = :leagueId ")
+    fun getLeagueById(leagueId: Int): Flow<LeagueEntity>
+
     //@Transaction
     //@Query("SELECT * FROM $TABLE_STATISTIC WHERE leagueId = :leagueId")
     //fun getStatistic(leagueId:Int): Flow<List<List<Statistic>>>

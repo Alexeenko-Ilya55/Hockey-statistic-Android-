@@ -33,7 +33,9 @@ class AppModule {
         loadTeamGamesUseCase: LoadTeamGamesUseCase,
         loadGamesFromApiToDBUseCase: LoadGamesFromApiToDBUseCase,
         loadGameByIdUseCase: LoadGameByIdUseCase,
-        loadTeamByIdUseCase: LoadTeamByIdUseCase
+        loadTeamByIdUseCase: LoadTeamByIdUseCase,
+        loadCountryByIdUseCase: LoadCountryByIdUseCase,
+        loadLeagueByIdUseCase: LoadLeagueByIdUseCase
     ) = ViewModelFactory(
         addGameToFavoritesUseCase,
         deleteGameFromFavoritesUseCase,
@@ -49,6 +51,8 @@ class AppModule {
         loadTeamGamesUseCase,
         loadGamesFromApiToDBUseCase,
         loadGameByIdUseCase,
-        loadTeamByIdUseCase
+        loadTeamByIdUseCase,
+        loadLeagueByIdUseCase,
+        loadCountryByIdUseCase
     )
 }

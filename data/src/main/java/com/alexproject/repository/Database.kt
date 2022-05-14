@@ -21,5 +21,6 @@ interface Database {
     suspend fun getTeamGames(teamId: Int): Flow<List<GameDTO>>
     suspend fun getTeamById(teamId: Int): Flow<TeamDTO>
     suspend fun getStatistic(leagueId: Int): Flow<List<List<StatisticDTO>>>
-
+    suspend fun getCountryById(countryId: Int):Flow<CountryDTO>
+    suspend fun getLeagueById(leagueId: Int):Flow<LeagueDTO>
 }

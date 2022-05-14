@@ -2,10 +2,7 @@ package com.alexproject.testapplication.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.alexproject.domain.useCases.AddTeamToFavoritesUseCase
-import com.alexproject.domain.useCases.DeleteTeamFromFavoritesUseCase
-import com.alexproject.domain.useCases.LoadTeamByIdUseCase
-import com.alexproject.domain.useCases.LoadTeamGamesUseCase
+import com.alexproject.domain.useCases.*
 import com.alexproject.testapplication.contracts.TeamFavorites
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,7 +12,9 @@ class FragmentTeamViewModel @Inject constructor(
     private val addTeamToFavoritesUseCase: AddTeamToFavoritesUseCase,
     private val deleteTeamFromFavoritesUseCase: DeleteTeamFromFavoritesUseCase,
     private val loadTeamGamesUseCase: LoadTeamGamesUseCase,
-    private val loadTeamByIdUseCase: LoadTeamByIdUseCase
+    private val loadTeamByIdUseCase: LoadTeamByIdUseCase,
+    private val loadCountryByIdUseCase: LoadCountryByIdUseCase,
+    private val loadLeagueByIdUseCase: LoadLeagueByIdUseCase
 ) : ViewModel(), TeamFavorites {
 
     override fun addTeamToFavorites(teamId: Int) =
@@ -32,5 +31,9 @@ class FragmentTeamViewModel @Inject constructor(
 
     suspend fun loadAllGamesForTeam(teamId: Int) =
         loadTeamGamesUseCase.loadAllGamesForTeam(teamId)
+
+    suspend fun loadLeagueById(leagueId: Int) = loadLeagueByIdUseCase.loadLeagueById(leagueId)
+
+    suspend fun loadCountryById(countryId: Int) = loadCountryByIdUseCase.loadCountryById(countryId)
 
 }

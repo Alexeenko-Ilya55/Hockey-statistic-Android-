@@ -78,6 +78,14 @@ class DatabaseImpl @Inject constructor(private val dao: Dao) : Database {
     override suspend fun getStatistic(leagueId: Int): Flow<List<List<StatisticDTO>>> {
         return emptyFlow()
     }
+
+    override suspend fun getCountryById(countryId: Int) =
+        dao.getCountryById(countryId).map { it.mapToDTO() }
+
+    override suspend fun getLeagueById(leagueId: Int) =
+        dao.getLeagueById(leagueId).map { it.mapToDTO() }
+
+
     // override suspend fun getStatistic(leagueId: Int) = dao.getStatistic(leagueId)
     //     .map { group -> group.map { listStatistic -> listStatistic.map { it.mapToDTO() } } }
 

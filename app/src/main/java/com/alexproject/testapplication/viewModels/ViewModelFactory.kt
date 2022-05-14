@@ -20,7 +20,9 @@ class ViewModelFactory(
     private val loadTeamGamesUseCase: LoadTeamGamesUseCase,
     private val loadGamesFromApiToDBUseCase: LoadGamesFromApiToDBUseCase,
     private val loadGameByIdUseCase: LoadGameByIdUseCase,
-    private val loadTeamByIdUseCase: LoadTeamByIdUseCase
+    private val loadTeamByIdUseCase: LoadTeamByIdUseCase,
+    private val loadLeagueByIdUseCase: LoadLeagueByIdUseCase,
+    private val loadCountryByIdUseCase: LoadCountryByIdUseCase
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -58,7 +60,9 @@ class ViewModelFactory(
                 addTeamToFavoritesUseCase,
                 deleteTeamFromFavoritesUseCase,
                 loadTeamGamesUseCase,
-                loadTeamByIdUseCase
+                loadTeamByIdUseCase,
+                loadCountryByIdUseCase,
+                loadLeagueByIdUseCase
             )
             MainActivityViewModel::class.java -> MainActivityViewModel()
             else -> MainActivityViewModel()

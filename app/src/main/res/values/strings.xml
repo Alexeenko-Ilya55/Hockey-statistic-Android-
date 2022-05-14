@@ -41,6 +41,10 @@
     <string name="score">счёт: %s</string>
 
     <string name="period">%s-Й ПЕРИОД</string>
+
+    <string name="league_name">League: %s</string>
+    <string name="country_name">Country: %s</string>
+
     <string name="noInfoAboutGame">Информации пока нет, так как матч еще не начался</string>
 
 

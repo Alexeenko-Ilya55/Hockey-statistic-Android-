@@ -37,7 +37,6 @@ class FragmentGame : Fragment(), GameClickListener {
     lateinit var viewModelFactory: ViewModelFactory
     lateinit var viewModel: FragmentGameViewModel
 
-
     lateinit var game: Game
 
     @SuppressLint("SetTextI18n")
@@ -75,10 +74,23 @@ class FragmentGame : Fragment(), GameClickListener {
 
 
         binding.awayTeamLabelGame.setOnClickListener {
-            findNavController().navigate(R.id.fragmentTeam, bundleOf(TEAM_ID to game.awayTeam.id))
+            findNavController().navigate(
+                R.id.fragmentTeam,
+                bundleOf(
+                    TEAM_ID to game.awayTeam.id,
+                    COUNTRY_ID to game.country.id,
+                    LEAGUE_ID to game.league.id
+                )
+            )
         }
         binding.homeTeamLabelGame.setOnClickListener {
-            findNavController().navigate(R.id.fragmentTeam, bundleOf(TEAM_ID to game.homeTeam.id))
+            findNavController().navigate(
+                R.id.fragmentTeam, bundleOf(
+                    TEAM_ID to game.homeTeam.id,
+                    COUNTRY_ID to game.country.id,
+                    LEAGUE_ID to game.league.id
+                )
+            )
         }
         return binding.root
     }

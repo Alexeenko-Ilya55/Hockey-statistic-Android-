@@ -95,4 +95,10 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun loadTeamById(teamId: Int): Flow<Team> =
         database.getTeamById(teamId).map { it.mapToTeam() }
+
+    override suspend fun loadCountryById(countryId: Int) =
+        database.getCountryById(countryId).map { it.mapToCountry() }
+
+    override suspend fun loadLeagueById(leagueId: Int) =
+        database.getLeagueById(leagueId).map { it.mapToLeague() }
 }

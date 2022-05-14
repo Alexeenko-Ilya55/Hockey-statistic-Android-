@@ -75,5 +75,10 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
 
+    implementation 'com.github.corouteam:GlideToVectorYou:v2.0.0'
+
     kapt "com.google.dagger:dagger-android-processor:2.11"
+
+
+
 }
