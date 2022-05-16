@@ -19,14 +19,16 @@ import com.alexproject.testapplication.app.appComponent
 import com.alexproject.testapplication.contracts.GameClickListener
 import com.alexproject.testapplication.contracts.TeamClickListener
 import com.alexproject.testapplication.databinding.FragmentFavoritesBinding
+import com.alexproject.testapplication.objects.GAME_ID
 import com.alexproject.testapplication.viewModels.FragmentFavoritesViewModel
 import com.alexproject.testapplication.viewModels.ViewModelFactory
+import com.alexproject.testapplication.views.TabItemClickListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class FragmentFavorites : Fragment(), GameClickListener, TeamClickListener {
+class FragmentFavorites : Fragment(), GameClickListener, TeamClickListener, TabItemClickListener {
 
     private lateinit var binding: FragmentFavoritesBinding
 
@@ -42,6 +44,10 @@ class FragmentFavorites : Fragment(), GameClickListener, TeamClickListener {
         context?.appComponent?.inject(this)
         viewModel =
             ViewModelProvider(this, viewModelFactory)[FragmentFavoritesViewModel::class.java]
+
+        binding.tabLayout.setFirstTabItemName(getString(R.string.gameTabItem))
+        binding.tabLayout.setSecondTabItemName(getString(R.string.teamsTabItem))
+        binding.tabLayout.setClickListener(this)
         return binding.root
     }
 
@@ -52,7 +58,7 @@ class FragmentFavorites : Fragment(), GameClickListener, TeamClickListener {
         }
 
         lifecycleScope.launchWhenStarted {
-            binding.tabLayout3
+            binding.tabLayout
 
         }
     }
@@ -82,9 +88,9 @@ class FragmentFavorites : Fragment(), GameClickListener, TeamClickListener {
 
     override fun buttonTeamFavoriteClicked(teamId: Int, isFavorite: Boolean) {
         if (isFavorite)
-            viewModel.addGameToFavorites(teamId)
+            viewModel.addTeamToFavorites(teamId)
         else
-            viewModel.deleteGameFromFavorites(teamId)
+            viewModel.deleteTeamFromFavorites(teamId)
     }
 
     override fun itemTeamClicked(teamId: Int) {
@@ -92,7 +98,20 @@ class FragmentFavorites : Fragment(), GameClickListener, TeamClickListener {
     }
 
     override fun itemGameClicked(gameId: Int) {
-        val bundle = bundleOf("gameId" to gameId)
+        val bundle = bundleOf(GAME_ID to gameId)
         findNavController().navigate(R.id.fragmentGame, bundle)
+    }
+
+
+    override fun firstTabClicked() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.loadFavoritesGames().collectLatest { initGameAdapter(it) }
+        }
+    }
+
+    override fun secondTabClicked() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.loadFavoritesTeams().collectLatest { initTeamAdapter(it) }
+        }
     }
 }

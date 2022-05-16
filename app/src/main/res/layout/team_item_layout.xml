@@ -6,9 +6,9 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:id="@+id/teamLabel"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
@@ -21,27 +21,27 @@
         tools:targetApi="s" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/teamName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:text="TextView"
         android:textColor="?attr/colorOnSecondary"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintBottom_toBottomOf="@+id/teamLabel"
+        app:layout_constraintStart_toEndOf="@+id/teamLabel"
+        app:layout_constraintTop_toTopOf="@+id/teamLabel" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/buttonFavorites"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginEnd="16dp"
         android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="@+id/teamLabel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/teamLabel"
         app:srcCompat="@drawable/nav_menu_favorites" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
