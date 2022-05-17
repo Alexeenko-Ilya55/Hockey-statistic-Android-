@@ -38,7 +38,7 @@ interface ApiService {
     @GET(LEAGUES)
     suspend fun loadLeagues(
         @Query(COUNTRY) countryName: String?,
-        @Query(SEASON) season: Int
+        @Query(SEASON) season: Int?
     ): Leagues
 
     @Headers(

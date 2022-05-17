@@ -44,8 +44,7 @@ class RepositoryImpl @Inject constructor(
         .map { group -> group.map { listStatistic -> listStatistic.map { it.mapToStatistic() } } }
 
     override suspend fun loadAllGamesForTeam(teamId: Int): Flow<List<Game>> {
-        val games = apiRepository.loadTeamGames(teamId)
-        database.insertGame(games)
+        database.insertGame(apiRepository.loadTeamGames(teamId))
         return database.getTeamGames(teamId).map { listGame -> listGame.map { it.mapToGame() } }
     }
 
@@ -86,8 +85,7 @@ class RepositoryImpl @Inject constructor(
     }
 
     override suspend fun loadH2HGames(homeTeamId: Int, awayTeamId: Int): Flow<List<Game>> {
-        val games = apiRepository.loadGamesH2H("$homeTeamId-$awayTeamId")
-        database.insertGame(games)
+        database.insertGame(apiRepository.loadGamesH2H("$homeTeamId-$awayTeamId"))
         return database.getH2HGames(homeTeamId, awayTeamId).map { listGameDTO ->
             listGameDTO.map { it.mapToGame() }
         }

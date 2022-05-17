@@ -62,7 +62,10 @@ class ViewModelFactory(
                 loadTeamGamesUseCase,
                 loadTeamByIdUseCase,
                 loadCountryByIdUseCase,
-                loadLeagueByIdUseCase
+                loadLeagueByIdUseCase,
+                loadStatisticsUseCase,
+                addGameToFavoritesUseCase,
+                deleteGameFromFavoritesUseCase
             )
             MainActivityViewModel::class.java -> MainActivityViewModel()
             else -> MainActivityViewModel()
