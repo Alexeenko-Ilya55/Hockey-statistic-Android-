@@ -45,22 +45,18 @@ class FragmentFavorites : Fragment(), GameClickListener, TeamClickListener, TabI
         viewModel =
             ViewModelProvider(this, viewModelFactory)[FragmentFavoritesViewModel::class.java]
 
-        binding.tabLayout.setFirstTabItemName(getString(R.string.gameTabItem))
-        binding.tabLayout.setSecondTabItemName(getString(R.string.teamsTabItem))
-        binding.tabLayout.setClickListener(this)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         lifecycleScope.launchWhenStarted {
             viewModel.loadFavoritesGames().collectLatest { initGameAdapter(it) }
         }
 
-        lifecycleScope.launchWhenStarted {
-            binding.tabLayout
-
-        }
+        binding.tabLayout.setTabNames(
+            listOf(
+                getString(R.string.gameTabItem),
+                getString(R.string.teamsTabItem)
+            )
+        )
+        binding.tabLayout.setClickListener(this)
+        return binding.root
     }
 
     private fun initGameAdapter(games: List<Game>) {
@@ -102,16 +98,15 @@ class FragmentFavorites : Fragment(), GameClickListener, TeamClickListener, TabI
         findNavController().navigate(R.id.fragmentGame, bundle)
     }
 
-
-    override fun firstTabClicked() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.loadFavoritesGames().collectLatest { initGameAdapter(it) }
-        }
-    }
-
-    override fun secondTabClicked() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.loadFavoritesTeams().collectLatest { initTeamAdapter(it) }
+    override fun positionActiveTabChanged(activeTabIndex: Int) {
+        if (activeTabIndex == 0) {
+            lifecycleScope.launchWhenStarted {
+                viewModel.loadFavoritesGames().collectLatest { initGameAdapter(it) }
+            }
+        } else {
+            lifecycleScope.launchWhenStarted {
+                viewModel.loadFavoritesTeams().collectLatest { initTeamAdapter(it) }
+            }
         }
     }
 }

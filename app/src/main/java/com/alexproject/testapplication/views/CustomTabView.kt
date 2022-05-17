@@ -10,117 +10,68 @@ import com.alexproject.testapplication.R
 
 
 @SuppressLint("UseCompatLoadingForDrawables")
-class CustomTabView(
+class CustomTabView @JvmOverloads constructor(
     context: Context,
-    attrs: AttributeSet?,
-    defStyleAttr: Int
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-    constructor(context: Context) : this(context, null)
 
-
-    private val tabFirst = Button(context)
-    private val tabSecond = Button(context)
-    private val tabThird = Button(context)
+    private lateinit var tabItemClickListener: TabItemClickListener
+    var tabsNames = listOf<String>()
+    private val tabs = mutableListOf<Button>()
     private val params = LayoutParams(
         LayoutParams.WRAP_CONTENT,
-        LayoutParams.WRAP_CONTENT,
-        0f
+        LayoutParams.WRAP_CONTENT
     )
-    private lateinit var tabItemClickListener: TabItemClickListener
-    var threeTabsItemClickListener: ThreeTabsItemClickListener? = null
 
     init {
         this.orientation = HORIZONTAL
         this.background = context.getDrawable(R.color.transparent)
 
-        tabFirst.setText(R.string.reviewTabMenu)
-        tabSecond.setText(R.string.h2hTabMenu)
-        params.setMargins(24, 16, 0, 8)
-        tabFirst.layoutParams = params
-        tabFirst.setPadding(0, 0, 0, 0)
-        tabFirst.gravity = Gravity.CENTER
-        tabSecond.layoutParams = params
-        tabSecond.setPadding(0, 0, 0, 0)
-        tabSecond.layoutParams.height = 110
-
-        firstTabClicked()
-
-        tabFirst.setOnClickListener {
-            firstTabClicked()
-            tabItemClickListener.firstTabClicked()
-        }
-
-        tabSecond.setOnClickListener {
-            secondTabClicked()
-            tabItemClickListener.secondTabClicked()
-        }
-
-        tabThird.setOnClickListener {
-            thirdTabClicked()
-            threeTabsItemClickListener?.thirdTabClicked()
-        }
-        this.addView(tabFirst)
-        this.addView(tabSecond)
+        params.setMargins(
+            context.resources.getDimension(R.dimen.large_margin).toInt(),
+            context.resources.getDimension(R.dimen.small_margin).toInt(),
+            0,
+            context.resources.getDimension(R.dimen.very_small_margin).toInt()
+        )
+        params.height = context.resources.getDimension(R.dimen.height_tabLayout).toInt()
     }
 
-    private fun firstTabClicked() {
-
-        tabFirst.setTextColor(context.getColor(R.color.colorLiveScore))
-        tabFirst.background = context.getDrawable(R.drawable.custom_border)
-
-        tabSecond.setTextColor(context.getColor(R.color.tabMenu))
-        tabSecond.background = context.getDrawable(R.color.transparent)
-
-        tabThird.setTextColor(context.getColor(R.color.tabMenu))
-        tabThird.background = context.getDrawable(R.color.transparent)
+    private fun changePositionIndicator(activeTab: Int) {
+        tabs.forEachIndexed { index, tab ->
+            if (index == activeTab) {
+                tab.setTextColor(context.getColor(R.color.colorLiveScore))
+                tab.background = context.getDrawable(R.drawable.custom_border)
+            } else {
+                tab.setTextColor(context.getColor(R.color.tabMenu))
+                tab.background = context.getDrawable(R.color.transparent)
+            }
+        }
     }
 
-    private fun secondTabClicked() {
-        tabSecond.setTextColor(context.getColor(R.color.colorLiveScore))
-        tabSecond.background = context.getDrawable(R.drawable.custom_border)
-
-        tabFirst.setTextColor(context.getColor(R.color.tabMenu))
-        tabFirst.background = context.getDrawable(R.color.transparent)
-
-        tabThird.setTextColor(context.getColor(R.color.tabMenu))
-        tabThird.background = context.getDrawable(R.color.transparent)
-    }
-
-    private fun thirdTabClicked() {
-        tabThird.setTextColor(context.getColor(R.color.colorLiveScore))
-        tabThird.background = context.getDrawable(R.drawable.custom_border)
-
-        tabSecond.setTextColor(context.getColor(R.color.tabMenu))
-        tabSecond.background = context.getDrawable(R.color.transparent)
-
-        tabFirst.setTextColor(context.getColor(R.color.tabMenu))
-        tabFirst.background = context.getDrawable(R.color.transparent)
+    fun setTabNames(tabsNames: List<String>) {
+        this.tabsNames = tabsNames
+        tabsNames.forEachIndexed { index, tabName ->
+            val button = Button(context)
+            button.text = tabName
+            addView(button)
+            button.layoutParams = params
+            button.gravity = Gravity.CENTER
+            button.setPadding(0, 0, 0, 0)
+            button.setOnClickListener {
+                tabItemClickListener.positionActiveTabChanged(index)
+                changePositionIndicator(index)
+            }
+            tabs.add(button)
+        }
+        changePositionIndicator(0)
     }
 
     fun setClickListener(tabItemClickListener: TabItemClickListener) {
         this.tabItemClickListener = tabItemClickListener
     }
-
-    fun setFirstTabItemName(tabName: String) {
-        tabFirst.text = tabName
-    }
-
-    fun setSecondTabItemName(tabName: String) {
-        tabSecond.text = tabName
-    }
-
-    fun setThirdTabItemName(tabName: String) {
-        this.addView(tabThird)
-        tabThird.text = tabName
-    }
 }
 
 interface TabItemClickListener {
-    fun firstTabClicked()
-    fun secondTabClicked()
-}
-
-interface ThreeTabsItemClickListener : TabItemClickListener {
-    fun thirdTabClicked()
+    fun positionActiveTabChanged(activeTabIndex: Int)
 }

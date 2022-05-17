@@ -38,7 +38,6 @@ class FragmentGame : Fragment(), GameClickListener, TabItemClickListener {
     lateinit var viewModelFactory: ViewModelFactory
     lateinit var viewModel: FragmentGameViewModel
 
-
     lateinit var game: Game
 
     @SuppressLint("SetTextI18n")
@@ -64,8 +63,6 @@ class FragmentGame : Fragment(), GameClickListener, TabItemClickListener {
             }
         }
 
-        binding.customTabView.setClickListener(this)
-
         binding.homeTeamFavorites.setOnClickListener {
             game.homeTeam.isFavorite = !game.homeTeam.isFavorite
             onButtonFavoriteClicked(game.homeTeam.id, game.homeTeam.isFavorite)
@@ -77,6 +74,13 @@ class FragmentGame : Fragment(), GameClickListener, TabItemClickListener {
             setImage()
         }
 
+        binding.customTabView.setClickListener(this)
+        binding.customTabView.setTabNames(
+            listOf(
+                getString(R.string.reviewTabMenu),
+                getString(R.string.h2hTabMenu)
+            )
+        )
 
         binding.awayTeamLabelGame.setOnClickListener {
             findNavController().navigate(R.id.fragmentTeam, bundleOf(TEAM_ID to game.awayTeam.id))
@@ -172,18 +176,16 @@ class FragmentGame : Fragment(), GameClickListener, TabItemClickListener {
         findNavController().navigate(R.id.fragmentGame, bundleOf(GAME_ID to gameId))
     }
 
-    override fun firstTabClicked() {
+    override fun positionActiveTabChanged(activeTabIndex: Int) {
         lifecycleScope.launch(Dispatchers.IO) {
-            viewModel.loadGameEvents(game.id).collectLatest {
-                initEventsAdapter(it)
-            }
-        }
-    }
-
-    override fun secondTabClicked() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            viewModel.loadH2HGames(game.homeTeam.id, game.awayTeam.id).collectLatest { list ->
-                initH2HAdapter(list.filter { it.id != game.id })
+            if (activeTabIndex == 0) {
+                viewModel.loadGameEvents(game.id).collectLatest {
+                    initEventsAdapter(it)
+                }
+            } else {
+                viewModel.loadH2HGames(game.homeTeam.id, game.awayTeam.id).collectLatest { list ->
+                    initH2HAdapter(list.filter { it.id != game.id })
+                }
             }
         }
     }
