@@ -32,7 +32,7 @@
     <string name="reviewTabMenu">Обзор</string>
     <string name="h2hTabMenu">H2h</string>
     <string name="after">После</string>
-    <string name="overtime">ОТ</string>
+    <string name="overtimeShort">ОТ</string>
     <string name="penalty">бул.</string>
     <string name="breakGAME">Перерыв</string>
 
@@ -41,6 +41,7 @@
     <string name="score">счёт: %s</string>
 
     <string name="period">%s-Й ПЕРИОД</string>
+    <string name="overtime">ОВЕРТАЙМ</string>
 
     <string name="league_name">League: %s</string>
     <string name="country_name">Country: %s</string>

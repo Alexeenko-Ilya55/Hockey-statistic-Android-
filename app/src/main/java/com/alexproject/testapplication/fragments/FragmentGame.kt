@@ -23,13 +23,14 @@ import com.alexproject.testapplication.databinding.FragmentGameBinding
 import com.alexproject.testapplication.objects.*
 import com.alexproject.testapplication.viewModels.FragmentGameViewModel
 import com.alexproject.testapplication.viewModels.ViewModelFactory
+import com.alexproject.testapplication.views.TabItemClickListener
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class FragmentGame : Fragment(), GameClickListener {
+class FragmentGame : Fragment(), GameClickListener, TabItemClickListener {
 
     private lateinit var binding: FragmentGameBinding
 
@@ -61,6 +62,7 @@ class FragmentGame : Fragment(), GameClickListener {
                 }
             }
         }
+
         binding.homeTeamFavorites.setOnClickListener {
             game.homeTeam.isFavorite = !game.homeTeam.isFavorite
             onButtonFavoriteClicked(game.homeTeam.id, game.homeTeam.isFavorite)
@@ -72,6 +74,13 @@ class FragmentGame : Fragment(), GameClickListener {
             setImage()
         }
 
+        binding.customTabView.setClickListener(this)
+        binding.customTabView.setTabNames(
+            listOf(
+                getString(R.string.reviewTabMenu),
+                getString(R.string.h2hTabMenu)
+            )
+        )
 
         binding.awayTeamLabelGame.setOnClickListener {
             findNavController().navigate(
@@ -95,6 +104,7 @@ class FragmentGame : Fragment(), GameClickListener {
         return binding.root
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun initH2HAdapter(listGames: List<Game>) {
         lifecycleScope.launch(Dispatchers.Main) {
             binding.matchInfo.isVisible = false
@@ -102,6 +112,7 @@ class FragmentGame : Fragment(), GameClickListener {
             binding.rcView.layoutManager = LinearLayoutManager(context)
             val adapter = GamesAdapter(listGames, this@FragmentGame)
             binding.rcView.adapter = adapter
+            adapter.notifyDataSetChanged()
         }
     }
 
@@ -136,7 +147,7 @@ class FragmentGame : Fragment(), GameClickListener {
                 ScoreGame.text = "${game.homeScores}-${game.awayScores}"
                 lifecycleScope.launchWhenStarted {
                     viewModel.loadGameEvents(game.id).collectLatest {
-                        initEntityAdapter(it)
+                        initEventsAdapter(it)
                     }
                 }
             } else
@@ -150,7 +161,7 @@ class FragmentGame : Fragment(), GameClickListener {
         }
     }
 
-    private fun initEntityAdapter(gameEvents: List<EventsAdapterItem>) {
+    private fun initEventsAdapter(gameEvents: List<EventsAdapterItem>) {
         lifecycleScope.launch(Dispatchers.Main) {
             binding.matchInfo.isVisible = false
             binding.rcView.isVisible = true
@@ -176,5 +187,19 @@ class FragmentGame : Fragment(), GameClickListener {
 
     override fun itemGameClicked(gameId: Int) {
         findNavController().navigate(R.id.fragmentGame, bundleOf(GAME_ID to gameId))
+    }
+
+    override fun positionActiveTabChanged(activeTabIndex: Int) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            if (activeTabIndex == 0) {
+                viewModel.loadGameEvents(game.id).collectLatest {
+                    initEventsAdapter(it)
+                }
+            } else {
+                viewModel.loadH2HGames(game.homeTeam.id, game.awayTeam.id).collectLatest { list ->
+                    initH2HAdapter(list.filter { it.id != game.id })
+                }
+            }
+        }
     }
 }

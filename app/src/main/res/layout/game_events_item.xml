@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/constraintLayout"
     android:background="@color/white">
 
     <androidx.constraintlayout.widget.Group
@@ -142,5 +143,4 @@
         app:layout_constraintBottom_toBottomOf="@+id/homeEventImage"
         app:layout_constraintStart_toEndOf="@+id/homeEventImage"
         app:layout_constraintTop_toTopOf="@+id/homeEventImage" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

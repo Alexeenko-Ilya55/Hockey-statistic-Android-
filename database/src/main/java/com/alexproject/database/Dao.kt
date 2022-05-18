@@ -68,7 +68,7 @@ interface Dao {
     fun loadGameEvents(gameId: Int): Flow<List<GameEvents>>
 
     @Transaction
-    @Query("SELECT * FROM $TABLE_GAMES WHERE homeTeamId = :homeTeamId AND awayTeamId = :awayTeamId")
+    @Query("SELECT * FROM $TABLE_GAMES WHERE homeTeamId = :homeTeamId AND awayTeamId = :awayTeamId ORDER BY date DESC")
     fun getH2HGames(homeTeamId: Int, awayTeamId: Int): Flow<List<Game>>
 
     @Transaction

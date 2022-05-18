@@ -10,40 +10,33 @@
 
     <ImageView
         android:id="@+id/homeTeamLabelGame"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/round_outline"
-        android:clipToOutline="true"
+        android:layout_width="@dimen/teamEmblem_gameFragment"
+        android:layout_height="@dimen/teamEmblem_gameFragment"
+        android:layout_marginStart="@dimen/medium_margin"
+        android:layout_marginTop="@dimen/very_large_margin"
         android:scaleType="fitCenter"
         app:layout_constraintStart_toEndOf="@+id/homeTeamFavorites"
         app:layout_constraintTop_toBottomOf="@+id/leagueButton"
-        tools:src="@tools:sample/avatars"
-        tools:targetApi="s" />
+        tools:src="@tools:sample/avatars" />
 
     <ImageView
         android:id="@+id/awayTeamLabelGame"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/round_outline"
-        android:clipToOutline="true"
+        android:layout_width="@dimen/teamEmblem_gameFragment"
+        android:layout_height="@dimen/teamEmblem_gameFragment"
+        android:layout_marginTop="@dimen/very_large_margin"
+        android:layout_marginEnd="@dimen/medium_margin"
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toStartOf="@+id/awayTeamFavorites"
         app:layout_constraintTop_toBottomOf="@+id/leagueButton"
-        tools:src="@tools:sample/avatars"
-        tools:targetApi="s" />
+        tools:src="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/homeTeamNameGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:layout_marginTop="@dimen/medium_margin"
         android:textColor="?attr/colorOnSecondary"
-        android:textSize="13sp"
+        android:textSize="@dimen/smallTextSize"
         app:layout_constraintEnd_toEndOf="@+id/homeTeamLabelGame"
         app:layout_constraintStart_toStartOf="@+id/homeTeamLabelGame"
         app:layout_constraintTop_toBottomOf="@+id/homeTeamLabelGame" />
@@ -53,9 +46,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/DefaultMargin"
-        android:text="TextView"
         android:textColor="?attr/colorOnSecondary"
-        android:textSize="13sp"
+        android:textSize="@dimen/smallTextSize"
         app:layout_constraintEnd_toEndOf="@+id/awayTeamLabelGame"
         app:layout_constraintStart_toStartOf="@+id/awayTeamLabelGame"
         app:layout_constraintTop_toBottomOf="@+id/awayTeamLabelGame" />
@@ -64,9 +56,8 @@
         android:id="@+id/timeGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="11.04.22 00:00"
         android:textColor="?attr/colorOnSecondary"
-        android:textSize="12sp"
+        android:textSize="@dimen/verySmallTextSize"
         app:layout_constraintBottom_toTopOf="@+id/homeTeamLabelGame"
         app:layout_constraintEnd_toStartOf="@+id/awayTeamLabelGame"
         app:layout_constraintStart_toEndOf="@+id/homeTeamLabelGame" />
@@ -75,9 +66,8 @@
         android:id="@+id/ScoreGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="6-5"
         android:textColor="?attr/colorOnSecondary"
-        android:textSize="28sp"
+        android:textSize="@dimen/scoreTextSize"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/homeTeamLabelGame"
         app:layout_constraintEnd_toEndOf="@+id/timeGame"
@@ -86,8 +76,8 @@
 
     <ImageButton
         android:id="@+id/homeTeamFavorites"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="@dimen/favoritesButton_gameFragment"
+        android:layout_height="@dimen/favoritesButton_gameFragment"
         android:layout_marginStart="@dimen/defaultMarginStart"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
@@ -99,7 +89,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/leagueButton"
         android:layout_width="@dimen/match_constraint"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/leagueButtonHeight_gameFragment"
         android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -108,33 +98,29 @@
 
         <ImageView
             android:id="@+id/leagueEmblem"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="@dimen/favoritesButton_gameFragment"
+            android:layout_height="@dimen/favoritesButton_gameFragment"
             android:layout_marginStart="@dimen/DefaultMargin"
-            android:background="@drawable/round_outline"
-            android:clipToOutline="true"
             android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars"
-            tools:targetApi="s" />
+            tools:src="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/leagueName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/DefaultMargin"
-            android:text="League: NHL"
-            android:textSize="13sp"
+            android:textSize="@dimen/smallTextSize"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/leagueEmblem"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:layout_width="15dp"
-            android:layout_height="25dp"
+            android:layout_width="@dimen/leagueButton_gameFragment"
+            android:layout_height="@dimen/favoritesButton_gameFragment"
             android:layout_marginEnd="@dimen/defaultMarginStart"
             android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -146,8 +132,8 @@
 
     <ImageButton
         android:id="@+id/awayTeamFavorites"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="@dimen/favoritesButton_gameFragment"
+        android:layout_height="@dimen/favoritesButton_gameFragment"
         android:layout_marginEnd="@dimen/defaultMarginStart"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
@@ -160,56 +146,45 @@
         android:id="@+id/statusGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Завершен"
         android:textColor="?attr/colorOnSecondary"
-        android:textSize="11dp"
+        android:textSize="@dimen/verySmallTextSize"
         app:layout_constraintEnd_toEndOf="@+id/timeGame"
         app:layout_constraintStart_toStartOf="@+id/timeGame"
         app:layout_constraintTop_toBottomOf="@+id/ScoreGame" />
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="@dimen/match_constraint"
-        android:layout_height="40dp"
-        android:layout_marginTop="@dimen/DefaultMargin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeTeamNameGame"
-        app:tabMode="scrollable">
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/reviewTabMenu" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/h2hTabMenu" />
-
-    </com.google.android.material.tabs.TabLayout>
-
-    <TextView
-        android:id="@+id/matchInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/DefaultMargin"
-        android:layout_marginTop="@dimen/DefaultMargin"
-        android:text="@string/noInfoAboutGame"
-        android:textColor="?attr/colorOnSecondary"
-        android:textSize="16sp"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/match_constraint"
+        android:background="?attr/colorOnPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/customTabView" />
+
+    <TextView
+        android:id="@+id/matchInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/noInfoAboutGame"
+        android:textColor="?attr/colorOnSecondary"
+        android:textSize="@dimen/largeTextSize"
+        android:visibility="visible"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:layout_marginStart="@dimen/medium_margin"
+        android:layout_marginEnd="@dimen/medium_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/rcView" />
+
+    <com.alexproject.testapplication.views.CustomTabView
+        android:id="@+id/customTabView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/leagueButton"
+        app:layout_constraintTop_toBottomOf="@+id/homeTeamNameGame" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

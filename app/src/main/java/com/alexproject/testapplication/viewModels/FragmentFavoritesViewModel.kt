@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alexproject.domain.useCases.*
 import com.alexproject.testapplication.contracts.GameFavorites
+import com.alexproject.testapplication.contracts.TeamFavorites
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,26 +16,24 @@ class FragmentFavoritesViewModel @Inject constructor(
     private val deleteGameFromFavoritesUseCase: DeleteGameFromFavoritesUseCase,
     private val loadFavoritesGamesUseCase: LoadFavoritesGamesUseCase,
     private val loadFavoritesTeamsUseCase: LoadFavoritesTeamsUseCase
-) : ViewModel(), GameFavorites {
+) : ViewModel(), GameFavorites, TeamFavorites{
 
     override fun addGameToFavorites(gameId: Int) =
         viewModelScope.launch(Dispatchers.IO) {
             addGameToFavoritesUseCase.addGameToFavorites(gameId)
         }
 
-
-    fun addTeamToFavorites(teamId: Int, isFavorite: Boolean) =
+    override fun addTeamToFavorites(teamId: Int) =
         viewModelScope.launch(Dispatchers.IO) {
             addTeamToFavoritesUseCase.addTeamToFavorites(teamId)
         }
-
 
     override fun deleteGameFromFavorites(gameId: Int) =
         viewModelScope.launch(Dispatchers.IO) {
             deleteGameFromFavoritesUseCase.deleteGameFromFavorites(gameId)
         }
 
-    fun deleteTeamFromFavorites(teamId: Int, isFavorite: Boolean) =
+    override fun deleteTeamFromFavorites(teamId: Int) =
         viewModelScope.launch(Dispatchers.IO) {
             deleteTeamFromFavoritesUseCase.deleteTeamFromFavorites(teamId)
         }

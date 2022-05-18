@@ -13,4 +13,9 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="myStyle" >
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondary">#A5A5A5</item>
+    </style>
 </resources>

@@ -31,7 +31,6 @@ class FragmentAllGames : Fragment(), GameClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-
     lateinit var viewModel: FragmentAllGamesViewModel
 
     override fun onCreateView(

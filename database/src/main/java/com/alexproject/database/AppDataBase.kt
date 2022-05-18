@@ -9,7 +9,7 @@ import com.alexproject.database.entities.*
 @Database(
     entities = [GamesEntity::class, CountryEntity::class, LeagueEntity::class, StatisticEntity::class,
         TeamEntity::class, GameEventsEntity::class, IsFavoriteGameEntity::class, IsFavoriteTeamEntity::class],
-    version = 1
+    version = 2
 )
 abstract class AppDataBase : RoomDatabase() {
 
