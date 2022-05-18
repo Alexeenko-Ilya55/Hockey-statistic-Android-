@@ -25,8 +25,8 @@
         <entry key="app/src/main/res/layout/game_events_away_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/game_events_home_item.xml" value="0.23385416666666667" />
         <entry key="app/src/main/res/layout/game_events_item.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/game_events_period_item.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/game_item_layout.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/game_events_period_item.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/game_item_layout.xml" value="0.33" />
         <entry key="app/src/main/res/layout/tab_item.xml" value="0.2203125" />
         <entry key="app/src/main/res/layout/team_item_layout.xml" value="0.25" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.18177083333333333" />

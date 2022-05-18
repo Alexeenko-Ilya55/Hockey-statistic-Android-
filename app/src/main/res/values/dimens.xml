@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="defaultTextSize">13sp</dimen>
-    <dimen name="scoreItemGameTextSize">14sp</dimen>
+    <dimen name="smallTextSize">13sp</dimen>
+    <dimen name="verySmallTextSize">12sp</dimen>
+    <dimen name="mediumTextSize">14sp</dimen>
+    <dimen name="largeTextSize">16sp</dimen>
+    <dimen name="teamNameTextSize">24sp</dimen>
+    <dimen name="scoreTextSize">28sp</dimen>
     <dimen name="teamEmblemItemGame">33dp</dimen>
     <dimen name="defaultMarginStart">8dp</dimen>
     <dimen name="DefaultMargin">16dp</dimen>
@@ -18,6 +22,18 @@
     <dimen name="very_large_margin">24dp</dimen>
 
     <dimen name="height_tabLayout">35dp</dimen>
+
+    <dimen name="teamEmblem_favorites">50dp</dimen>
+    <dimen name="teamButton_favorites">45dp</dimen>
+
+    <dimen name="teamEmblem_gameFragment">50dp</dimen>
+    <dimen name="teamEmblem_teamFragment">80dp</dimen>
+    <dimen name="favoritesButton_gameFragment">25dp</dimen>
+    <dimen name="leagueButton_gameFragment">15dp</dimen>
+    <dimen name="leagueButtonHeight_gameFragment">40dp</dimen>
+    <dimen name="flag">20dp</dimen>
+    <dimen name="leagueEmblem">30dp</dimen>
+    <dimen name="leagueButton">50dp</dimen>
 
 
 </resources>

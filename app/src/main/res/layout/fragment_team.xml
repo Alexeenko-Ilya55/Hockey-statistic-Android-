@@ -8,10 +8,10 @@
 
     <ImageView
         android:id="@+id/countryFlag"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="@dimen/flag"
+        android:layout_height="@dimen/flag"
+        android:layout_marginStart="@dimen/very_large_margin"
+        android:layout_marginTop="@dimen/medium_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars" />
@@ -20,10 +20,9 @@
         android:id="@+id/countryName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="USA"
+        android:layout_marginStart="@dimen/small_margin"
         android:textColor="?attr/colorOnSecondary"
-        android:textSize="14sp"
+        android:textSize="@dimen/mediumTextSize"
         app:layout_constraintBottom_toBottomOf="@+id/countryFlag"
         app:layout_constraintStart_toEndOf="@+id/countryFlag"
         app:layout_constraintTop_toTopOf="@+id/countryFlag" />
@@ -32,10 +31,9 @@
         android:id="@+id/teamName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:text="Detroit"
+        android:layout_marginStart="@dimen/large_margin"
         android:textColor="?attr/colorOnSecondary"
-        android:textSize="24sp"
+        android:textSize="@dimen/teamNameTextSize"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/teamEmblem"
         app:layout_constraintStart_toEndOf="@+id/teamEmblem"
@@ -43,22 +41,19 @@
 
     <ImageView
         android:id="@+id/teamEmblem"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="@dimen/teamEmblem_teamFragment"
+        android:layout_height="@dimen/teamEmblem_teamFragment"
+        android:layout_marginStart="@dimen/very_large_margin"
+        android:layout_marginTop="@dimen/medium_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/countryFlag"
-        tools:src="@tools:sample/avatars"
-        android:clipToOutline="true"
-        android:background="@drawable/round_outline"
-        tools:targetApi="s" />
+        tools:src="@tools:sample/avatars" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/small_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/leagueButton"
@@ -85,43 +80,39 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/leagueButton"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="@dimen/match_constraint"
+        android:layout_height="@dimen/leagueButton"
+        android:layout_marginTop="@dimen/medium_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/teamEmblem">
 
         <ImageView
             android:id="@+id/leagueLogo"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="16dp"
+            android:layout_width="@dimen/leagueEmblem"
+            android:layout_height="@dimen/leagueEmblem"
+            android:layout_marginStart="@dimen/medium_margin"
             android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars"
-            android:clipToOutline="true"
-            android:background="@drawable/round_outline"
-            tools:targetApi="s" />
+            tools:src="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/leagueName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="League: NHL"
+            android:layout_marginStart="@dimen/medium_margin"
             android:textColor="?attr/colorOnSecondary"
-            android:textSize="16sp"
+            android:textSize="@dimen/largeTextSize"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/leagueLogo"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="8dp"
+            android:layout_width="@dimen/flag"
+            android:layout_height="@dimen/leagueEmblem"
+            android:layout_marginEnd="@dimen/small_margin"
             android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -132,8 +123,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/match_constraint"
+        android:layout_height="@dimen/match_constraint"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
