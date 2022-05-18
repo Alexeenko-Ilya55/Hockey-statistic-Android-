@@ -6,42 +6,38 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/round_outline"
-        android:clipToOutline="true"
+        android:id="@+id/teamLabel"
+        android:layout_width="@dimen/teamEmblem_favorites"
+        android:layout_height="@dimen/teamEmblem_favorites"
+        android:layout_marginStart="@dimen/large_margin"
+        android:layout_marginTop="@dimen/small_margin"
+        android:layout_marginBottom="@dimen/small_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars"
-        tools:targetApi="s" />
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/teamName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:text="TextView"
+        android:layout_marginStart="@dimen/large_margin"
         android:textColor="?attr/colorOnSecondary"
-        android:textSize="16sp"
+        android:textSize="@dimen/mediumTextSize"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintBottom_toBottomOf="@+id/teamLabel"
+        app:layout_constraintStart_toEndOf="@+id/teamLabel"
+        app:layout_constraintTop_toTopOf="@+id/teamLabel" />
 
     <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginEnd="16dp"
+        android:id="@+id/buttonFavorites"
+        android:layout_width="@dimen/teamButton_favorites"
+        android:layout_height="@dimen/teamButton_favorites"
+        android:layout_marginEnd="@dimen/medium_margin"
         android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="@+id/teamLabel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/teamLabel"
         app:srcCompat="@drawable/nav_menu_favorites" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

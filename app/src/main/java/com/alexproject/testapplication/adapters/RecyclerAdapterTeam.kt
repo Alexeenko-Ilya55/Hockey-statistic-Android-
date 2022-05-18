@@ -18,8 +18,8 @@ class RecyclerAdapterTeam(
 ) : RecyclerView.Adapter<RecyclerAdapterTeam.RecyclerHolder>() {
 
     inner class RecyclerHolder(item: View) : RecyclerView.ViewHolder(item) {
-        val teamName = item.findViewById<TextView>(R.id.homeTeamName)!!
-        val teamEmblem = item.findViewById<ImageView>(R.id.homeTeamEmblem)!!
+        val teamName = item.findViewById<TextView>(R.id.teamName)!!
+        val teamEmblem = item.findViewById<ImageView>(R.id.teamLabel)!!
         val buttonFavorites = item.findViewById<ImageButton>(R.id.buttonFavorites)!!
     }
 
