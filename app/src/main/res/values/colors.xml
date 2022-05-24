@@ -10,5 +10,6 @@
     <color name="colorLiveScore">#FF5353</color>
     <color name="transparent">#00000000</color>
     <color name="tabMenu">#676767</color>
+    <color name="favoriteLeagueBackground">#FFE285</color>
 
 </resources>

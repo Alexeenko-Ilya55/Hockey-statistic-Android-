@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.Flow
 interface Database {
     suspend fun insertGame(games: List<GameDTO>)
     suspend fun insertGameEvents(gameEventsDTO: List<GameEventsDTO>)
+    suspend fun insertLeagues(leagues: List<LeagueInfoDTO>)
+    suspend fun insertCountries(countries: List<CountryDTO>)
     suspend fun getCountries(): List<CountryDTO>
     suspend fun getGamesByDate(date: String): Flow<List<GameDTO>>
     suspend fun addGameToFavorites(gameId: Int)
@@ -21,6 +23,7 @@ interface Database {
     suspend fun getTeamGames(teamId: Int): Flow<List<GameDTO>>
     suspend fun getTeamById(teamId: Int): Flow<TeamDTO>
     suspend fun getStatistic(leagueId: Int): Flow<List<List<StatisticDTO>>>
-    suspend fun getCountryById(countryId: Int):Flow<CountryDTO>
-    suspend fun getLeagueById(leagueId: Int):Flow<LeagueDTO>
+    suspend fun getCountryById(countryId: Int): Flow<CountryDTO>
+    suspend fun getLeagueById(leagueId: Int): Flow<LeagueDTO>
+    suspend fun loadAllLeagues(): Flow<List<LeagueInfoDTO>>
 }

@@ -9,7 +9,7 @@ sealed class StatisticTable {
     data class TeamStatistic(
         val country: Country,
         val description: String?,
-        val form: String,
+        val form: String?,
         val league: League,
         val points: Int,
         val position: Int,

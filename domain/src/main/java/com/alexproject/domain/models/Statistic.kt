@@ -3,7 +3,7 @@ package com.alexproject.domain.models
 data class Statistic(
     val country: Country,
     val description: String?,
-    val form: String,
+    val form: String?,
     val nameGroup: String,
     val league: League,
     val points: Int,

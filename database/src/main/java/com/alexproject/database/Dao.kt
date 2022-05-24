@@ -20,6 +20,9 @@ interface Dao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertLeague(leagueEntity: LeagueEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertLeague(listLeagues: List<LeagueInfoEntity>)
+
     @Transaction
     @Query("SELECT * FROM $TABLE_GAMES WHERE date = :date ORDER BY time")
     fun getGamesByDate(date: String): Flow<List<Game>>
@@ -35,9 +38,6 @@ interface Dao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertGameEvents(gameEventsEntity: List<GameEventsEntity>)
-
-    @Query("SELECT * FROM $TABLE_GAME_EVENTS")
-    suspend fun getGameEvents(): List<GameEvents>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addGameToFavorites(isFavoriteGameEntity: IsFavoriteGameEntity)
@@ -82,12 +82,12 @@ interface Dao {
     @Query("SELECT * FROM $TABLE_COUNTRIES WHERE id = :countryId ")
     fun getCountryById(countryId: Int): Flow<CountryEntity>
 
-    @Query("SELECT * FROM $TABLE_LEAGUE WHERE id = :leagueId ")
-    fun getLeagueById(leagueId: Int): Flow<LeagueEntity>
+    @Query("SELECT * FROM $TABLE_LEAGUE_INFO WHERE id = :leagueId ")
+    fun getLeagueById(leagueId: Int): Flow<LeagueInfo>
 
-    //@Transaction
-    //@Query("SELECT * FROM $TABLE_STATISTIC WHERE leagueId = :leagueId")
-    //fun getStatistic(leagueId:Int): Flow<List<List<Statistic>>>
+    @Transaction
+    @Query("SELECT * FROM $TABLE_LEAGUE_INFO ORDER BY name")
+    fun getAllLeagues(): Flow<List<LeagueInfo>>
 }
 
 

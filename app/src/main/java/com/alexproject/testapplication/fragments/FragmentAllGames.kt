@@ -19,10 +19,8 @@ import com.alexproject.testapplication.databinding.FragmentAllGamesBinding
 import com.alexproject.testapplication.objects.GAME_ID
 import com.alexproject.testapplication.viewModels.FragmentAllGamesViewModel
 import com.alexproject.testapplication.viewModels.ViewModelFactory
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
-import java.time.LocalDateTime
+import java.time.LocalDate
 import javax.inject.Inject
 
 class FragmentAllGames : Fragment(), GameClickListener {
@@ -46,17 +44,15 @@ class FragmentAllGames : Fragment(), GameClickListener {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this, viewModelFactory)[FragmentAllGamesViewModel::class.java]
         lifecycleScope.launchWhenStarted {
-            viewModel.loadGamesByDate(LocalDateTime.now().toString().substringBefore("T"))
+            viewModel.loadGamesByDate(LocalDate.now().toString())
                 .collectLatest { initRecyclerAdapter(it) }
         }
     }
 
     private fun initRecyclerAdapter(games: List<Game>) {
-        lifecycleScope.launch(Dispatchers.Main) {
-            binding.rcView.layoutManager = LinearLayoutManager(context)
-            val adapter = GamesAdapter(games, this@FragmentAllGames)
-            binding.rcView.adapter = adapter
-        }
+        binding.rcView.layoutManager = LinearLayoutManager(context)
+        val adapter = GamesAdapter(games, this@FragmentAllGames)
+        binding.rcView.adapter = adapter
     }
 
     override fun buttonGameFavoriteClicked(gameId: Int, isFavorite: Boolean) {
@@ -68,5 +64,4 @@ class FragmentAllGames : Fragment(), GameClickListener {
 
     override fun itemGameClicked(gameId: Int) =
         findNavController().navigate(R.id.fragmentGame, bundleOf(GAME_ID to gameId))
-
 }

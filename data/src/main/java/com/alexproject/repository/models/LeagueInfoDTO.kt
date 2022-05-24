@@ -1,6 +1,6 @@
 package com.alexproject.repository.models
 
-import com.alexproject.domain.models.LeagueInfo
+import com.alexproject.domain.models.League
 
 
 data class LeagueInfoDTO(
@@ -9,6 +9,6 @@ data class LeagueInfoDTO(
     val logo: String,
     val name: String,
     val type: String
-){
-    fun mapToLeagueInfo() = LeagueInfo(country.mapToCountry(), id, logo, name, type)
+) {
+    fun mapToLeague() = League(id, logo, name, type)
 }

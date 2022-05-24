@@ -9,6 +9,7 @@ import com.alexproject.testapplication.contracts.TeamFavorites
 import com.alexproject.testapplication.models.StatisticTable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,8 +19,6 @@ class FragmentTeamViewModel @Inject constructor(
     private val deleteTeamFromFavoritesUseCase: DeleteTeamFromFavoritesUseCase,
     private val loadTeamGamesUseCase: LoadTeamGamesUseCase,
     private val loadTeamByIdUseCase: LoadTeamByIdUseCase,
-    private val loadCountryByIdUseCase: LoadCountryByIdUseCase,
-    private val loadLeagueByIdUseCase: LoadLeagueByIdUseCase,
     private val loadStatisticsUseCase: LoadStatisticsUseCase,
     private val addGameToFavoritesUseCase: AddGameToFavoritesUseCase,
     private val deleteGameFromFavoritesUseCase: DeleteGameFromFavoritesUseCase
@@ -41,23 +40,22 @@ class FragmentTeamViewModel @Inject constructor(
         loadTeamGamesUseCase.loadAllGamesForTeam(teamId)
 
     suspend fun loadStatisticsTable(leagueId: Int): Flow<List<StatisticTable>> {
-        loadStatisticsUseCase.loadStatistic(leagueId)
         val statisticList = mutableListOf<StatisticTable>()
-        val statisticTable = loadStatisticsUseCase.loadStatistic(leagueId)
-        statisticTable.collect { statistic ->
-            statistic.forEach { listStatisticForGroup ->
-                statisticList.add(StatisticTable.Group(listStatisticForGroup.first().nameGroup))
+        var groupName = ""
+        loadStatisticsUseCase.loadStatistic(leagueId).collectLatest { statistic ->
+            statistic.first { listStatisticForGroup ->
                 listStatisticForGroup.forEach {
+                    if (it.nameGroup != groupName) {
+                        groupName = it.nameGroup
+                        statisticList.add(StatisticTable.Group(groupName))
+                    }
                     statisticList.add(mapToStatisticTable(it))
                 }
+                return@first true
             }
         }
         return flowOf(statisticList as List<StatisticTable>)
     }
-
-    suspend fun loadLeagueById(leagueId: Int) = loadLeagueByIdUseCase.loadLeagueById(leagueId)
-
-    suspend fun loadCountryById(countryId: Int) = loadCountryByIdUseCase.loadCountryById(countryId)
 
     private fun mapToStatisticTable(statistic: Statistic) = StatisticTable.TeamStatistic(
         country = statistic.country,

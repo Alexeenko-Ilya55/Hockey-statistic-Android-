@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -21,25 +22,27 @@ import com.alexproject.testapplication.contracts.GameFavorites
 import com.alexproject.testapplication.contracts.TeamFavorites
 import com.alexproject.testapplication.databinding.FragmentTeamBinding
 import com.alexproject.testapplication.models.StatisticTable
-import com.alexproject.testapplication.objects.COUNTRY_ID
-import com.alexproject.testapplication.objects.LEAGUE_ID
-import com.alexproject.testapplication.objects.TEAM_ID
+import com.alexproject.testapplication.objects.*
 import com.alexproject.testapplication.viewModels.FragmentTeamViewModel
 import com.alexproject.testapplication.viewModels.ViewModelFactory
+import com.alexproject.testapplication.views.TabItemClickListener
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
-class FragmentTeam : Fragment(), TeamFavorites, GameFavorites, GameClickListener {
+class FragmentTeam : Fragment(), TeamFavorites, GameFavorites, GameClickListener,
+    TabItemClickListener {
 
     private lateinit var binding: FragmentTeamBinding
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    lateinit var viewModel: FragmentTeamViewModel
+    private lateinit var viewModel: FragmentTeamViewModel
+    private var teamId by Delegates.notNull<Int>()
+    private var leagueId by Delegates.notNull<Int>()
+    private lateinit var allGames: List<Game>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,39 +53,34 @@ class FragmentTeam : Fragment(), TeamFavorites, GameFavorites, GameClickListener
         viewModel =
             ViewModelProvider(this, viewModelFactory)[FragmentTeamViewModel::class.java]
 
-        val teamId = arguments?.getInt(TEAM_ID)!!
-        val countryId = arguments?.getInt(COUNTRY_ID)!!
-        val leagueId = arguments?.getInt(LEAGUE_ID)!!
+        teamId = arguments?.getInt(TEAM_ID)!!
 
-        lifecycleScope.launch(Dispatchers.IO) {
+        lifecycleScope.launchWhenStarted {
             viewModel.loadTeamById(teamId).collectLatest { team ->
                 initUI(team.name, team.logo, binding.teamEmblem, binding.teamName)
             }
         }
-        lifecycleScope.launch(Dispatchers.IO) {
-            viewModel.loadLeagueById(leagueId).collectLatest {
-                initUI(
-                    getString(R.string.league_name, it.name),
-                    it.logo,
-                    binding.leagueLogo,
-                    binding.leagueName
-                )
-            }
-        }
-        lifecycleScope.launch(Dispatchers.IO) {
-            viewModel.loadCountryById(countryId).collectLatest {
-                initUI(
-                    getString(R.string.country_name, it.name),
-                    it.flag,
-                    binding.countryFlag,
-                    binding.countryName
-                )
-            }
-        }
+
+        binding.tabLayout.setTabNames(
+            listOf(
+                getString(R.string.results),
+                getString(R.string.calendar),
+                getString(R.string.statistic)
+            )
+        )
+        binding.tabLayout.setClickListener(this)
 
         lifecycleScope.launchWhenStarted {
             viewModel.loadAllGamesForTeam(teamId).collectLatest {
-                initGamesAdapter(it)
+                allGames = it
+                allGames.filterGamesResults()
+                leagueId = it.first().league.id
+                initUI(
+                    allGames.first().league.name,
+                    allGames.first().league.logo,
+                    binding.leagueLogo,
+                    binding.leagueName
+                )
             }
         }
         binding.leagueButton.setOnClickListener {
@@ -105,10 +103,8 @@ class FragmentTeam : Fragment(), TeamFavorites, GameFavorites, GameClickListener
     }
 
     private fun initUI(name: String, imageUrl: String?, imageView: ImageView, textView: TextView) {
-        lifecycleScope.launch(Dispatchers.Main) {
-            Picasso.get().load(imageUrl).into(imageView)
-            textView.text = name
-        }
+        Picasso.get().load(imageUrl).into(imageView)
+        textView.text = name
     }
 
     override fun addGameToFavorites(gameId: Int) = viewModel.addGameToFavorites(gameId)
@@ -127,5 +123,21 @@ class FragmentTeam : Fragment(), TeamFavorites, GameFavorites, GameClickListener
     }
 
     override fun itemGameClicked(gameId: Int) =
-        findNavController().navigate(R.id.fragmentGame)
+        findNavController().navigate(R.id.fragmentGame, bundleOf(GAME_ID to gameId))
+
+    override fun positionActiveTabChanged(activeTabIndex: Int) {
+        when (activeTabIndex) {
+            Tab.RESULTS.index -> lifecycleScope.launchWhenStarted {
+                initGamesAdapter(allGames.filterGamesResults())
+            }
+            Tab.CALENDAR.index -> lifecycleScope.launchWhenStarted {
+                initGamesAdapter(allGames.filterGamesCalendar())
+            }
+            Tab.STATISTIC_TABLE.index -> lifecycleScope.launchWhenStarted {
+                viewModel.loadStatisticsTable(leagueId).collectLatest {
+                    initStatisticAdapter(it)
+                }
+            }
+        }
+    }
 }

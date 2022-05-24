@@ -1,6 +1,5 @@
 package com.alexproject.testapplication.adapters
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -15,14 +14,8 @@ import com.alexproject.testapplication.objects.GOAL
 
 class GameEventsAdapter(
     private val game: Game,
+    private val eventsItem: List<EventsAdapterItem>,
 ) : RecyclerView.Adapter<RecyclerTHolder>() {
-
-    var eventsItem = listOf<EventsAdapterItem>()
-        @SuppressLint("NotifyDataSetChanged")
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerTHolder {
         return when (viewType) {
@@ -73,14 +66,14 @@ sealed class RecyclerTHolder(binding: ViewBinding) : RecyclerView.ViewHolder(bin
         fun bind(gameEvents: EventsAdapterItem.GameEvents, homeTeamId: Int) {
             binding.gameEventsItemView.apply {
                 setSide(gameEvents.team.id == homeTeamId)
-                if (gameEvents.type == GOAL){
+                if (gameEvents.type == GOAL) {
                     setImage(R.drawable.goal)
                 } else {
                     setImage(R.drawable.penalty)
                 }
                 setPlayerText(gameEvents.players ?: "team ${gameEvents.team.name}")
                 setTimerText(gameEvents.minute)
-                setAssistsText(parseAssists(gameEvents.assistsFirst,gameEvents.assistsSecond))
+                setAssistsText(parseAssists(gameEvents.assistsFirst, gameEvents.assistsSecond))
             }
         }
 
@@ -102,7 +95,7 @@ sealed class RecyclerTHolder(binding: ViewBinding) : RecyclerView.ViewHolder(bin
     ) : RecyclerTHolder(binding) {
 
         fun bind(gamePeriod: String) {
-            if(gamePeriod == "T")
+            if (gamePeriod == "T")
                 binding.period.text = itemView.context.getString(R.string.overtime)
             else
                 binding.period.text = itemView.context.getString(R.string.period, gamePeriod)

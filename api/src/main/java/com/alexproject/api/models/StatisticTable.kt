@@ -6,8 +6,8 @@ data class StatisticTable(
     val errors: List<Any>,
     val response: List<List<StatisticResponse>>,
     val results: Int
-){
-    fun mapToDTO():List<List<StatisticDTO>> = response.map {
+) {
+    fun mapToDTO(): List<List<StatisticDTO>> = response.map {
         it.map { statisticResponse ->
             statisticResponse.toStatistic()
         }
@@ -17,7 +17,7 @@ data class StatisticTable(
 data class StatisticResponse(
     val country: Country,
     val description: String?,
-    val form: String,
+    val form: String?,
     val games: GamesStatistic,
     val goals: Goals,
     val group: Group,

@@ -5,6 +5,7 @@
     <string name="live">Live</string>
     <string name="favorites">Избранное</string>
     <string name="statistic">Статистика</string>
+    <string name="statisticTable">Таблица</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -56,6 +57,9 @@
     <string name="goals">Голы</string>
     <string name="points">О</string>
     <string name="number">#</string>
+
+    <string name="chooseLeague">Выберите лигу</string>
+    <string name="cancel">Отменить</string>
 
 
 </resources>

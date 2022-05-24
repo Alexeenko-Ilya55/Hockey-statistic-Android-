@@ -39,6 +39,7 @@ class FragmentGame : Fragment(), GameClickListener, TabItemClickListener {
     lateinit var viewModel: FragmentGameViewModel
 
     lateinit var game: Game
+    private var h2hGames: List<Game> = listOf()
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -93,28 +94,19 @@ class FragmentGame : Fragment(), GameClickListener, TabItemClickListener {
             )
         }
         binding.homeTeamLabelGame.setOnClickListener {
-            findNavController().navigate(
-                R.id.fragmentTeam, bundleOf(
-                    TEAM_ID to game.homeTeam.id,
-                    COUNTRY_ID to game.country.id,
-                    LEAGUE_ID to game.league.id
-                )
-            )
+            findNavController().navigate(R.id.fragmentTeam, bundleOf(TEAM_ID to game.homeTeam.id))
         }
         return binding.root
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private fun initH2HAdapter(listGames: List<Game>) {
+    private fun initH2HAdapter(listGames: List<Game>) =
         lifecycleScope.launch(Dispatchers.Main) {
             binding.matchInfo.isVisible = false
             binding.rcView.isVisible = true
             binding.rcView.layoutManager = LinearLayoutManager(context)
             val adapter = GamesAdapter(listGames, this@FragmentGame)
             binding.rcView.adapter = adapter
-            adapter.notifyDataSetChanged()
         }
-    }
 
     private fun onButtonFavoriteClicked(teamId: Int, isFavorite: Boolean) {
         if (isFavorite)
@@ -161,22 +153,16 @@ class FragmentGame : Fragment(), GameClickListener, TabItemClickListener {
         }
     }
 
-    private fun initEventsAdapter(gameEvents: List<EventsAdapterItem>) {
+    private fun initEventsAdapter(gameEvents: List<EventsAdapterItem>) =
         lifecycleScope.launch(Dispatchers.Main) {
             binding.matchInfo.isVisible = false
             binding.rcView.isVisible = true
             binding.rcView.layoutManager = LinearLayoutManager(context)
-            val adapter = GameEventsAdapter(game)
-            adapter.eventsItem = gameEvents
+            val adapter = GameEventsAdapter(game, gameEvents)
+
             binding.rcView.adapter = adapter
         }
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.leagueButton.setOnClickListener {
-        }
-    }
 
     override fun buttonGameFavoriteClicked(gameId: Int, isFavorite: Boolean) {
         if (isFavorite)
@@ -185,20 +171,25 @@ class FragmentGame : Fragment(), GameClickListener, TabItemClickListener {
             viewModel.deleteGameFromFavorites(gameId)
     }
 
-    override fun itemGameClicked(gameId: Int) {
+    override fun itemGameClicked(gameId: Int) =
         findNavController().navigate(R.id.fragmentGame, bundleOf(GAME_ID to gameId))
-    }
+
 
     override fun positionActiveTabChanged(activeTabIndex: Int) {
         lifecycleScope.launch(Dispatchers.IO) {
-            if (activeTabIndex == 0) {
+            if (activeTabIndex == Tab.EVENTS.index) {
                 viewModel.loadGameEvents(game.id).collectLatest {
                     initEventsAdapter(it)
                 }
             } else {
-                viewModel.loadH2HGames(game.homeTeam.id, game.awayTeam.id).collectLatest { list ->
-                    initH2HAdapter(list.filter { it.id != game.id })
-                }
+                if (h2hGames.isEmpty())
+                    viewModel.loadH2HGames(game.homeTeam.id, game.awayTeam.id).collect { list ->
+                        h2hGames =
+                            list.filter { it.id != game.id && it.status != Status.GAME_NOT_STARTED.get }
+                        initH2HAdapter(h2hGames)
+                    }
+                else
+                    initH2HAdapter(h2hGames)
             }
         }
     }

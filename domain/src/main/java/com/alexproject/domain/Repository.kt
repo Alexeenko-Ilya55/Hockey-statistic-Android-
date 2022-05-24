@@ -25,4 +25,6 @@ interface Repository {
     suspend fun loadTeamById(teamId: Int): Flow<Team>
     suspend fun loadCountryById(countryId: Int): Flow<Country>
     suspend fun loadLeagueById(leagueId: Int): Flow<League>
+    suspend fun loadGamesForLeague(leagueId: Int): Flow<List<Game>>
+    suspend fun loadAllLeagues(): Flow<List<League>>
 }
