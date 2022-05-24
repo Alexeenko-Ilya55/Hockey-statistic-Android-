@@ -27,6 +27,16 @@ class DatabaseImpl @Inject constructor(private val dao: Dao) : Database {
     override suspend fun insertGameEvents(gameEventsDTO: List<GameEventsDTO>) =
         dao.insertGameEvents(toGameEventsEntity(gameEventsDTO))
 
+    override suspend fun insertLeagues(leagues: List<LeagueInfoDTO>) {
+        dao.insertLeague(toLeagueInfoEntity(leagues))
+        leagues.forEach {
+            dao.insertCountry(toCountryEntity(it.country))
+        }
+    }
+
+    override suspend fun insertCountries(countries: List<CountryDTO>) =
+        dao.insertCountries(countries.map { toCountryEntity(it) })
+
     override suspend fun getCountries(): List<CountryDTO> = dao.getCountries().map {
         it.mapToDTO()
     }
@@ -78,12 +88,25 @@ class DatabaseImpl @Inject constructor(private val dao: Dao) : Database {
     override suspend fun getStatistic(leagueId: Int): Flow<List<List<StatisticDTO>>> {
         return emptyFlow()
     }
-    // override suspend fun getStatistic(leagueId: Int) = dao.getStatistic(leagueId)
-    //     .map { group -> group.map { listStatistic -> listStatistic.map { it.mapToDTO() } } }
+
+    override suspend fun getCountryById(countryId: Int) =
+        dao.getCountryById(countryId).map { it.mapToDTO() }
+
+    override suspend fun getLeagueById(leagueId: Int) =
+        dao.getLeagueById(leagueId).map {
+            LeagueDTO(
+                it.leagueInfoEntity.id,
+                it.leagueInfoEntity.logo,
+                it.leagueInfoEntity.name,
+                it.leagueInfoEntity.type
+            )
+        }
+
+    override suspend fun loadAllLeagues(): Flow<List<LeagueInfoDTO>> =
+        dao.getAllLeagues().map { listLeagues -> listLeagues.map { it.mapToDTO() } }
 
     override suspend fun addTeamToFavorites(teamId: Int) =
         dao.addTeamToFavorites(IsFavoriteTeamEntity(teamId))
-
 
     private fun toGameEventsEntity(gameEvents: List<GameEventsDTO>) = gameEvents.map {
         GameEventsEntity(
@@ -128,6 +151,10 @@ class DatabaseImpl @Inject constructor(private val dao: Dao) : Database {
 
     private fun toLeagueEntity(leagueDTO: LeagueDTO) =
         LeagueEntity(leagueDTO.id, leagueDTO.logo, leagueDTO.name, leagueDTO.type)
+
+    private fun toLeagueInfoEntity(listLeagueDTO: List<LeagueInfoDTO>) = listLeagueDTO.map {
+        LeagueInfoEntity(it.country.id, it.id, it.logo, it.name, it.type)
+    }
 }
 
 enum class Status(val get: String) {

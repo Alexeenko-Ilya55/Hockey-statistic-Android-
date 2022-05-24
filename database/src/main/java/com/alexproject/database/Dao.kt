@@ -20,6 +20,9 @@ interface Dao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertLeague(leagueEntity: LeagueEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertLeague(listLeagues: List<LeagueInfoEntity>)
+
     @Transaction
     @Query("SELECT * FROM $TABLE_GAMES WHERE date = :date ORDER BY time")
     fun getGamesByDate(date: String): Flow<List<Game>>
@@ -76,6 +79,15 @@ interface Dao {
     @Query("SELECT * FROM $TABLE_TEAM WHERE id = :teamId ")
     fun getTeamById(teamId: Int): Flow<Team>
 
+    @Query("SELECT * FROM $TABLE_COUNTRIES WHERE id = :countryId ")
+    fun getCountryById(countryId: Int): Flow<CountryEntity>
+
+    @Query("SELECT * FROM $TABLE_LEAGUE_INFO WHERE id = :leagueId ")
+    fun getLeagueById(leagueId: Int): Flow<LeagueInfo>
+
+    @Transaction
+    @Query("SELECT * FROM $TABLE_LEAGUE_INFO ORDER BY name")
+    fun getAllLeagues(): Flow<List<LeagueInfo>>
 }
 
 

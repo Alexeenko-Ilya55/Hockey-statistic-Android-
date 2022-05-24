@@ -21,6 +21,7 @@ interface ApiService {
         @Query("h2h") h2h: String?,
         @Query("team") teamId: Int?,
         @Query("season") season: Int?,
+        @Query("league") leagueId: Int?,
         @Query("timezone") timeZone: String
     ): Game
 
@@ -38,18 +39,8 @@ interface ApiService {
     @GET(LEAGUES)
     suspend fun loadLeagues(
         @Query(COUNTRY) countryName: String?,
-        @Query(SEASON) season: Int
+        @Query(SEASON) season: Int?
     ): Leagues
-
-    @Headers(
-        "$HOST $API_SPORTS",
-        "$KEY ${BuildConfig.API_KEY}"
-    )
-    @GET(STANDINGS_GROUPS)
-    suspend fun loadLeaguesGroup(
-        @Query(LEAGUE) leagueId: Int,
-        @Query(SEASON) season: Int
-    ): LeaguesGroup
 
     @Headers(
         "$HOST $API_SPORTS",

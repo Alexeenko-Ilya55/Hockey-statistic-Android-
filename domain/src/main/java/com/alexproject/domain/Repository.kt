@@ -1,9 +1,6 @@
 package com.alexproject.domain
 
-import com.alexproject.domain.models.EventsAdapterItem
-import com.alexproject.domain.models.Game
-import com.alexproject.domain.models.Statistic
-import com.alexproject.domain.models.Team
+import com.alexproject.domain.models.*
 import kotlinx.coroutines.flow.Flow
 
 interface Repository {
@@ -26,4 +23,8 @@ interface Repository {
     suspend fun loadGameEvents(gameId: Int): Flow<List<EventsAdapterItem.GameEvents>>
     suspend fun loadH2HGames(homeTeamId: Int, awayTeamId: Int): Flow<List<Game>>
     suspend fun loadTeamById(teamId: Int): Flow<Team>
+    suspend fun loadCountryById(countryId: Int): Flow<Country>
+    suspend fun loadLeagueById(leagueId: Int): Flow<League>
+    suspend fun loadGamesForLeague(leagueId: Int): Flow<List<Game>>
+    suspend fun loadAllLeagues(): Flow<List<League>>
 }

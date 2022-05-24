@@ -4,28 +4,45 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.alexproject.domain.models.Team
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.alexproject.domain.models.Game
+import com.alexproject.testapplication.R
+import com.alexproject.testapplication.adapters.GamesAdapter
+import com.alexproject.testapplication.adapters.StatisticTableAdapter
 import com.alexproject.testapplication.app.appComponent
+import com.alexproject.testapplication.contracts.GameClickListener
+import com.alexproject.testapplication.contracts.GameFavorites
+import com.alexproject.testapplication.contracts.TeamFavorites
 import com.alexproject.testapplication.databinding.FragmentTeamBinding
-import com.alexproject.testapplication.objects.TEAM_ID
+import com.alexproject.testapplication.models.StatisticTable
+import com.alexproject.testapplication.objects.*
 import com.alexproject.testapplication.viewModels.FragmentTeamViewModel
 import com.alexproject.testapplication.viewModels.ViewModelFactory
+import com.alexproject.testapplication.views.TabItemClickListener
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
-class FragmentTeam : Fragment() {
+class FragmentTeam : Fragment(), TeamFavorites, GameFavorites, GameClickListener,
+    TabItemClickListener {
 
     private lateinit var binding: FragmentTeamBinding
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    lateinit var viewModel: FragmentTeamViewModel
-    lateinit var team: Team
+    private lateinit var viewModel: FragmentTeamViewModel
+    private var teamId by Delegates.notNull<Int>()
+    private var leagueId by Delegates.notNull<Int>()
+    private lateinit var allGames: List<Game>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,34 +53,91 @@ class FragmentTeam : Fragment() {
         viewModel =
             ViewModelProvider(this, viewModelFactory)[FragmentTeamViewModel::class.java]
 
-        val teamId = arguments?.getInt(TEAM_ID)
+        teamId = arguments?.getInt(TEAM_ID)!!
+
         lifecycleScope.launchWhenStarted {
-            teamId?.let {
-                viewModel.loadTeamById(it).collectLatest { team ->
-                    this@FragmentTeam.team = team
-                    updateUi(team)
-                }
+            viewModel.loadTeamById(teamId).collectLatest { team ->
+                initUI(team.name, team.logo, binding.teamEmblem, binding.teamName)
             }
         }
+
+        binding.tabLayout.setTabNames(
+            listOf(
+                getString(R.string.results),
+                getString(R.string.calendar),
+                getString(R.string.statistic)
+            )
+        )
+        binding.tabLayout.setClickListener(this)
+
         lifecycleScope.launchWhenStarted {
-            viewModel.loadAllGamesForTeam(team.id)
+            viewModel.loadAllGamesForTeam(teamId).collectLatest {
+                allGames = it
+                allGames.filterGamesResults()
+                leagueId = it.first().league.id
+                initUI(
+                    allGames.first().league.name,
+                    allGames.first().league.logo,
+                    binding.leagueLogo,
+                    binding.leagueName
+                )
+            }
         }
-
-        binding.tabItemResults.setOnClickListener {
-
-        }
-
         binding.leagueButton.setOnClickListener {
 
         }
         return binding.root
     }
 
-    private fun updateUi(team: Team) {
-        binding.apply {
-            teamName.text = team.name
-            Picasso.get().load(team.logo).into(teamEmblem)
-        }
+    private fun initGamesAdapter(games: List<Game>) {
+        binding.rcView.layoutManager = LinearLayoutManager(context)
+        val adapter = GamesAdapter(games, this@FragmentTeam)
+        binding.rcView.adapter = adapter
     }
 
+    private fun initStatisticAdapter(statistic: List<StatisticTable>) {
+        binding.rcView.layoutManager = LinearLayoutManager(context)
+        val adapter = StatisticTableAdapter()
+        adapter.statistic = statistic
+        binding.rcView.adapter = adapter
+    }
+
+    private fun initUI(name: String, imageUrl: String?, imageView: ImageView, textView: TextView) {
+        Picasso.get().load(imageUrl).into(imageView)
+        textView.text = name
+    }
+
+    override fun addGameToFavorites(gameId: Int) = viewModel.addGameToFavorites(gameId)
+
+    override fun deleteGameFromFavorites(gameId: Int) = viewModel.deleteGameFromFavorites(gameId)
+
+    override fun addTeamToFavorites(teamId: Int) = viewModel.addTeamToFavorites(teamId)
+
+    override fun deleteTeamFromFavorites(teamId: Int) = viewModel.deleteTeamFromFavorites(teamId)
+
+    override fun buttonGameFavoriteClicked(gameId: Int, isFavorite: Boolean) {
+        if (isFavorite)
+            addGameToFavorites(gameId)
+        else
+            deleteGameFromFavorites(gameId)
+    }
+
+    override fun itemGameClicked(gameId: Int) =
+        findNavController().navigate(R.id.fragmentGame, bundleOf(GAME_ID to gameId))
+
+    override fun positionActiveTabChanged(activeTabIndex: Int) {
+        when (activeTabIndex) {
+            Tab.RESULTS.index -> lifecycleScope.launchWhenStarted {
+                initGamesAdapter(allGames.filterGamesResults())
+            }
+            Tab.CALENDAR.index -> lifecycleScope.launchWhenStarted {
+                initGamesAdapter(allGames.filterGamesCalendar())
+            }
+            Tab.STATISTIC_TABLE.index -> lifecycleScope.launchWhenStarted {
+                viewModel.loadStatisticsTable(leagueId).collectLatest {
+                    initStatisticAdapter(it)
+                }
+            }
+        }
+    }
 }

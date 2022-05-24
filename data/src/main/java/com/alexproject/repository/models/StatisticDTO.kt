@@ -5,7 +5,7 @@ import com.alexproject.domain.models.Statistic
 data class StatisticDTO(
     val country: CountryDTO,
     val description: String?,
-    val form: String,
+    val form: String?,
     val nameGroup: String,
     val league: LeagueDTO,
     val points: Int,

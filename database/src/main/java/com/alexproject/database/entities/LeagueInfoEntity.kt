@@ -1,5 +1,6 @@
 package com.alexproject.database.entities
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.Relation
@@ -18,21 +19,18 @@ data class LeagueInfoEntity(
 )
 
 data class LeagueInfo(
+    @Embedded val leagueInfoEntity: LeagueInfoEntity,
     @Relation(
         parentColumn = "countryId",
-        entityColumn = "id"
+        entityColumn = "id",
     )
     val country: CountryEntity,
-    val id: Int,
-    val logo: String,
-    val name: String,
-    val type: String
 ) {
     fun mapToDTO() = LeagueInfoDTO(
         country.mapToDTO(),
-        id,
-        logo,
-        name,
-        type
+        leagueInfoEntity.id,
+        leagueInfoEntity.logo,
+        leagueInfoEntity.name,
+        leagueInfoEntity.type
     )
 }

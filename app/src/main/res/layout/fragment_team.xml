@@ -6,27 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".fragments.FragmentTeam">
 
-    <ImageView
-        android:id="@+id/countryFlag"
-        android:layout_width="@dimen/flag"
-        android:layout_height="@dimen/flag"
-        android:layout_marginStart="@dimen/very_large_margin"
-        android:layout_marginTop="@dimen/medium_margin"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
-
-    <TextView
-        android:id="@+id/countryName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/small_margin"
-        android:textColor="?attr/colorOnSecondary"
-        android:textSize="@dimen/mediumTextSize"
-        app:layout_constraintBottom_toBottomOf="@+id/countryFlag"
-        app:layout_constraintStart_toEndOf="@+id/countryFlag"
-        app:layout_constraintTop_toTopOf="@+id/countryFlag" />
-
     <TextView
         android:id="@+id/teamName"
         android:layout_width="wrap_content"
@@ -35,6 +14,7 @@
         android:textColor="?attr/colorOnSecondary"
         android:textSize="@dimen/teamNameTextSize"
         android:textStyle="bold"
+        android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/teamEmblem"
         app:layout_constraintStart_toEndOf="@+id/teamEmblem"
         app:layout_constraintTop_toTopOf="@+id/teamEmblem" />
@@ -44,54 +24,35 @@
         android:layout_width="@dimen/teamEmblem_teamFragment"
         android:layout_height="@dimen/teamEmblem_teamFragment"
         android:layout_marginStart="@dimen/very_large_margin"
-        android:layout_marginTop="@dimen/medium_margin"
+        android:layout_marginTop="@dimen/small_margin"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/countryFlag"
+        app:layout_constraintTop_toBottomOf="@+id/leagueButton"
         tools:src="@tools:sample/avatars" />
 
-    <com.google.android.material.tabs.TabLayout
+    <com.alexproject.testapplication.views.CustomTabView
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/small_margin"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/teamEmblem"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/leagueButton"
-        app:tabMode="scrollable">
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabItemResults"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/results" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabItemCalendar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/calendar" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabItemStatisticTable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/table" />
-    </com.google.android.material.tabs.TabLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/leagueButton"
         android:layout_width="@dimen/match_constraint"
         android:layout_height="@dimen/leagueButton"
-        android:layout_marginTop="@dimen/medium_margin"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/teamEmblem">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/leagueLogo"
             android:layout_width="@dimen/leagueEmblem"
             android:layout_height="@dimen/leagueEmblem"
-            android:layout_marginStart="@dimen/medium_margin"
+            android:layout_marginStart="@dimen/very_large_margin"
             android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -117,7 +78,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/arrow_forward" />
+            tools:src="@drawable/arrow_forward_black" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

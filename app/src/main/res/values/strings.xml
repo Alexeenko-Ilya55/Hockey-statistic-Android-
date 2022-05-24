@@ -5,6 +5,7 @@
     <string name="live">Live</string>
     <string name="favorites">Избранное</string>
     <string name="statistic">Статистика</string>
+    <string name="statisticTable">Таблица</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -42,7 +43,23 @@
 
     <string name="period">%s-Й ПЕРИОД</string>
     <string name="overtime">ОВЕРТАЙМ</string>
+
+    <string name="league_name">League: %s</string>
+    <string name="country_name">Country: %s</string>
+
     <string name="noInfoAboutGame">Информации пока нет, так как матч еще не начался</string>
+
+    <string name="gamesTeamStatistic">%1$d</string>
+    <string name="goalsTeamStatistic">%1$d/%2$d</string>
+
+    <string name="team">Команда</string>
+    <string name="games">И</string>
+    <string name="goals">Голы</string>
+    <string name="points">О</string>
+    <string name="number">#</string>
+
+    <string name="chooseLeague">Выберите лигу</string>
+    <string name="cancel">Отменить</string>
 
 
 </resources>

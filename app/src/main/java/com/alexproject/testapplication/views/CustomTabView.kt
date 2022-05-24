@@ -29,7 +29,7 @@ class CustomTabView @JvmOverloads constructor(
         this.background = context.getDrawable(R.color.transparent)
 
         params.setMargins(
-            context.resources.getDimension(R.dimen.large_margin).toInt(),
+            context.resources.getDimension(R.dimen.small_margin).toInt(),
             context.resources.getDimension(R.dimen.small_margin).toInt(),
             0,
             context.resources.getDimension(R.dimen.very_small_margin).toInt()
@@ -55,9 +55,15 @@ class CustomTabView @JvmOverloads constructor(
             val button = Button(context)
             button.text = tabName
             addView(button)
+            button.textSize = context.resources.getDimension(R.dimen.textTabSize)
             button.layoutParams = params
             button.gravity = Gravity.CENTER
-            button.setPadding(0, 0, 0, 0)
+            button.setPadding(
+                context.resources.getDimension(R.dimen.tabs_horizontal_padding).toInt(),
+                context.resources.getDimension(R.dimen.tabs_vertical_padding).toInt(),
+                context.resources.getDimension(R.dimen.tabs_horizontal_padding).toInt(),
+                context.resources.getDimension(R.dimen.tabs_vertical_padding).toInt()
+            )
             button.setOnClickListener {
                 tabItemClickListener.positionActiveTabChanged(index)
                 changePositionIndicator(index)

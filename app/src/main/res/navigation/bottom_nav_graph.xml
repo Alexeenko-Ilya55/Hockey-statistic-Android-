@@ -22,6 +22,15 @@
         <action
             android:id="@+id/fragmentGame_to_fragmentTeam"
             app:destination="@id/fragmentTeam" />
+        <action
+            android:id="@+id/action_fragmentGame_to_fragmentLive"
+            app:destination="@id/fragmentLive" />
+        <action
+            android:id="@+id/action_fragmentGame_to_fragmentFavorites"
+            app:destination="@id/fragmentFavorites" />
+        <action
+            android:id="@+id/action_fragmentGame_to_fragmentStatistics"
+            app:destination="@id/fragmentStatistics" />
     </fragment>
     <fragment
         android:id="@+id/fragmentLive"
@@ -57,5 +66,18 @@
         android:id="@+id/fragmentTeam"
         android:name="com.alexproject.testapplication.fragments.FragmentTeam"
         android:label="fragment_team"
-        tools:layout="@layout/fragment_team" />
+        tools:layout="@layout/fragment_team" >
+        <action
+            android:id="@+id/action_fragmentTeam_to_fragmentAllGames"
+            app:destination="@id/fragmentAllGames"
+            app:launchSingleTop="false"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_fragmentTeam_to_fragmentLive"
+            app:destination="@id/fragmentLive" />
+        <action
+            android:id="@+id/action_fragmentTeam_to_fragmentFavorites"
+            app:destination="@id/fragmentFavorites"
+            app:launchSingleTop="false" />
+    </fragment>
 </navigation>

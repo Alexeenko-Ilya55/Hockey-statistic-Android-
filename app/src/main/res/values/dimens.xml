@@ -4,7 +4,7 @@
     <dimen name="verySmallTextSize">12sp</dimen>
     <dimen name="mediumTextSize">14sp</dimen>
     <dimen name="largeTextSize">16sp</dimen>
-    <dimen name="teamNameTextSize">24sp</dimen>
+    <dimen name="teamNameTextSize">18sp</dimen>
     <dimen name="scoreTextSize">28sp</dimen>
     <dimen name="teamEmblemItemGame">33dp</dimen>
     <dimen name="defaultMarginStart">8dp</dimen>
@@ -21,9 +21,14 @@
     <dimen name="large_margin">20dp</dimen>
     <dimen name="very_large_margin">24dp</dimen>
 
+    <dimen name="tabs_margin">10dp</dimen>
+    <dimen name="tabs_horizontal_padding">7dp</dimen>
+    <dimen name="tabs_vertical_padding">4dp</dimen>
+
     <dimen name="height_tabLayout">35dp</dimen>
 
     <dimen name="teamEmblem_favorites">50dp</dimen>
+    <dimen name="leagueEmblem_changeList">30dp</dimen>
     <dimen name="teamButton_favorites">45dp</dimen>
 
     <dimen name="teamEmblem_gameFragment">50dp</dimen>
@@ -32,8 +37,21 @@
     <dimen name="leagueButton_gameFragment">15dp</dimen>
     <dimen name="leagueButtonHeight_gameFragment">40dp</dimen>
     <dimen name="flag">20dp</dimen>
-    <dimen name="leagueEmblem">30dp</dimen>
-    <dimen name="leagueButton">50dp</dimen>
+    <dimen name="leagueEmblem">25dp</dimen>
+    <dimen name="leagueButton">40dp</dimen>
+
+    <dimen name="teamEmblemStatisticTable">35dp</dimen>
+    <dimen name="games_guideLine">116dp</dimen>
+    <dimen name="goals_guideLine">73dp</dimen>
+    <dimen name="points_guideLine">8dp</dimen>
+
+    <dimen name="vertical_margin_header">2dp</dimen>
+    <dimen name="games_margin_header">28dp</dimen>
+    <dimen name="goals_margin_header">37dp</dimen>
+    <dimen name="points_margin_header">12dp</dimen>
+
+
+    <dimen name="textTabSize">4sp</dimen>
 
 
 </resources>

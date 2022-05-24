@@ -20,6 +20,8 @@ import com.alexproject.testapplication.contracts.GameClickListener
 import com.alexproject.testapplication.contracts.TeamClickListener
 import com.alexproject.testapplication.databinding.FragmentFavoritesBinding
 import com.alexproject.testapplication.objects.GAME_ID
+import com.alexproject.testapplication.objects.TEAM_ID
+import com.alexproject.testapplication.objects.Tab
 import com.alexproject.testapplication.viewModels.FragmentFavoritesViewModel
 import com.alexproject.testapplication.viewModels.ViewModelFactory
 import com.alexproject.testapplication.views.TabItemClickListener
@@ -59,21 +61,21 @@ class FragmentFavorites : Fragment(), GameClickListener, TeamClickListener, TabI
         return binding.root
     }
 
-    private fun initGameAdapter(games: List<Game>) {
+    private fun initGameAdapter(games: List<Game>) =
         lifecycleScope.launch(Dispatchers.Main) {
             binding.rcView.layoutManager = LinearLayoutManager(context)
             val adapter = GamesAdapter(games, this@FragmentFavorites)
             binding.rcView.adapter = adapter
         }
-    }
 
-    private fun initTeamAdapter(teams: List<Team>) {
+
+    private fun initTeamAdapter(teams: List<Team>) =
         lifecycleScope.launch(Dispatchers.Main) {
             binding.rcView.layoutManager = LinearLayoutManager(context)
             val adapter = RecyclerAdapterTeam(teams, this@FragmentFavorites)
             binding.rcView.adapter = adapter
         }
-    }
+
 
     override fun buttonGameFavoriteClicked(gameId: Int, isFavorite: Boolean) {
         if (isFavorite)
@@ -89,17 +91,16 @@ class FragmentFavorites : Fragment(), GameClickListener, TeamClickListener, TabI
             viewModel.deleteTeamFromFavorites(teamId)
     }
 
-    override fun itemTeamClicked(teamId: Int) {
-        findNavController().navigate(R.id.fragmentTeam)
-    }
+    override fun itemTeamClicked(teamId: Int) =
+        findNavController().navigate(R.id.fragmentTeam, bundleOf(TEAM_ID to teamId))
 
-    override fun itemGameClicked(gameId: Int) {
-        val bundle = bundleOf(GAME_ID to gameId)
-        findNavController().navigate(R.id.fragmentGame, bundle)
-    }
+
+    override fun itemGameClicked(gameId: Int) =
+        findNavController().navigate(R.id.fragmentGame, bundleOf(GAME_ID to gameId))
+
 
     override fun positionActiveTabChanged(activeTabIndex: Int) {
-        if (activeTabIndex == 0) {
+        if (activeTabIndex == Tab.GAMES.index) {
             lifecycleScope.launchWhenStarted {
                 viewModel.loadFavoritesGames().collectLatest { initGameAdapter(it) }
             }
