@@ -17,12 +17,13 @@ class CustomTabView @JvmOverloads constructor(
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
     private lateinit var tabItemClickListener: TabItemClickListener
-    var tabsNames = listOf<String>()
+    private var tabsNames = listOf<String>()
     private val tabs = mutableListOf<Button>()
     private val params = LayoutParams(
         LayoutParams.WRAP_CONTENT,
         LayoutParams.WRAP_CONTENT
     )
+    var activeTabIndex: Int = 0
 
     init {
         this.orientation = HORIZONTAL
@@ -65,6 +66,7 @@ class CustomTabView @JvmOverloads constructor(
                 context.resources.getDimension(R.dimen.tabs_vertical_padding).toInt()
             )
             button.setOnClickListener {
+                activeTabIndex = index
                 tabItemClickListener.positionActiveTabChanged(index)
                 changePositionIndicator(index)
             }

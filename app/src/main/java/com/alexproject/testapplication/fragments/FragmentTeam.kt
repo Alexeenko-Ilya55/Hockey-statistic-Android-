@@ -1,9 +1,7 @@
 package com.alexproject.testapplication.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.os.bundleOf
@@ -13,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alexproject.domain.models.Game
+import com.alexproject.domain.models.Team
 import com.alexproject.testapplication.R
 import com.alexproject.testapplication.adapters.GamesAdapter
 import com.alexproject.testapplication.adapters.StatisticTableAdapter
@@ -43,11 +42,16 @@ class FragmentTeam : Fragment(), TeamFavorites, GameFavorites, GameClickListener
     private var teamId by Delegates.notNull<Int>()
     private var leagueId by Delegates.notNull<Int>()
     private lateinit var allGames: List<Game>
+    private lateinit var menu: Menu
+    private lateinit var team: Team
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
+        requireActivity().setTitle(R.string.fragmentTeam)
         binding = FragmentTeamBinding.inflate(inflater, container, false)
         context?.appComponent?.inject(this)
         viewModel =
@@ -56,8 +60,12 @@ class FragmentTeam : Fragment(), TeamFavorites, GameFavorites, GameClickListener
         teamId = arguments?.getInt(TEAM_ID)!!
 
         lifecycleScope.launchWhenStarted {
-            viewModel.loadTeamById(teamId).collectLatest { team ->
+            viewModel.loadTeamById(teamId).collectLatest {
+                team = it
                 initUI(team.name, team.logo, binding.teamEmblem, binding.teamName)
+                if (team.isFavorite) {
+                    menu.findItem(R.id.favorites).setIcon(R.drawable.favorites_enable)
+                }
             }
         }
 
@@ -139,5 +147,28 @@ class FragmentTeam : Fragment(), TeamFavorites, GameFavorites, GameClickListener
                 }
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        this.menu = menu
+        requireActivity().menuInflater.inflate(R.menu.default_action_bar, menu)
+        menu.setGroupVisible(R.id.group_search, false)
+        menu.setGroupVisible(R.id.group_search_button, false)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item == menu.findItem(R.id.favorites)) {
+            team.isFavorite = !team.isFavorite
+            if (team.isFavorite) {
+                item.setIcon(R.drawable.favorites_enable)
+                addTeamToFavorites(teamId)
+            } else {
+                item.setIcon(R.drawable.favorite_not_enable)
+                deleteTeamFromFavorites(teamId)
+            }
+        } else
+            findNavController().navigate(R.id.fragmentSettings)
+        return super.onOptionsItemSelected(item)
     }
 }
