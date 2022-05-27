@@ -123,4 +123,11 @@ class RepositoryImpl @Inject constructor(
             database.insertLeagues(apiRepository.loadAllLeagues())
         return leagues.map { listLeagues -> listLeagues.map { it.mapToLeague() } }
     }
+
+    override suspend fun updateGamesByDate(date: String) {
+        database.insertGame(apiRepository.loadGamesByDate(date))
+    }
+
+    override suspend fun updateGameEvents(gameId: Int) =
+        database.insertGameEvents(apiRepository.loadGameEvents(gameId))
 }

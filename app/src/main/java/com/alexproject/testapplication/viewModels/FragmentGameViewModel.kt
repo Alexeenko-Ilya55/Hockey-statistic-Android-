@@ -21,11 +21,16 @@ class FragmentGameViewModel @Inject constructor(
     private val deleteTeamFromFavoritesUseCase: DeleteTeamFromFavoritesUseCase,
     private val loadGameByIdUseCase: LoadGameByIdUseCase,
     private val addGameToFavoritesUseCase: AddGameToFavoritesUseCase,
-    private val deleteGameFromFavoritesUseCase: DeleteGameFromFavoritesUseCase
+    private val deleteGameFromFavoritesUseCase: DeleteGameFromFavoritesUseCase,
+    private val updateGameEventsUseCase: UpdateGameEventsUseCase
 ) : ViewModel(), TeamFavorites, GameFavorites {
 
     suspend fun loadH2HGames(idHomeTeam: Int, idAwayTeam: Int) =
         loadH2HGamesUseCase.loadH2HGames(idHomeTeam, idAwayTeam)
+
+    fun updateGameEvents(gameId: Int) = viewModelScope.launch(Dispatchers.IO) {
+        updateGameEventsUseCase.updateGamesEvents(gameId)
+    }
 
     suspend fun loadGameEvents(gameId: Int): Flow<List<EventsAdapterItem>> {
         val gameEventsList = mutableListOf<EventsAdapterItem>()
@@ -43,7 +48,6 @@ class FragmentGameViewModel @Inject constructor(
         }
         return flowOf(gameEventsList as List<EventsAdapterItem>)
     }
-
 
     override fun addTeamToFavorites(teamId: Int) =
         viewModelScope.launch(Dispatchers.IO) {

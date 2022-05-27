@@ -24,14 +24,16 @@ class ViewModelFactory(
     private val loadLeagueByIdUseCase: LoadLeagueByIdUseCase,
     private val loadCountryByIdUseCase: LoadCountryByIdUseCase,
     private val loadGamesForLeagueUseCase: LoadGamesForLeagueUseCase,
-    private val loadAllLeaguesUseCase: LoadAllLeaguesUseCase
+    private val loadAllLeaguesUseCase: LoadAllLeaguesUseCase,
+    private val updateGamesByDateUseCase: UpdateGamesByDateUseCase,
+    private val updateGameEventsUseCase: UpdateGameEventsUseCase
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when (modelClass) {
             FragmentAllGamesViewModel::class.java -> FragmentAllGamesViewModel(
                 loadGamesByDateUseCase, addGameToFavoritesUseCase, deleteGameFromFavoritesUseCase,
-                loadGamesFromApiToDBUseCase
+                loadGamesFromApiToDBUseCase, updateGamesByDateUseCase
             )
             FragmentFavoritesViewModel::class.java -> FragmentFavoritesViewModel(
                 addTeamToFavoritesUseCase,
@@ -48,12 +50,14 @@ class ViewModelFactory(
                 deleteTeamFromFavoritesUseCase,
                 loadGameByIdUseCase,
                 addGameToFavoritesUseCase,
-                deleteGameFromFavoritesUseCase
+                deleteGameFromFavoritesUseCase,
+                updateGameEventsUseCase
             )
             FragmentLiveViewModel::class.java -> FragmentLiveViewModel(
                 addGameToFavoritesUseCase,
                 deleteGameFromFavoritesUseCase,
-                loadLiveGamesUseCase
+                loadLiveGamesUseCase,
+                updateGamesByDateUseCase
             )
             FragmentStatisticsViewModel::class.java -> FragmentStatisticsViewModel(
                 loadStatisticsUseCase,
