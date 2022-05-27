@@ -5,7 +5,12 @@
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.20037926675094817" />
         <entry key="app/src/main/res/drawable-anydpi/arrow_forward.xml" value="0.2615" />
+        <entry key="app/src/main/res/drawable-anydpi/favoriteEnable.xml" value="0.283" />
+        <entry key="app/src/main/res/drawable-anydpi/favoriteNotEnable.xml" value="0.2615" />
+        <entry key="app/src/main/res/drawable-anydpi/favorites_enable.xml" value="0.2615" />
         <entry key="app/src/main/res/drawable-anydpi/nav_menu_all_games.xml" value="0.202" />
+        <entry key="app/src/main/res/drawable-anydpi/search_action_bar.xml" value="0.318" />
+        <entry key="app/src/main/res/drawable-anydpi/settings.xml" value="0.283" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.235" />
         <entry key="app/src/main/res/drawable/round_border.xml" value="0.2875" />
         <entry key="app/src/main/res/drawable/round_outline.xml" value="0.1985" />
@@ -35,6 +40,9 @@
         <entry key="app/src/main/res/layout/table_header.xml" value="0.33" />
         <entry key="app/src/main/res/layout/team_item_layout.xml" value="0.25" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.18177083333333333" />
+        <entry key="app/src/main/res/menu/defaultActionBarMenu.xml" value="0.25" />
+        <entry key="app/src/main/res/menu/default_action_bar.xml" value="0.33" />
+        <entry key="app/src/main/res/menu/favorites_menu.xml" value="0.33" />
         <entry key="app/src/main/res/xml/root_preferences.xml" value="0.18177083333333333" />
       </map>
     </option>

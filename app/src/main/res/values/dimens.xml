@@ -50,6 +50,8 @@
     <dimen name="goals_margin_header">37dp</dimen>
     <dimen name="points_margin_header">12dp</dimen>
 
+    <dimen name="search_view_height">45dp</dimen>
+
 
     <dimen name="textTabSize">4sp</dimen>
 

@@ -12,24 +12,26 @@
             android:id="@+id/buttonChangeLeague"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@+id/leagueEmblem"
-            app:layout_constraintBottom_toBottomOf="@+id/leagueEmblem"
-            app:layout_constraintStart_toEndOf="@id/leagueEmblem"
             android:layout_marginStart="@dimen/large_margin"
             android:layout_marginEnd="@dimen/medium_margin"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/leagueEmblem"
+            app:layout_constraintStart_toEndOf="@id/leagueEmblem"
+            app:layout_constraintTop_toTopOf="@+id/leagueEmblem">
+
                 <TextView
                     android:id="@+id/leagueName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="@dimen/teamNameTextSize"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/arrow_league_change"
-                    android:layout_marginStart="@dimen/small_margin"/>
+                    android:layout_marginStart="@dimen/small_margin"
+                    android:src="@drawable/arrow_league_change" />
         </LinearLayout>
 
         <ImageView
@@ -59,4 +61,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:visibility="invisible"
+            android:id="@+id/leagueRcView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="buttonChangeLeague,tabLayout,rcView,leagueEmblem" />
 </androidx.constraintlayout.widget.ConstraintLayout>
