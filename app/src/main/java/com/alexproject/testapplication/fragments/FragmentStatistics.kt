@@ -1,14 +1,11 @@
 package com.alexproject.testapplication.fragments
 
 import android.app.AlertDialog
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.fragment.app.Fragment
@@ -38,7 +35,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.properties.Delegates
-import kotlin.properties.ReadOnlyProperty
 
 class FragmentStatistics : Fragment(), GameClickListener, TabItemClickListener,
     LeagueClickListener {

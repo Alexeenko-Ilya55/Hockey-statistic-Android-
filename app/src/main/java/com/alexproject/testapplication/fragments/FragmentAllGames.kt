@@ -3,13 +3,10 @@ package com.alexproject.testapplication.fragments
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.EditText
 import androidx.appcompat.widget.SearchView
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -76,6 +73,7 @@ class FragmentAllGames : Fragment(), GameClickListener {
         binding.scheduleGamesByDateTabLayout.getTabAt(TODAY_TAB_ITEM_INDEX)?.select()
         lifecycleScope.launchWhenStarted {
             viewModel.loadGamesByDate(LocalDate.now().toString()).collectLatest {
+                listGames[binding.scheduleGamesByDateTabLayout.selectedTabPosition] = it
                 initRecyclerAdapter(it)
             }
         }
@@ -135,8 +133,9 @@ class FragmentAllGames : Fragment(), GameClickListener {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                val selectedTab = binding.scheduleGamesByDateTabLayout.selectedTabPosition
                 newText?.let {
-                    initRecyclerAdapter(listGames.filter {
+                    initRecyclerAdapter(listGames[selectedTab].filter {
                         it.homeTeam.name.lowercase().contains(newText.lowercase()) ||
                                 it.awayTeam.name.lowercase().contains(newText.lowercase())
                     })
