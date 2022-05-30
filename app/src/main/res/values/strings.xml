@@ -63,6 +63,8 @@
 
     <string name="tabNames">%1s\n%2s</string>
     <string name="today">Сегодня</string>
+    <string name="update">Обновить</string>
+    <string name="updateGames">Данные устарели. Обновить?</string>
 
 
 </resources>

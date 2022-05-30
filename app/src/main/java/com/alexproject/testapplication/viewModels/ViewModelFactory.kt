@@ -33,7 +33,7 @@ class ViewModelFactory(
         return when (modelClass) {
             FragmentAllGamesViewModel::class.java -> FragmentAllGamesViewModel(
                 loadGamesByDateUseCase, addGameToFavoritesUseCase, deleteGameFromFavoritesUseCase,
-                loadGamesFromApiToDBUseCase, updateGamesByDateUseCase
+                updateGamesByDateUseCase
             )
             FragmentFavoritesViewModel::class.java -> FragmentFavoritesViewModel(
                 addTeamToFavoritesUseCase,

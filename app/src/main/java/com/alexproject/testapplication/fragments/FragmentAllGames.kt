@@ -1,11 +1,15 @@
 package com.alexproject.testapplication.fragments
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -21,7 +25,10 @@ import com.alexproject.testapplication.objects.*
 import com.alexproject.testapplication.viewModels.FragmentAllGamesViewModel
 import com.alexproject.testapplication.viewModels.ViewModelFactory
 import com.google.android.material.tabs.TabLayout
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import javax.inject.Inject
@@ -33,6 +40,7 @@ class FragmentAllGames : Fragment(), GameClickListener {
     lateinit var viewModelFactory: ViewModelFactory
     lateinit var viewModel: FragmentAllGamesViewModel
     private var listGames: MutableList<List<Game>> = mutableListOf()
+    private val dataStoreKey = stringPreferencesKey(DATE_LAST_UPDATE)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,12 +49,16 @@ class FragmentAllGames : Fragment(), GameClickListener {
         binding = FragmentAllGamesBinding.inflate(inflater, container, false)
         context?.appComponent?.inject(this)
         viewModel = ViewModelProvider(this, viewModelFactory)[FragmentAllGamesViewModel::class.java]
-        tabDate.forEach {
-            val dayIndex = if(it == LocalDate.now()) TODAY_INDEX
-                            else it.dayOfWeek.value
 
-            binding.tabLayout2.addTab(binding.tabLayout2.newTab().setText(
-                getString(R.string.tabNames,dayOfTheWeek(dayIndex) ,formatDate(it.toString()))))
+        tabDate.forEach {
+            val dayIndex = if (it == LocalDate.now()) TODAY_INDEX
+            else it.dayOfWeek.value
+
+            binding.tabLayout2.addTab(
+                binding.tabLayout2.newTab().setText(
+                    getString(R.string.tabNames, dayOfTheWeek(dayIndex), formatDate(it.toString()))
+                )
+            )
             listGames.add(emptyList())
         }
         binding.tabLayout2.getTabAt(TODAY_TAB_ITEM_INDEX)?.select()
@@ -74,6 +86,9 @@ class FragmentAllGames : Fragment(), GameClickListener {
 
         binding.swipeRefresh.setOnRefreshListener {
             viewModel.updateGames(tabDate)
+            lifecycleScope.launchWhenStarted {
+                setUpdateDate(LocalDate.now().toString())
+            }
             binding.swipeRefresh.isRefreshing = false
         }
 
@@ -104,6 +119,17 @@ class FragmentAllGames : Fragment(), GameClickListener {
         return formatOutputDate.format(docDate!!)
     }
 
+    override fun onResume() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            if (getUpdateDate() != LocalDate.now().toString()) {
+                lifecycleScope.launch(Dispatchers.Main) {
+                    showUpdateDialog()
+                }
+            }
+        }
+        super.onResume()
+    }
+
     private val tabDate: List<LocalDate> = listOf(
         LocalDate.now().minusDays(3),
         LocalDate.now().minusDays(2),
@@ -114,8 +140,8 @@ class FragmentAllGames : Fragment(), GameClickListener {
         LocalDate.now().plusDays(3)
     )
 
-    private fun dayOfTheWeek(dayIndex: Int): String{
-        return when(dayIndex){
+    private fun dayOfTheWeek(dayIndex: Int): String {
+        return when (dayIndex) {
             WeekDays.MONDAY.index -> Week.MONDAY.short
             WeekDays.TUESDAY.index -> Week.TUESDAY.short
             WeekDays.WEDNESDAY.index -> Week.WEDNESDAY.short
@@ -126,4 +152,28 @@ class FragmentAllGames : Fragment(), GameClickListener {
             else -> getString(R.string.today)
         }
     }
+
+    private fun showUpdateDialog() {
+        with(AlertDialog.Builder(context)) {
+            setTitle(R.string.update)
+            setMessage(R.string.updateGames)
+            setNegativeButton(getString(R.string.cancel)) { _, _ ->
+                Log.i("MyLog", CANCEL_PRESSED)
+            }
+            setPositiveButton(R.string.update) { _, _ ->
+                viewModel.updateGames(tabDate)
+                lifecycleScope.launchWhenStarted {
+                    setUpdateDate(LocalDate.now().toString())
+                }
+            }
+            create().show()
+        }
+    }
+
+    private suspend fun setUpdateDate(date: String) =
+        requireContext().dataStore.edit { settings ->
+            settings[dataStoreKey] = date
+        }
+
+    private suspend fun getUpdateDate() = requireContext().dataStore.data.first()[dataStoreKey]
 }

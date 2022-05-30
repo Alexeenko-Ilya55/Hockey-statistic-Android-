@@ -29,4 +29,5 @@ interface Repository {
     suspend fun loadAllLeagues(): Flow<List<League>>
     suspend fun updateGamesByDate(date: String)
     suspend fun updateGameEvents(gameId: Int)
+    suspend fun updateAllLeagues()
 }

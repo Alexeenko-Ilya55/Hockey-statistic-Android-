@@ -130,4 +130,6 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun updateGameEvents(gameId: Int) =
         database.insertGameEvents(apiRepository.loadGameEvents(gameId))
+
+    override suspend fun updateAllLeagues() = database.insertLeagues(apiRepository.loadAllLeagues())
 }
