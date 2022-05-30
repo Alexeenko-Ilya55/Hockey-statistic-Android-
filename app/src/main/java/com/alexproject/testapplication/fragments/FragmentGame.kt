@@ -2,9 +2,7 @@ package com.alexproject.testapplication.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -38,14 +36,17 @@ class FragmentGame : Fragment(), GameClickListener, TabItemClickListener {
     lateinit var viewModelFactory: ViewModelFactory
     lateinit var viewModel: FragmentGameViewModel
 
-    lateinit var game: Game
+    private lateinit var game: Game
     private var h2hGames: List<Game> = listOf()
+    private lateinit var menu: Menu
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
+        requireActivity().setTitle(R.string.fragmentGame)
         binding = FragmentGameBinding.inflate(
             inflater,
             container,
@@ -60,6 +61,9 @@ class FragmentGame : Fragment(), GameClickListener, TabItemClickListener {
                 viewModel.loadGameById(it).collectLatest { game ->
                     this@FragmentGame.game = game
                     updateUi(game)
+                    if (game.isFavorite) {
+                        menu.findItem(R.id.favorites).setIcon(R.drawable.favorites_enable)
+                    }
                 }
             }
         }
@@ -196,5 +200,26 @@ class FragmentGame : Fragment(), GameClickListener, TabItemClickListener {
                     initH2HAdapter(h2hGames)
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        this.menu = menu
+        requireActivity().menuInflater.inflate(R.menu.default_action_bar, menu)
+        menu.setGroupVisible(R.id.group_search, false)
+        menu.setGroupVisible(R.id.group_search_button, false)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.favorites) {
+            game.isFavorite = !game.isFavorite
+            buttonGameFavoriteClicked(game.id, game.isFavorite)
+            if (game.isFavorite)
+                item.setIcon(R.drawable.favorites_enable)
+            else
+                item.setIcon(R.drawable.favorite_not_enable)
+        } else
+            findNavController().navigate(R.id.fragmentSettings)
+        return super.onOptionsItemSelected(item)
     }
 }

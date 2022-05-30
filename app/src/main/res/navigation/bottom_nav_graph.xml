@@ -13,6 +13,9 @@
         <action
             android:id="@+id/open_fragmentGame"
             app:destination="@id/fragmentGame" />
+        <action
+            android:id="@+id/action_fragmentAllGames_to_settingsFragment"
+            app:destination="@id/fragmentSettings" />
     </fragment>
     <fragment
         android:id="@+id/fragmentGame"
@@ -31,6 +34,9 @@
         <action
             android:id="@+id/action_fragmentGame_to_fragmentStatistics"
             app:destination="@id/fragmentStatistics" />
+        <action
+            android:id="@+id/action_fragmentGame_to_settingsFragment"
+            app:destination="@id/fragmentSettings" />
     </fragment>
     <fragment
         android:id="@+id/fragmentLive"
@@ -40,6 +46,9 @@
         <action
             android:id="@+id/fragmentLive_to_fragmentGame"
             app:destination="@id/fragmentGame" />
+        <action
+            android:id="@+id/action_fragmentLive_to_settingsFragment"
+            app:destination="@id/fragmentSettings" />
     </fragment>
     <fragment
         android:id="@+id/fragmentFavorites"
@@ -52,6 +61,9 @@
         <action
             android:id="@+id/open_teamFragment"
             app:destination="@id/fragmentTeam" />
+        <action
+            android:id="@+id/action_fragmentFavorites_to_settingsFragment"
+            app:destination="@id/fragmentSettings" />
     </fragment>
     <fragment
         android:id="@+id/fragmentStatistics"
@@ -61,6 +73,9 @@
         <action
             android:id="@+id/fragmentStatistics_to_fragmentTeam"
             app:destination="@id/fragmentTeam" />
+        <action
+            android:id="@+id/action_fragmentStatistics_to_settingsFragment"
+            app:destination="@id/fragmentSettings" />
     </fragment>
     <fragment
         android:id="@+id/fragmentTeam"
@@ -79,5 +94,12 @@
             android:id="@+id/action_fragmentTeam_to_fragmentFavorites"
             app:destination="@id/fragmentFavorites"
             app:launchSingleTop="false" />
+        <action
+            android:id="@+id/action_fragmentTeam_to_settingsFragment"
+            app:destination="@id/fragmentSettings" />
     </fragment>
+    <fragment
+        android:id="@+id/fragmentSettings"
+        android:name="com.alexproject.testapplication.fragments.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:id="@+id/group_search">
+        <item
+            android:id="@+id/search"
+            android:icon="@drawable/search_action_bar"
+            android:title="@string/search"
+            app:showAsAction="ifRoom"
+            app:actionViewClass="androidx.appcompat.widget.SearchView" />
+    </group>
+
+    <group android:id="@+id/group_search_button">
+        <item
+            android:id="@+id/search_button"
+            android:icon="@drawable/search_action_bar"
+            android:title="@string/search"
+            app:showAsAction="ifRoom"/>
+    </group>
+
+    <group android:id="@+id/group_favorites">
+        <item
+            android:id="@+id/favorites"
+            android:icon="@drawable/favorite_not_enable"
+            android:title="@string/favorites"
+            app:showAsAction="ifRoom" />
+    </group>
+
+    <group android:id="@+id/group_settings">
+        <item
+            android:id="@+id/settings"
+            android:icon="@drawable/settings"
+            android:title="@string/settings"
+            app:showAsAction="ifRoom" />
+    </group>
+</menu>

@@ -3,6 +3,9 @@ package com.alexproject.testapplication.fragments
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
+import android.view.*
+import android.widget.EditText
+import androidx.appcompat.widget.SearchView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -46,6 +49,8 @@ class FragmentAllGames : Fragment(), GameClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
+        requireActivity().setTitle(R.string.fragmentAllGames)
         binding = FragmentAllGamesBinding.inflate(inflater, container, false)
         context?.appComponent?.inject(this)
         viewModel = ViewModelProvider(this, viewModelFactory)[FragmentAllGamesViewModel::class.java]
@@ -70,10 +75,10 @@ class FragmentAllGames : Fragment(), GameClickListener {
         }
         binding.scheduleGamesByDateTabLayout.getTabAt(TODAY_TAB_ITEM_INDEX)?.select()
         lifecycleScope.launchWhenStarted {
-            viewModel.loadGamesByDate(LocalDate.now().toString())
-                .collectLatest { initRecyclerAdapter(it) }
+            viewModel.loadGamesByDate(LocalDate.now().toString()).collectLatest {
+                initRecyclerAdapter(it)
+            }
         }
-
         binding.scheduleGamesByDateTabLayout.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -117,8 +122,39 @@ class FragmentAllGames : Fragment(), GameClickListener {
             viewModel.deleteGameFromFavorites(gameId)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        requireActivity().menuInflater.inflate(R.menu.default_action_bar, menu)
+        menu.setGroupVisible(R.id.group_favorites, false)
+        menu.setGroupVisible(R.id.group_search_button, false)
+        val searchView = menu.findItem(R.id.search).actionView as SearchView
+        searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text).hint =
+            getString(R.string.search_game)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    initRecyclerAdapter(listGames.filter {
+                        it.homeTeam.name.lowercase().contains(newText.lowercase()) ||
+                                it.awayTeam.name.lowercase().contains(newText.lowercase())
+                    })
+                }
+                return true
+            }
+        })
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
     override fun itemGameClicked(gameId: Int) =
         findNavController().navigate(R.id.fragmentGame, bundleOf(GAME_ID to gameId))
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.settings)
+            findNavController().navigate(R.id.fragmentSettings)
+        return super.onOptionsItemSelected(item)
+    }
 
     @SuppressLint("SimpleDateFormat")
     private fun formatDate(date: String): String {

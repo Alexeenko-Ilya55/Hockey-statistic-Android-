@@ -4,9 +4,8 @@ import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -45,6 +44,7 @@ class FragmentStatistics : Fragment(), GameClickListener, TabItemClickListener,
     LeagueClickListener {
 
     private lateinit var binding: FragmentStatisticsBinding
+    private lateinit var bindingDialog: DialodChangeLeagueFragmentBinding
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -57,12 +57,15 @@ class FragmentStatistics : Fragment(), GameClickListener, TabItemClickListener,
     private lateinit var favoriteLeague: League
     private lateinit var dialog: AlertDialog
     private val dataStoreKey = intPreferencesKey(FAVORITE_LEAGUE_ID)
+    private var listLeagues: List<League> = emptyList()
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
+        requireActivity().setTitle(R.string.fragmentStatistic)
         binding = FragmentStatisticsBinding.inflate(inflater, container, false)
         context?.appComponent?.inject(this)
 
@@ -75,12 +78,14 @@ class FragmentStatistics : Fragment(), GameClickListener, TabItemClickListener,
             loadLeague(leagueId)
         }
 
-        binding.buttonChangeLeague.setOnClickListener {
-            lifecycleScope.launchWhenStarted {
-                viewModel.loadAllLeagues().collectLatest {
-                    showChangeLeagueDialog(it)
-                }
+        lifecycleScope.launchWhenStarted {
+            viewModel.loadAllLeagues().collectLatest {
+                listLeagues = it
             }
+        }
+
+        binding.buttonChangeLeague.setOnClickListener {
+            showChangeLeagueDialog(listLeagues)
         }
 
         binding.tabLayout.setTabNames(
@@ -91,7 +96,6 @@ class FragmentStatistics : Fragment(), GameClickListener, TabItemClickListener,
             )
         )
         binding.tabLayout.setClickListener(this)
-
         return binding.root
     }
 
@@ -143,6 +147,7 @@ class FragmentStatistics : Fragment(), GameClickListener, TabItemClickListener,
         findNavController().navigate(R.id.fragmentGame, bundleOf(GAME_ID to gameId))
 
     override fun positionActiveTabChanged(activeTabIndex: Int) {
+        binding.tabLayout.activeTabIndex = activeTabIndex
         when (activeTabIndex) {
             TabsFragmentStatistic.STATISTIC.index -> lifecycleScope.launchWhenStarted {
                 initStatisticAdapter(statisticTable)
@@ -178,18 +183,37 @@ class FragmentStatistics : Fragment(), GameClickListener, TabItemClickListener,
     }
 
     private fun showChangeLeagueDialog(leagueList: List<League>) {
-        val binding = DialodChangeLeagueFragmentBinding.inflate(layoutInflater)
-        binding.rcView.layoutManager = LinearLayoutManager(context)
-        binding.rcView.adapter =
-            LeagueChangeListAdapter(leagueList, this@FragmentStatistics, favoriteLeague)
+        bindingDialog = DialodChangeLeagueFragmentBinding.inflate(layoutInflater)
+        initLeagueAdapter(leagueList)
+        bindingDialog.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    initLeagueAdapter(listLeagues.filter {
+                        it.name.lowercase().contains(newText.lowercase())
+                    })
+                }
+                return true
+            }
+        })
         dialog = with(AlertDialog.Builder(context)) {
             setTitle(R.string.chooseLeague)
             setNegativeButton(getString(R.string.cancel)) { _, _ ->
                 Log.i("MyLog", CANCEL_PRESSED)
             }
-            setView(binding.root)
+            setView(bindingDialog.root)
             show()
         }
+    }
+
+    private fun initLeagueAdapter(leagueList: List<League>) {
+        bindingDialog.rcView.layoutManager = LinearLayoutManager(context)
+        bindingDialog.rcView.adapter =
+            LeagueChangeListAdapter(leagueList, this@FragmentStatistics, favoriteLeague)
     }
 
     override fun itemClicked(league: League) {
@@ -207,5 +231,20 @@ class FragmentStatistics : Fragment(), GameClickListener, TabItemClickListener,
         }
 
     private suspend fun readFavoriteLeague() = requireContext().dataStore.data.first()[dataStoreKey]
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        requireActivity().menuInflater.inflate(R.menu.default_action_bar, menu)
+        menu.setGroupVisible(R.id.group_favorites, false)
+        menu.setGroupVisible(R.id.group_search, false)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.search_button)
+            showChangeLeagueDialog(listLeagues)
+        else
+            findNavController().navigate(R.id.fragmentSettings)
+        return super.onOptionsItemSelected(item)
+    }
 }
 

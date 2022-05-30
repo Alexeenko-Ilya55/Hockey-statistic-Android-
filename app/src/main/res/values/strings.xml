@@ -66,5 +66,21 @@
     <string name="update">Обновить</string>
     <string name="updateGames">Данные устарели. Обновить?</string>
 
+    <string name="fragmentAllGames">Hockey app</string>
+    <string name="fragmentFavorites">Избранное</string>
+    <string name="fragmentGame">Информация о игре</string>
+    <string name="fragmentLive">Live игры</string>
+    <string name="fragmentStatistic">Статистика</string>
+    <string name="fragmentTeam">О команде</string>
+
+    <string name="settings">Настройки</string>
+    <string name="search">Поиск</string>
+
+    <string name="search_league">Найти лигу…</string>
+    <string name="search_game">Найти игру…</string>
+    <string name="search_team">Найти команду…</string>
+
+
+
 
 </resources>
