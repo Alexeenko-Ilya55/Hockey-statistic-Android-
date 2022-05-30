@@ -57,23 +57,13 @@ enum class TabsFragmentStatistic(val index: Int) {
     RESULTS(1)
 }
 
-enum class Week(val short: String) {
-    MONDAY("ПН"),
-    TUESDAY("ВТ"),
-    WEDNESDAY("СР"),
-    THURSDAY("ЧТ"),
-    FRIDAY("ПТ"),
-    SATURDAY("СБ"),
-    SUNDAY("ВС")
-}
-
-enum class WeekDays(val index: Int) {
-    MONDAY(1),
-    TUESDAY(2),
-    WEDNESDAY(3),
-    THURSDAY(4),
-    FRIDAY(5),
-    SATURDAY(6),
-    SUNDAY(7)
+enum class DaysOfTheWeek(val short: String, val index: Int) {
+    MONDAY("ПН",1),
+    TUESDAY("ВТ",2),
+    WEDNESDAY("СР",3),
+    THURSDAY("ЧТ",4),
+    FRIDAY("ПТ",5),
+    SATURDAY("СБ",6),
+    SUNDAY("ВС",7)
 }
 

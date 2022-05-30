@@ -50,24 +50,32 @@ class FragmentAllGames : Fragment(), GameClickListener {
         context?.appComponent?.inject(this)
         viewModel = ViewModelProvider(this, viewModelFactory)[FragmentAllGamesViewModel::class.java]
 
-        tabDate.forEach {
+        tabDate.forEach { it ->
             val dayIndex = if (it == LocalDate.now()) TODAY_INDEX
             else it.dayOfWeek.value
 
-            binding.tabLayout2.addTab(
-                binding.tabLayout2.newTab().setText(
-                    getString(R.string.tabNames, dayOfTheWeek(dayIndex), formatDate(it.toString()))
+            binding.scheduleGamesByDateTabLayout.addTab(
+                binding.scheduleGamesByDateTabLayout.newTab().setText(
+                    getString(
+                        R.string.tabNames,
+                        if (dayIndex == TODAY_INDEX)
+                            getString(R.string.today)
+                        else
+                            DaysOfTheWeek.values().first { it.index == dayIndex }.short,
+                        formatDate(it.toString())
+                    )
                 )
             )
             listGames.add(emptyList())
         }
-        binding.tabLayout2.getTabAt(TODAY_TAB_ITEM_INDEX)?.select()
+        binding.scheduleGamesByDateTabLayout.getTabAt(TODAY_TAB_ITEM_INDEX)?.select()
         lifecycleScope.launchWhenStarted {
             viewModel.loadGamesByDate(LocalDate.now().toString())
                 .collectLatest { initRecyclerAdapter(it) }
         }
 
-        binding.tabLayout2.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        binding.scheduleGamesByDateTabLayout.addOnTabSelectedListener(object :
+            TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 val tabPosition = tab?.position ?: TODAY_TAB_ITEM_INDEX
                 if (listGames[tabPosition] == emptyList<Game>()) {
@@ -80,6 +88,7 @@ class FragmentAllGames : Fragment(), GameClickListener {
                 } else
                     initRecyclerAdapter(listGames[tabPosition])
             }
+
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
@@ -139,19 +148,6 @@ class FragmentAllGames : Fragment(), GameClickListener {
         LocalDate.now().plusDays(2),
         LocalDate.now().plusDays(3)
     )
-
-    private fun dayOfTheWeek(dayIndex: Int): String {
-        return when (dayIndex) {
-            WeekDays.MONDAY.index -> Week.MONDAY.short
-            WeekDays.TUESDAY.index -> Week.TUESDAY.short
-            WeekDays.WEDNESDAY.index -> Week.WEDNESDAY.short
-            WeekDays.THURSDAY.index -> Week.THURSDAY.short
-            WeekDays.FRIDAY.index -> Week.FRIDAY.short
-            WeekDays.SATURDAY.index -> Week.SATURDAY.short
-            WeekDays.SUNDAY.index -> Week.SUNDAY.short
-            else -> getString(R.string.today)
-        }
-    }
 
     private fun showUpdateDialog() {
         with(AlertDialog.Builder(context)) {
