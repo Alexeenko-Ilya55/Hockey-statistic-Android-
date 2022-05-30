@@ -1,17 +1,13 @@
 package com.alexproject.testapplication.fragments
 
 import android.app.AlertDialog
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -42,8 +38,6 @@ import kotlin.properties.Delegates
 
 class FragmentStatistics : Fragment(), GameClickListener, TabItemClickListener,
     LeagueClickListener {
-
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = DATA_STORE_NAME)
 
     private lateinit var binding: FragmentStatisticsBinding
     private lateinit var bindingDialog: DialodChangeLeagueFragmentBinding
@@ -232,7 +226,7 @@ class FragmentStatistics : Fragment(), GameClickListener, TabItemClickListener,
             settings[dataStoreKey] = leagueId
         }
 
-    private suspend fun readFavoriteLeague() = context?.dataStore?.data?.first()?.get(dataStoreKey)
+    private suspend fun readFavoriteLeague() = requireContext().dataStore.data.first()[dataStoreKey]
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         requireActivity().menuInflater.inflate(R.menu.default_action_bar, menu)

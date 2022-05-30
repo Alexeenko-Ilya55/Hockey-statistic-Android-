@@ -7,7 +7,6 @@
     android:background="#F3F3F3"
     tools:context=".fragments.FragmentGame">
 
-
     <ImageView
         android:id="@+id/homeTeamLabelGame"
         android:layout_width="@dimen/teamEmblem_gameFragment"
@@ -152,6 +151,15 @@
         app:layout_constraintStart_toStartOf="@+id/timeGame"
         app:layout_constraintTop_toBottomOf="@+id/ScoreGame" />
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/match_constraint"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/customTabView" >
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcView"
         android:layout_width="match_parent"
@@ -161,6 +169,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/customTabView" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <TextView
         android:id="@+id/matchInfo"
@@ -175,7 +184,7 @@
         android:layout_marginEnd="@dimen/medium_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/rcView" />
+        app:layout_constraintTop_toBottomOf="@+id/customTabView" />
 
     <com.alexproject.testapplication.views.CustomTabView
         android:id="@+id/customTabView"

@@ -87,6 +87,10 @@ class FragmentGame : Fragment(), GameClickListener, TabItemClickListener {
             )
         )
 
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.updateGameEvents(game.id)
+            binding.swipeRefresh.isRefreshing = false
+        }
         binding.awayTeamLabelGame.setOnClickListener {
             findNavController().navigate(
                 R.id.fragmentTeam,

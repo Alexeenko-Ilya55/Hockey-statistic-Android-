@@ -61,6 +61,11 @@
     <string name="chooseLeague">Выберите лигу</string>
     <string name="cancel">Отменить</string>
 
+    <string name="tabNames">%1s\n%2s</string>
+    <string name="today">Сегодня</string>
+    <string name="update">Обновить</string>
+    <string name="updateGames">Данные устарели. Обновить?</string>
+
     <string name="fragmentAllGames">Hockey app</string>
     <string name="fragmentFavorites">Избранное</string>
     <string name="fragmentGame">Информация о игре</string>

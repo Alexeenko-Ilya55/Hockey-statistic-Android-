@@ -37,7 +37,10 @@ class AppModule {
         loadCountryByIdUseCase: LoadCountryByIdUseCase,
         loadLeagueByIdUseCase: LoadLeagueByIdUseCase,
         loadGamesForLeagueUseCase: LoadGamesForLeagueUseCase,
-        loadAllLeaguesUseCase: LoadAllLeaguesUseCase
+        loadAllLeaguesUseCase: LoadAllLeaguesUseCase,
+        updateGamesByDateUseCase: UpdateGamesByDateUseCase,
+        updateGameEventsUseCase: UpdateGameEventsUseCase
+
     ) = ViewModelFactory(
         addGameToFavoritesUseCase,
         deleteGameFromFavoritesUseCase,
@@ -57,6 +60,8 @@ class AppModule {
         loadLeagueByIdUseCase,
         loadCountryByIdUseCase,
         loadGamesForLeagueUseCase,
-        loadAllLeaguesUseCase
+        loadAllLeaguesUseCase,
+        updateGamesByDateUseCase,
+        updateGameEventsUseCase
     )
 }

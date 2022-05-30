@@ -12,7 +12,6 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-
     private lateinit var binding: ActivityMainBinding
 
     @Inject
@@ -25,6 +24,6 @@ class MainActivity : AppCompatActivity() {
         applicationContext.appComponent.inject(this)
         val navController = findNavController(R.id.activity_nav_container)
         binding.bottomNavigationView.setupWithNavController(navController)
+        viewModel.initWorker(this)
     }
-
 }

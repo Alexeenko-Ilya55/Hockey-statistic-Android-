@@ -16,6 +16,7 @@ import com.alexproject.testapplication.adapters.GamesAdapter
 import com.alexproject.testapplication.app.appComponent
 import com.alexproject.testapplication.contracts.GameClickListener
 import com.alexproject.testapplication.databinding.FragmentLiveBinding
+import com.alexproject.testapplication.objects.GAME_ID
 import com.alexproject.testapplication.viewModels.FragmentLiveViewModel
 import com.alexproject.testapplication.viewModels.ViewModelFactory
 import kotlinx.coroutines.Dispatchers
@@ -43,6 +44,12 @@ class FragmentLive : Fragment(), GameClickListener {
         binding = FragmentLiveBinding.inflate(inflater, container, false)
         context?.appComponent?.inject(this)
         viewModel = ViewModelProvider(this, viewModelFactory)[FragmentLiveViewModel::class.java]
+        binding.swipeRefresh.setOnRefreshListener {
+            lifecycleScope.launch(Dispatchers.IO) {
+                viewModel.updateLiveGames(LocalDate.now().toString())
+            }
+            binding.swipeRefresh.isRefreshing = false
+        }
         return binding.root
     }
 
@@ -54,7 +61,6 @@ class FragmentLive : Fragment(), GameClickListener {
                 initRecyclerAdapter(it)
             }
         }
-
     }
 
     private fun initRecyclerAdapter(games: List<Game>) {
@@ -73,7 +79,7 @@ class FragmentLive : Fragment(), GameClickListener {
     }
 
     override fun itemGameClicked(gameId: Int) =
-        findNavController().navigate(R.id.fragmentGame, bundleOf("gameId" to gameId))
+        findNavController().navigate(R.id.fragmentGame, bundleOf(GAME_ID to gameId))
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         requireActivity().menuInflater.inflate(R.menu.default_action_bar, menu)

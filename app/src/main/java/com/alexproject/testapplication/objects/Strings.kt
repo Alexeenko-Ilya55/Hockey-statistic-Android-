@@ -30,10 +30,16 @@ const val LEAGUE_ID = "leagueId"
 
 
 const val CANCEL_PRESSED = "Cancel pressed"
+const val TODAY_TAB_ITEM_INDEX = 3
 
 const val DEFAULT_LEAGUE_ID = 57
 const val FAVORITE_LEAGUE_ID = "favoriteLeague"
 const val DATA_STORE_NAME = "myDataStore"
+
+const val DATE_LAST_UPDATE = "Date last update"
+const val WORK_NAME = "UpdateAllLeagues"
+
+const val TODAY_INDEX = 10
 
 enum class Tab(val index: Int) {
     RESULTS(0),
@@ -50,3 +56,14 @@ enum class TabsFragmentStatistic(val index: Int) {
     STATISTIC(0),
     RESULTS(1)
 }
+
+enum class DaysOfTheWeek(val short: String, val index: Int) {
+    MONDAY("ПН",1),
+    TUESDAY("ВТ",2),
+    WEDNESDAY("СР",3),
+    THURSDAY("ЧТ",4),
+    FRIDAY("ПТ",5),
+    SATURDAY("СБ",6),
+    SUNDAY("ВС",7)
+}
+
