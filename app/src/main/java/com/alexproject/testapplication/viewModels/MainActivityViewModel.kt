@@ -30,16 +30,15 @@ class MainActivityViewModel : ViewModel() {
     }
 
     fun initNotificationWorker(context: Context) {
-        val request = PeriodicWorkRequest.Builder(
-            NotificationWorker::class.java,
+        val request = PeriodicWorkRequestBuilder<NotificationWorker>(
             15,
             TimeUnit.MINUTES,
-            14,
-            TimeUnit.MINUTES
+            5,
+            TimeUnit.SECONDS
         ).build()
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(
             NOTIFICATIONS_WORK_NAME,
-            ExistingPeriodicWorkPolicy.KEEP,
+            ExistingPeriodicWorkPolicy.REPLACE,
             request
         )
     }

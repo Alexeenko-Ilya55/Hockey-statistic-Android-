@@ -35,10 +35,10 @@ class NotificationWorker(context: Context, workerParameters: WorkerParameters) :
             listFavoritesGames.forEach { game ->
                 val needNotificationToGame =
                     game.date == LocalDate.now().toString() && ((LocalTime.now()
-                        .plusMinutes(15).isAfter(LocalTime.parse(game.time)) && LocalTime.now()
+                        .plusMinutes(10).isAfter(LocalTime.parse(game.time)) && LocalTime.now()
                         .isBefore(LocalTime.parse(game.time))) || (LocalTime.now()
-                        .isAfter(LocalTime.parse(game.time).plusMinutes(150)) && LocalTime.now()
-                        .isBefore(LocalTime.parse(game.time).plusMinutes(165))))
+                        .isAfter(LocalTime.parse(game.time).plusMinutes(180)) && LocalTime.now()
+                        .isBefore(LocalTime.parse(game.time).plusMinutes(190))))
 
                 if (needNotificationToGame)
                     createNotification(game.id, game.time, game.homeTeam.name, game.awayTeam.name)
@@ -109,6 +109,7 @@ class NotificationWorker(context: Context, workerParameters: WorkerParameters) :
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
             .setContentIntent(pendingIntentFavorites)
+            .setStyle(NotificationCompat.BigTextStyle())
 
         NotificationManagerCompat.from(applicationContext).notify(gameId, notification.build())
     }
@@ -152,6 +153,7 @@ class NotificationWorker(context: Context, workerParameters: WorkerParameters) :
             )
             .setAutoCancel(true)
             .setContentIntent(pendingIntentFavorites)
+            .setStyle(NotificationCompat.BigTextStyle())
 
         NotificationManagerCompat.from(applicationContext).notify(gameId, notification.build())
     }

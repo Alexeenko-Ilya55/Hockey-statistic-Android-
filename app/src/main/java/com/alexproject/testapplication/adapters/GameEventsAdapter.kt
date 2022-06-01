@@ -11,6 +11,7 @@ import com.alexproject.testapplication.databinding.EventsGameItemBinding
 import com.alexproject.testapplication.databinding.GameEventsPeriodItemBinding
 import com.alexproject.testapplication.objects.EMPTY_STRING
 import com.alexproject.testapplication.objects.GOAL
+import com.alexproject.testapplication.objects.OVERTIME
 
 class GameEventsAdapter(
     private val game: Game,
@@ -71,7 +72,12 @@ sealed class RecyclerTHolder(binding: ViewBinding) : RecyclerView.ViewHolder(bin
                 } else {
                     setImage(R.drawable.penalty)
                 }
-                setPlayerText(gameEvents.players ?: "team ${gameEvents.team.name}")
+                setPlayerText(
+                    gameEvents.players ?: itemView.context.getString(
+                        R.string.teamPenalty,
+                        gameEvents.team.name
+                    )
+                )
                 setTimerText(gameEvents.minute)
                 setAssistsText(parseAssists(gameEvents.assistsFirst, gameEvents.assistsSecond))
             }
@@ -95,7 +101,7 @@ sealed class RecyclerTHolder(binding: ViewBinding) : RecyclerView.ViewHolder(bin
     ) : RecyclerTHolder(binding) {
 
         fun bind(gamePeriod: String) {
-            if (gamePeriod == "T")
+            if (gamePeriod == OVERTIME)
                 binding.period.text = itemView.context.getString(R.string.overtime)
             else
                 binding.period.text = itemView.context.getString(R.string.period, gamePeriod)

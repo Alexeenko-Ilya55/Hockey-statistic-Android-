@@ -82,6 +82,8 @@
 
     <string name="notificationButtonName">Перейти к игре</string>
 
+    <string name="teamPenalty">Команда %s</string>
+
     <string name="beforeGameTitleNotification">Скоро начнется матч!</string>
     <string name="AfterGameTitleNotification">Матч завершился!</string>
     <string name="beforeGameContentTextNotification">Через %1s минут начнется матч между командами: %2s и %3s</string>
