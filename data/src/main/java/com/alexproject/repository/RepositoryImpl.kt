@@ -20,14 +20,12 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun addGameToFavorites(gameId: Int) =
         database.addGameToFavorites(gameId)
-
-
+    
     override suspend fun addTeamToFavorites(teamId: Int) =
         database.addTeamToFavorites(teamId)
 
     override suspend fun deleteGameFromFavorites(gameId: Int) =
         database.deleteGameFromFavorites(gameId)
-
 
     override suspend fun deleteTeamFromFavorites(teamId: Int) =
         database.deleteTeamFromFavorites(teamId)
@@ -39,12 +37,8 @@ class RepositoryImpl @Inject constructor(
         it.map { teamDTO -> teamDTO.mapToTeam() }
     }
 
-    override suspend fun searchTeam(teamName: String) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun loadStatistics(leagueId: Int) =
-        flowOf(apiRepository.loadStatisticTable(leagueId)).map { group ->
+    override suspend fun loadStatistics(leagueId: Int) = flowOf(
+        apiRepository.loadStatisticTable(leagueId)).map { group ->
             group.map { listStatistic ->
                 listStatistic.map {
                     it.mapToStatistic()
@@ -52,9 +46,7 @@ class RepositoryImpl @Inject constructor(
             }
         }
 
-
     override suspend fun loadAllGamesForTeam(teamId: Int): Flow<List<Game>> {
-
         database.insertGame(apiRepository.loadTeamGames(teamId))
         return database.getTeamGames(teamId).map { listGame -> listGame.map { it.mapToGame() } }
     }
@@ -62,28 +54,15 @@ class RepositoryImpl @Inject constructor(
     override suspend fun loadLiveGames(date: String): Flow<List<Game>> =
         database.getLiveGames(date).map { it.map { gameDTO -> gameDTO.mapToGame() } }
 
-    override suspend fun loadGamesFromApiToDB(date: String) {
-        val games = apiRepository.loadGamesByDate(date)
-        database.insertGame(games)
-    }
+    override suspend fun loadGamesFromApiToDB(date: String) =
+        database.insertGame(apiRepository.loadGamesByDate(date))
+
 
     override suspend fun loadGamesByDate(date: String): Flow<List<Game>> {
         val games = database.getGamesByDate(date)
         if (games.first() == emptyList<GameDTO>())
             database.insertGame(apiRepository.loadGamesByDate(date))
         return games.map { listGameDTO -> listGameDTO.map { it.mapToGame() } }
-    }
-
-    override suspend fun searchGameByTeamName(teamName: String) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun searchGameByLeagueName(leagueName: String) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun searchGameByCountryIndex(countryIndex: String) {
-        TODO("Not yet implemented")
     }
 
     override suspend fun loadGameById(gameId: Int) =
@@ -124,9 +103,9 @@ class RepositoryImpl @Inject constructor(
         return leagues.map { listLeagues -> listLeagues.map { it.mapToLeague() } }
     }
 
-    override suspend fun updateGamesByDate(date: String) {
+    override suspend fun updateGamesByDate(date: String) =
         database.insertGame(apiRepository.loadGamesByDate(date))
-    }
+
 
     override suspend fun updateGameEvents(gameId: Int) =
         database.insertGameEvents(apiRepository.loadGameEvents(gameId))
