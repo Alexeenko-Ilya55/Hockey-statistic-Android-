@@ -34,11 +34,11 @@ class MainActivityViewModel : ViewModel() {
             15,
             TimeUnit.MINUTES,
             5,
-            TimeUnit.SECONDS
+            TimeUnit.MINUTES
         ).build()
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(
             NOTIFICATIONS_WORK_NAME,
-            ExistingPeriodicWorkPolicy.REPLACE,
+            ExistingPeriodicWorkPolicy.KEEP,
             request
         )
     }

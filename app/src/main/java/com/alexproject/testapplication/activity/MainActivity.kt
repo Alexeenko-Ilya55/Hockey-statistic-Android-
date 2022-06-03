@@ -34,7 +34,11 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setupWithNavController(navController)
         viewModel.initLeagueDownloadWorker(applicationContext)
         viewModel.initNotificationWorker(applicationContext)
-        val gameId = intent.getIntExtra(GAME_ID, 0)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val gameId = intent.getIntExtra(GAME_ID,0)
         if (gameId != 0)
             findNavController(R.id.activity_nav_container).navigate(
                 R.id.fragmentGame, bundleOf(GAME_ID to gameId)

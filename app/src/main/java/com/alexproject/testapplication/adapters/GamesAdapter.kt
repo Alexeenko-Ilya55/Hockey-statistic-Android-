@@ -157,7 +157,6 @@ class GamesAdapter(
             awayTeamScore.setTextColor(itemView.context.getColor(R.color.black))
             homeTeamScore.setTextColor(itemView.context.getColor(R.color.black))
 
-
             homeTeamScore.text = game.homeScores.toString()
             awayTeamScore.text = game.awayScores.toString()
             periodGame.text = itemView.context.getString(R.string.after)
