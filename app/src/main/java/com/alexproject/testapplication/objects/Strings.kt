@@ -37,7 +37,20 @@ const val FAVORITE_LEAGUE_ID = "favoriteLeague"
 const val DATA_STORE_NAME = "myDataStore"
 
 const val DATE_LAST_UPDATE = "Date last update"
-const val WORK_NAME = "UpdateAllLeagues"
+const val LEAGUE_UPDATE_WORK_NAME = "UpdateAllLeagues"
+const val NOTIFICATIONS_WORK_NAME = "ShowHockeyNotifications"
+
+const val CHANNEL_ID = "Hockey_app"
+const val CHANNEL_NAME = "Channel_hockey_app"
+const val CHANNEL_DESCRIPTION_TEXT = "Notification description"
+
+const val MOVE_TO_FAVORITES_GAMES = "Move to favorites games"
+const val ACTION = "Action"
+
+const val OVERTIME = "T"
+
+
+
 
 const val TODAY_INDEX = 10
 

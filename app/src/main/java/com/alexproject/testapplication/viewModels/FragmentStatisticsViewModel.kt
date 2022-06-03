@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.alexproject.domain.models.Statistic
 import com.alexproject.domain.useCases.*
 import com.alexproject.testapplication.models.StatisticTable
+import com.alexproject.testapplication.objects.EMPTY_STRING
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
@@ -23,7 +24,7 @@ class FragmentStatisticsViewModel @Inject constructor(
 
     suspend fun loadStatistic(leagueId: Int): Flow<List<StatisticTable>> {
         val statisticList = mutableListOf<StatisticTable>()
-        var groupName = ""
+        var groupName = EMPTY_STRING
         loadStatisticsUseCase.loadStatistic(leagueId).collectLatest { statistic ->
             statistic.first { listStatisticForGroup ->
                 listStatisticForGroup.forEach {
