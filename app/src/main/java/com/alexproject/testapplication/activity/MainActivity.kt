@@ -1,17 +1,20 @@
 package com.alexproject.testapplication.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.alexproject.testapplication.BuildConfig
 import com.alexproject.testapplication.R
 import com.alexproject.testapplication.app.appComponent
 import com.alexproject.testapplication.databinding.ActivityMainBinding
 import com.alexproject.testapplication.objects.ACTION
 import com.alexproject.testapplication.objects.GAME_ID
 import com.alexproject.testapplication.objects.MOVE_TO_FAVORITES_GAMES
+import com.alexproject.testapplication.objects.SERVICE_NOTIFICATION
 import com.alexproject.testapplication.viewModels.MainActivityViewModel
 import com.alexproject.testapplication.viewModels.ViewModelFactory
 import javax.inject.Inject
@@ -33,12 +36,16 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.activity_nav_container)
         binding.bottomNavigationView.setupWithNavController(navController)
         viewModel.initLeagueDownloadWorker(applicationContext)
-        viewModel.initNotificationWorker(applicationContext)
+
+        if (BuildConfig.Method_for_sending_notifications == SERVICE_NOTIFICATION)
+            startService(Intent(this, MainActivity::class.java))
+        else
+            viewModel.initNotificationWorker(applicationContext)
     }
 
     override fun onStart() {
         super.onStart()
-        val gameId = intent.getIntExtra(GAME_ID,0)
+        val gameId = intent.getIntExtra(GAME_ID, 0)
         if (gameId != 0)
             findNavController(R.id.activity_nav_container).navigate(
                 R.id.fragmentGame, bundleOf(GAME_ID to gameId)
