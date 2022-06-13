@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.collectLatest
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalTime
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class StartEndGameNotification(private val context: Context) {
@@ -132,9 +133,19 @@ class StartEndGameNotification(private val context: Context) {
             .setAutoCancel(true)
             .setContentIntent(pendingIntentFavorites)
             .setStyle(NotificationCompat.BigTextStyle())
-            .setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000))
+            .setVibrate(
+                longArrayOf(
+                    TimeUnit.SECONDS.toMillis(1),
+                    TimeUnit.SECONDS.toMillis(1),
+                    TimeUnit.SECONDS.toMillis(1)
+                )
+            )
             .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
-            .setLights(Color.RED, 3000, 3000)
+            .setLights(
+                Color.RED,
+                TimeUnit.MILLISECONDS.toMillis(500).toInt(),
+                TimeUnit.SECONDS.toMillis(4).toInt()
+            )
     }
 
     private fun createIntents(gameId: Int) {

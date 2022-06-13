@@ -53,8 +53,6 @@ const val SERVICE_NOTIFICATION = "Service notifications"
 
 const val TODAY_INDEX = 10
 
-const val TEN_MINUTES = 1000 * 60 * 10.toLong()
-
 enum class Tab(val index: Int) {
     RESULTS(0),
     CALENDAR(1),
