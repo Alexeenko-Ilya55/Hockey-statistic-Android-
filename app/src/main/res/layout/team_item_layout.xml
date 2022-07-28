@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/leagueLabel"
+        android:layout_width="@dimen/teamEmblem_favorites"
+        android:layout_height="@dimen/teamEmblem_favorites"
+        android:layout_marginStart="@dimen/large_margin"
+        android:layout_marginTop="@dimen/small_margin"
+        android:layout_marginBottom="@dimen/small_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/leagueName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/large_margin"
+        android:textColor="?attr/colorOnSecondary"
+        android:textSize="@dimen/mediumTextSize"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/leagueLabel"
+        app:layout_constraintStart_toEndOf="@+id/leagueLabel"
+        app:layout_constraintTop_toTopOf="@+id/leagueLabel" />
+
+    <ImageButton
+        android:id="@+id/buttonFavorites"
+        android:layout_width="@dimen/teamButton_favorites"
+        android:layout_height="@dimen/teamButton_favorites"
+        android:layout_marginEnd="@dimen/medium_margin"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/leagueLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/leagueLabel"
+        app:srcCompat="@drawable/nav_menu_favorites" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

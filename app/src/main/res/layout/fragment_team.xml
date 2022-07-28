@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.FragmentTeam">
+
+    <TextView
+        android:id="@+id/teamName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/large_margin"
+        android:textColor="?attr/colorOnSecondary"
+        android:textSize="@dimen/teamNameTextSize"
+        android:textStyle="bold"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/teamEmblem"
+        app:layout_constraintStart_toEndOf="@+id/teamEmblem"
+        app:layout_constraintTop_toTopOf="@+id/teamEmblem" />
+
+    <ImageView
+        android:id="@+id/teamEmblem"
+        android:layout_width="@dimen/teamEmblem_teamFragment"
+        android:layout_height="@dimen/teamEmblem_teamFragment"
+        android:layout_marginStart="@dimen/very_large_margin"
+        android:layout_marginTop="@dimen/small_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/leagueButton"
+        tools:src="@tools:sample/avatars" />
+
+    <com.alexproject.testapplication.views.CustomTabView
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_margin"
+        app:layout_constraintTop_toBottomOf="@+id/teamEmblem"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/leagueButton"
+        android:layout_width="@dimen/match_constraint"
+        android:layout_height="@dimen/leagueButton"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/leagueLogo"
+            android:layout_width="@dimen/leagueEmblem"
+            android:layout_height="@dimen/leagueEmblem"
+            android:layout_marginStart="@dimen/very_large_margin"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/leagueName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/medium_margin"
+            android:textColor="?attr/colorOnSecondary"
+            android:textSize="@dimen/largeTextSize"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/leagueLogo"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="@dimen/flag"
+            android:layout_height="@dimen/leagueEmblem"
+            android:layout_marginEnd="@dimen/small_margin"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/arrow_forward_black" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcView"
+        android:layout_width="@dimen/match_constraint"
+        android:layout_height="@dimen/match_constraint"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

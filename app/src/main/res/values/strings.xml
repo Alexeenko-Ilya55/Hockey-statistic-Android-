@@ -1,3 +1,93 @@
 <resources>
     <string name="app_name">Test Application</string>
+
+    <string name="all_games">Все игры</string>
+    <string name="live">Live</string>
+    <string name="favorites">Избранное</string>
+    <string name="statistic">Статистика</string>
+    <string name="statisticTable">Таблица</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="results">Результаты</string>
+    <string name="calendar">Календарь</string>
+    <string name="table">Таблица</string>
+    <string name="game_canceled">Отменён</string>
+    <string name="gameTabItem">Game</string>
+    <string name="teamsTabItem">Teams</string>
+    <string name="reviewTabMenu">Обзор</string>
+    <string name="h2hTabMenu">H2h</string>
+    <string name="after">После</string>
+    <string name="overtimeShort">ОТ</string>
+    <string name="penalty">бул.</string>
+    <string name="breakGAME">Перерыв</string>
+
+    <string name="assists">%1$s + %2$s</string>
+    <string name="penaltyComment">%1$s (%2$s)</string>
+    <string name="score">счёт: %s</string>
+
+    <string name="period">%s-Й ПЕРИОД</string>
+    <string name="overtime">ОВЕРТАЙМ</string>
+
+    <string name="league_name">League: %s</string>
+    <string name="country_name">Country: %s</string>
+
+    <string name="noInfoAboutGame">Информации пока нет, так как матч еще не начался</string>
+
+    <string name="gamesTeamStatistic">%1$d</string>
+    <string name="goalsTeamStatistic">%1$d/%2$d</string>
+
+    <string name="team">Команда</string>
+    <string name="games">И</string>
+    <string name="goals">Голы</string>
+    <string name="points">О</string>
+    <string name="number">#</string>
+
+    <string name="chooseLeague">Выберите лигу</string>
+    <string name="cancel">Отменить</string>
+
+    <string name="tabNames">%1s\n%2s</string>
+    <string name="today">Сегодня</string>
+    <string name="update">Обновить</string>
+    <string name="updateGames">Данные устарели. Обновить?</string>
+
+    <string name="fragmentAllGames">Hockey app</string>
+    <string name="fragmentFavorites">Избранное</string>
+    <string name="fragmentGame">Информация о игре</string>
+    <string name="fragmentLive">Live игры</string>
+    <string name="fragmentStatistic">Статистика</string>
+    <string name="fragmentTeam">О команде</string>
+
+    <string name="settings">Настройки</string>
+    <string name="search">Поиск</string>
+
+    <string name="search_league">Найти лигу…</string>
+    <string name="search_game">Найти игру…</string>
+    <string name="search_team">Найти команду…</string>
+
+    <string name="notificationButtonName">Перейти к игре</string>
+
+    <string name="teamPenalty">Команда %s</string>
+
+    <string name="beforeGameTitleNotification">Скоро начнется матч!</string>
+    <string name="AfterGameTitleNotification">Матч завершился!</string>
+    <string name="beforeGameContentTextNotification">Через %1s минут начнется матч между командами: %2s и %3s</string>
+    <string name="AfterGameContentTextNotification">Матч между командами: %1s и %2s завершен. Пора узнать результат</string>
+
+
 </resources>

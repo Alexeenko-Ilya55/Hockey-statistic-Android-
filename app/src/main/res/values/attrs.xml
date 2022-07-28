@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="GameEventsItemView">
+        <attr name="timerText" format="string"/>
+        <attr name="playerText" format="string"/>
+        <attr name="assistsText" format="string"/>
+        <attr name="playerRemoveText" format="string"/>
+        <attr name="eventImage" format="string"/>
+        <attr name="colorText" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="CustomTabView">
+
+    </declare-styleable>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/fragmentAllGames"
+        android:icon="@drawable/nav_menu_all_games"
+        android:title="@string/all_games"/>
+
+    <item
+        android:id="@+id/fragmentLive"
+        android:icon="@drawable/nav_menu_live"
+        android:title="@string/live"/>
+
+    <item
+        android:id="@+id/fragmentFavorites"
+        android:icon="@drawable/nav_menu_favorites"
+        android:title="@string/favorites"/>
+
+    <item
+        android:id="@+id/fragmentStatistics"
+        android:icon="@drawable/nav_menu_statistics"
+        android:title="@string/statistic"/>
+</menu>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    tools:context=".fragments.FragmentStatistics">
+
+        <LinearLayout
+            android:id="@+id/buttonChangeLeague"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/large_margin"
+            android:layout_marginEnd="@dimen/medium_margin"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/leagueEmblem"
+            app:layout_constraintStart_toEndOf="@id/leagueEmblem"
+            app:layout_constraintTop_toTopOf="@+id/leagueEmblem">
+
+                <TextView
+                    android:id="@+id/leagueName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="@dimen/teamNameTextSize"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin"
+                    android:src="@drawable/arrow_league_change" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/leagueEmblem"
+            android:layout_width="@dimen/teamEmblem_teamFragment"
+            android:layout_height="@dimen/teamEmblem_teamFragment"
+            android:layout_marginStart="@dimen/very_large_margin"
+            android:layout_marginTop="@dimen/large_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <com.alexproject.testapplication.views.CustomTabView
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/medium_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/leagueEmblem" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcView"
+            android:layout_width="@dimen/match_constraint"
+            android:layout_height="@dimen/match_constraint"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:visibility="invisible"
+            android:id="@+id/leagueRcView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="buttonChangeLeague,tabLayout,rcView,leagueEmblem" />
+</androidx.constraintlayout.widget.ConstraintLayout>

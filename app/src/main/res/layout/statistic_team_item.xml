@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/medium_margin"
+        android:layout_marginStart="@dimen/small_margin"
+        android:textColor="?attr/colorOnSecondary"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/team"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/small_margin"
+        android:textColor="?attr/colorOnSecondary"
+        app:layout_constraintBottom_toBottomOf="@+id/logoTeam"
+        app:layout_constraintStart_toEndOf="@+id/logoTeam"
+        app:layout_constraintTop_toTopOf="@+id/logoTeam" />
+
+    <TextView
+        android:id="@+id/points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/colorOnSecondary"
+        app:layout_constraintBottom_toBottomOf="@+id/goals"
+        app:layout_constraintEnd_toEndOf="@id/pointsGuideLine"
+        app:layout_constraintTop_toTopOf="@+id/goals" />
+
+    <TextView
+        android:id="@+id/goals"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/colorOnSecondary"
+        app:layout_constraintBottom_toBottomOf="@+id/games"
+        app:layout_constraintEnd_toEndOf="@+id/goalsGuideLine"
+        app:layout_constraintStart_toStartOf="@+id/goalsGuideLine"
+        app:layout_constraintTop_toTopOf="@+id/games" />
+
+    <TextView
+        android:id="@+id/games"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/colorOnSecondary"
+        app:layout_constraintBottom_toBottomOf="@+id/team"
+        app:layout_constraintEnd_toStartOf="@+id/gamesGuidLine"
+        app:layout_constraintTop_toTopOf="@+id/team" />
+
+    <ImageView
+        android:id="@+id/logoTeam"
+        android:layout_width="@dimen/teamEmblemStatisticTable"
+        android:layout_height="@dimen/teamEmblemStatisticTable"
+        android:layout_marginStart="@dimen/small_margin"
+        app:layout_constraintBottom_toBottomOf="@+id/position"
+        app:layout_constraintStart_toEndOf="@+id/position"
+        app:layout_constraintTop_toTopOf="@+id/position" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gamesGuidLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_end="@dimen/games_guideLine" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/goalsGuideLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_end="@dimen/goals_guideLine" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/pointsGuideLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/points_guideLine" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
