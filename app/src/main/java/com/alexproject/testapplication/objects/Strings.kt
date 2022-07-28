@@ -49,8 +49,7 @@ const val ACTION = "Action"
 
 const val OVERTIME = "T"
 
-
-
+const val SERVICE_NOTIFICATION = "Service notifications"
 
 const val TODAY_INDEX = 10
 
@@ -71,12 +70,12 @@ enum class TabsFragmentStatistic(val index: Int) {
 }
 
 enum class DaysOfTheWeek(val short: String, val index: Int) {
-    MONDAY("ПН",1),
-    TUESDAY("ВТ",2),
-    WEDNESDAY("СР",3),
-    THURSDAY("ЧТ",4),
-    FRIDAY("ПТ",5),
-    SATURDAY("СБ",6),
-    SUNDAY("ВС",7)
+    MONDAY("ПН", 1),
+    TUESDAY("ВТ", 2),
+    WEDNESDAY("СР", 3),
+    THURSDAY("ЧТ", 4),
+    FRIDAY("ПТ", 5),
+    SATURDAY("СБ", 6),
+    SUNDAY("ВС", 7)
 }
 

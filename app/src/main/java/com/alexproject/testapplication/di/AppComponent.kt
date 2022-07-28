@@ -3,8 +3,9 @@ package com.alexproject.testapplication.di
 import com.alexproject.testapplication.activity.MainActivity
 import com.alexproject.testapplication.app.AppDependencies
 import com.alexproject.testapplication.fragments.*
+import com.alexproject.testapplication.notification.StartEndGameNotification
+import com.alexproject.testapplication.services.NotificationService
 import com.alexproject.testapplication.workManager.LeagueDownloadWorker
-import com.alexproject.testapplication.workManager.NotificationWorker
 import dagger.Component
 import javax.inject.Singleton
 
@@ -22,7 +23,8 @@ interface AppComponent {
     fun inject(fragmentStatistics: FragmentStatistics)
     fun inject(fragmentTeam: FragmentTeam)
     fun inject(leagueDownloadWorker: LeagueDownloadWorker)
-    fun inject(notificationWorker: NotificationWorker)
+    fun inject(startEndGameNotification: StartEndGameNotification)
+    fun inject(notificationService: NotificationService)
 
     @Component.Builder
     interface Builder {
